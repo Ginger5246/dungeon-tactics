@@ -508,6 +508,66 @@ h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-cl
 /* v18: 首領👑／精英⭐ 標記移到右上角，不再蓋住血量數字 */
 .unit.boss::before,.unit.elite:not(.boss)::before{left:auto!important;right:-4px;transform:none!important;top:-10px}
 .unit.elite:not(.boss)::before{top:-8px}
+/* v19: 結界青鬼（青色調 赤鬼立繪）、結界連線、重擊頓幀、通關橫幅 */
+.unit[data-t="ward"] .face .av img{filter:hue-rotate(188deg) saturate(.85) brightness(1.55) contrast(.92)}
+#lines line.ward{stroke:#58e0ff;stroke-dasharray:7 5}
+#lines circle.tip.ward{fill:#2ab8e0}
+body.hs #board{filter:brightness(1.3) contrast(1.08)}
+body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!important}
+#board.shake2{animation:bshake2 .42s}
+@keyframes bshake2{15%{transform:translate(-8px,4px) scale(1.012)}30%{transform:translate(8px,-5px)}45%{transform:translate(-6px,-3px)}60%{transform:translate(5px,4px)}80%{transform:translate(-2px,1px)}}
+#clearBan{position:absolute;left:0;right:0;top:34%;z-index:40;text-align:center;pointer-events:none;display:none}
+#clearBan.on{display:block;animation:clr 1s ease-out forwards}
+#clearBan b{display:inline-block;font-size:30px;font-weight:900;color:#ffe066;background:linear-gradient(#3a1b0acc,#150b05cc);border:2px solid #ffd24a;border-radius:16px;padding:10px 26px;text-shadow:0 2px 0 #000,0 0 14px #ffb300;box-shadow:0 6px 24px #000a}
+#clearBan small{display:inline-block;margin-top:8px;font-size:14px;color:#ffe9b0;background:#150b05cc;border-radius:999px;padding:3px 14px;font-weight:700}
+@keyframes clr{0%{opacity:0;transform:scale(.6)}25%{opacity:1;transform:scale(1.08)}40%{transform:scale(1)}85%{opacity:1}100%{opacity:.0;transform:scale(1.02)}}
+/* v19: 首頁／目錄改版（金卡其上列、深棕標題列、列表列、底部分頁）參考 user_menu_ref.jpg */
+#home{padding:0!important;justify-content:flex-start!important;gap:0!important;background:linear-gradient(#efe1b4,#e4d09a)!important}
+#home::after{display:none!important}
+#home>*:not(.petal){z-index:2!important}
+#home .petal{opacity:.5}
+#hStrip{display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 10px;background:linear-gradient(#f0cf5e,#d9ae2c);border-bottom:2px solid #8a6414;position:relative}
+.hcoin{display:flex;align-items:center;gap:5px;font-weight:900;color:#5a3d08;font-size:14px;text-shadow:0 1px 0 #fff8;min-width:84px}
+.hcoin i{font-style:normal;font-size:17px}.hcoin.gem{justify-content:flex-end}.hcoin.gem span{color:#5a3d08}
+.hname{position:absolute;left:50%;top:0;transform:translateX(-50%);height:34px;padding:0 22px;display:flex;align-items:center;background:linear-gradient(#4a2f12,#2d1a08);color:#ffe9a0;font-weight:900;font-size:15px;letter-spacing:2px;border-radius:0 0 22px 22px;border:2px solid #c99a2a;border-top:0}
+#hStat{display:flex;align-items:center;gap:6px;padding:6px 10px;background:linear-gradient(#e9d28a,#d8bb68);border-bottom:3px solid #b8901f;height:68px;box-sizing:border-box}
+#hStat .hl,#hStat .hr{flex:1;display:flex;align-items:center;gap:6px;min-width:0}
+#hStat .hr{flex-direction:column;align-items:stretch;gap:3px}
+.lvb{flex:none;width:46px;height:46px;border-radius:50%;background:radial-gradient(#8a5a26,#4a2c10);border:3px solid #e8c25a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 2px 4px #0005}
+.lvb small{font-size:10px;font-style:italic;font-weight:900;color:#ffd878}.lvb b{font-size:19px;font-style:italic;font-weight:900}
+.hbarw{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.hbarw span{font-size:12px;font-weight:900;font-style:italic;color:#6a4a14;white-space:nowrap}
+.hbar2{height:11px;border-radius:6px;background:#6b5d44;border:1px solid #4a3e28;overflow:hidden}.hbar2 i{display:block;height:100%;width:0}
+.hbar2.org i{background:linear-gradient(#ffb347,#ee7a14)}.hbar2.grn i{background:linear-gradient(#a6e84a,#5fb81a)}
+.emb{flex:none;width:50px;height:50px;border-radius:50%;background:radial-gradient(#fff6d8,#e0c070);border:3px solid #8a6414;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 2px 5px #0005}
+.hbest{align-self:flex-end;background:linear-gradient(#7a5a2a,#4a3216);color:#ffe9a0;border:2px solid #b8901f;border-radius:7px;padding:1px 8px;font-size:11px;font-weight:900}
+#hHead{display:flex;align-items:center;justify-content:space-between;margin:8px 10px 6px;padding:0 8px 0 12px;height:44px;background:linear-gradient(#4b3314,#2f1d0a);border:2px solid #c9a34a;border-radius:10px;box-shadow:0 2px 0 #fff8 inset}
+.hh-t{display:flex;align-items:center;gap:10px;color:#ffe9a0;font-size:19px;font-weight:900}.hh-t i{color:#f2c53d;font-style:normal;font-size:22px}
+.pill{border:2px solid #cfe6ff;background:linear-gradient(#58b0f0,#1f6fb8);color:#fff;font-weight:900;font-size:13px;border-radius:999px;padding:6px 14px;text-shadow:0 1px 2px #0008;box-shadow:0 2px 0 #124a80;font-family:inherit}
+#hList{flex:1;min-height:0;overflow-y:auto;padding:2px 10px 8px;display:flex;flex-direction:column;gap:7px}
+.hrow{flex:none;position:relative;display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:1fr 1fr;column-gap:12px;align-items:center;text-align:left;width:100%;height:60px;padding:6px 12px 6px 8px;border-radius:12px;border:2px solid #f6ecc8;outline:1px solid #b79c5a;background:linear-gradient(#7a6a52,#43341f 70%,#33270f);box-shadow:0 2px 0 #7a6a3a,0 3px 6px #0004;color:#fff3cf;font-family:inherit;cursor:pointer}
+.hrow:active{transform:translateY(1px);filter:brightness(1.1)}
+.hrow .hi{grid-row:1/3;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:24px;border-radius:6px;border:3px solid #d8c27a;box-shadow:0 0 0 1px #5a4a1a,inset 0 0 6px #0006;color:#fff}
+.hi.blue{background:linear-gradient(#58a8f0,#2b6cc4)}.hi.gold{background:linear-gradient(#ffd84a,#e0a014)}
+.hrow .ht{grid-column:2;grid-row:1/3;align-self:center;font-size:18px;font-weight:700;color:#fff3cf;text-shadow:0 1px 2px #000a}
+.hrow .hs{grid-column:3;grid-row:1;justify-self:end;align-self:end;font-size:17px;font-weight:900;font-style:italic;color:#ffb52e;text-shadow:-1px -1px 0 #4a2800,1px -1px 0 #4a2800,-1px 1px 0 #4a2800,1px 1px 0 #4a2800}
+.hrow .hg{grid-column:3;grid-row:2;justify-self:end;align-self:start;font-size:12px;font-weight:800;color:#b7e64a;text-shadow:0 1px 2px #000a;white-space:nowrap}
+.hrow.lock{filter:saturate(.5) brightness(.85)}
+.hrow.nudge{animation:hnudge 1.4s ease-in-out infinite}.hrow.nudge::after{display:none}
+@keyframes hnudge{50%{box-shadow:0 2px 0 #7a6a3a,0 0 14px 3px #ffcf4a}}
+#btnResume{background:linear-gradient(#8a6a2a,#4a3410)}
+#hTabs{flex:none;display:flex;gap:5px;padding:7px 8px calc(7px + env(safe-area-inset-bottom));background:linear-gradient(#b8901f,#8a6414);border-top:3px solid #6a4a0c}
+.tab{flex:1;min-width:0;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-radius:9px;border:2px solid #fff3b0;outline:2px solid #7a5410;background:linear-gradient(#ffd84a,#e8a91c);color:#fff;font-family:inherit;padding:0}
+.tab i{font-style:normal;font-size:24px;line-height:1;filter:drop-shadow(0 1px 1px #0008)}
+.tab span{font-size:11px;font-weight:900;color:#fff;text-shadow:-1px -1px 0 #5a3a00,1px -1px 0 #5a3a00,-1px 1px 0 #5a3a00,1px 1px 0 #5a3a00}
+.tab.on{background:linear-gradient(#a8f08a,#4fbf4a);border-color:#eaffd0;outline-color:#2f7a2a}
+.tab:active{filter:brightness(1.1)}
+@media (max-height:700px){ #hStat{height:60px;padding:4px 10px}.lvb{width:40px;height:40px}.lvb b{font-size:16px}.emb{width:42px;height:42px;font-size:23px} #hHead{height:38px;margin:6px 10px 4px} .hrow{height:52px}.hrow .hi{width:38px;height:38px;font-size:20px}.hrow .ht{font-size:16px}.hrow .hs{font-size:15px}.tab{height:52px}.tab i{font-size:20px} #hList{gap:5px} }
+.hsub{flex:none;display:flex;align-items:center;margin:4px 0 0;padding:0 12px;height:34px;background:linear-gradient(#4b3314,#2f1d0a);border:2px solid #c9a34a;border-radius:10px}
+.hsub .hh-t{font-size:15px}.hsub .hh-t i{font-size:17px}
+#hMis{display:flex;flex-direction:column;gap:6px}
+.hrow.mini{height:46px;border-radius:10px}.hrow.mini .hi{width:32px;height:32px;font-size:17px;border-width:2px}.hrow.mini .ht{font-size:14px;font-weight:700}.hrow.mini .hs{font-size:14px}.hrow.mini .hg{font-size:11px}
+@media (min-height:760px){ .hrow:not(.mini){height:68px} .hrow:not(.mini) .ht{font-size:19px} }
 </style>
 </head>
 <body>
@@ -515,18 +575,30 @@ h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-cl
 
 <!-- 主選單 -->
 <section id="home" class="screen">
-  <div class="topbar"><button class="btn small gray" id="btnMute" style="padding:6px 10px">🔊</button><span class="gems">💎 <span class="gemv">0</span></span></div>
-  <div class="logo">⛩️</div>
-  <h1 style="font-size:36px;letter-spacing:3px">地城戰棋<br><span style="font-size:20px;letter-spacing:4px">（試作版）</span></h1>
-  <div class="sub">率領武士、陰陽師與巫女，踏破百鬼夜行的鳥居地城</div>
-  <div class="sub" id="homeBest"></div>
-  <div class="menu">
-    <button class="btn gold" id="btnResume" style="display:none">▶ 繼續冒險</button>
-    <button class="btn gold" id="btnStart">⚔️ 開始冒險</button>
-    <button class="btn" id="btnDraw">🎴 英雄抽卡</button>
-    <button class="btn" id="btnRoster">📖 英雄隊伍</button>
-    <button class="btn" id="btnDaily" style="background:linear-gradient(#3da58a,#1f6b5a);box-shadow:0 4px 0 #0f3b31,0 6px 14px #0008">📋 每日任務</button>
-    <button class="btn gray" id="btnHelp">❓ 玩法說明</button>
+  <div id="hStrip"><span class="hcoin"><i class="coin">🪙</i><span class="tixv">0</span></span><span class="hname">地城戰棋</span><span class="hcoin gem"><i>💎</i><span class="gemv">0</span></span></div>
+  <div id="hStat">
+    <div class="hl"><div class="lvb"><small>LV</small><b id="hLv">1</b></div><div class="hbarw"><span id="hExpT">收集 0/16</span><div class="hbar2 org"><i id="hExpB"></i></div></div></div>
+    <div class="emb"><span>⛩️</span></div>
+    <div class="hr"><div class="hbarw"><span id="hDayT">今日任務 0/3</span><div class="hbar2 grn"><i id="hDayB"></i></div></div><span class="hbest" id="hBest">最深 —</span></div>
+  </div>
+  <div id="hHead"><span class="hh-t"><i>✦</i><b id="hTitle">冒險</b></span><button class="pill" id="btnHelp">❓ 玩法說明</button></div>
+  <div id="hList">
+    <button class="hrow" id="btnResume" style="display:none"><span class="hi blue">▶</span><span class="ht">繼續冒險</span><span class="hs" id="rsS">進行中</span><span class="hg" id="rsG">第 1 層</span></button>
+    <button class="hrow" id="btnStart"><span class="hi gold">⚔️</span><span class="ht">開始冒險</span><span class="hs" id="stS">NEW!</span><span class="hg" id="stG">選擇隊伍出發</span></button>
+    <button class="hrow" id="btnHard"><span class="hi blue">🔥</span><span class="ht">修羅難度</span><span class="hs" id="hdS">🔒</span><span class="hg" id="hdG">敵人更強・獎勵 ×1.5</span></button>
+    <button class="hrow" id="btnDraw"><span class="hi gold">🎴</span><span class="ht">英雄抽卡</span><span class="hs" id="drS">召喚</span><span class="hg" id="drG">單抽 💎100・十連 💎900</span></button>
+    <button class="hrow" id="btnRoster"><span class="hi blue">📖</span><span class="ht">英雄隊伍</span><span class="hs" id="roS">0/16</span><span class="hg">升級・護符・羈絆</span></button>
+    <button class="hrow" id="btnDaily"><span class="hi gold">📋</span><span class="ht">每日任務</span><span class="hs" id="dlS">0/3</span><span class="hg" id="dlG">每日更新</span></button>
+    <div class="hsub"><span class="hh-t"><i>✦</i><b>今日任務</b></span></div>
+    <div id="hMis"></div>
+  </div>
+  <div id="hTabs">
+    <button class="tab on" id="tabAdv"><i>⚔️</i><span>冒險</span></button>
+    <button class="tab" id="tabTeam"><i>📖</i><span>隊伍</span></button>
+    <button class="tab" id="tabDraw"><i>🎴</i><span>召喚</span></button>
+    <button class="tab" id="tabDaily"><i>📋</i><span>每日</span></button>
+    <button class="tab" id="tabHelp"><i>❓</i><span>說明</span></button>
+    <button class="tab" id="btnMute"><i class="ti">🔊</i><span>音效</span></button>
   </div>
 </section>
 
@@ -558,6 +630,7 @@ h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-cl
 
 <!-- 戰鬥 -->
 <section id="battle" class="screen">
+  <div id="clearBan"></div>
   <div class="topbar hud">
     <div class="hud-l"><b id="bFloor">第 1 層</b><span id="bPhase"></span></div>
     <div class="med"><small>回合</small><span id="bTurn"></span></div>
@@ -634,6 +707,7 @@ h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-cl
   <p><b>站位：</b>橘色「挾」格＝從那裡攻擊，若敵人另一側有友軍夾擊，傷害 ×1.5；⛰️ 高台上的英雄攻擊 +30%；⚡ 落雷詞綴會標示十字範圍，回合結束前離開！</p>
   <p><b>棋子卡牌：</b>左上大數字＝生命，左下綠徽章（⚔）＝攻擊力，右下橘徽章＝移動力，右上小圖示＝狀態（⚠ 被鎖定、敵人預告攻擊…）。藍框是我方、紅框是敵人、金框是精英、👑 是首領。淡紅色魔法陣格＝危險／增援出現位置。</p>
   <p><b>羈絆 🔗：</b>特定英雄相鄰時觸發加成（初始隊伍：並肩作戰、遠程連攜；另有雙巫共鳴、劍心相映、掩護射擊、龍狼合擊），戰場上方會出現粉色標籤，英雄詳情可查看。</p>
+  <p><b>妖怪種類：</b>🦝 化け狸會治療同伴；🔵 鬼火被擊倒會爆炸；🛡 結界青鬼每 3 回合替身邊 2 格內的敵人加護盾（青色連線預告）；🚩 指揮官讓其他敵人攻擊 +35%。這些都是優先擊倒的目標。</p>
   <p><b>動畫速度：</b>戰鬥右上角 ⏩ 可切換 1×／2×。<button class="btn small gray" id="btnTips" style="padding:3px 8px">重看戰鬥提示</button></p>
   <p><b>護符：</b>首領與精英會掉落 🧿 護符，在英雄詳情裝備（每人 1 個），提供攻擊／生命／護盾／回春加成。</p>
   <p><b>每層通關：</b>獲得 💎 靈玉並三選一強化，隊伍會回復一些生命，倒下的英雄會以少量生命復活。</p>
@@ -657,7 +731,7 @@ h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-cl
 const SAVE_KEY = 'abyss_tactics_save_v1';
 const COLS = 7, ROWS = 9;
 const DIRS = [[1,0],[-1,0],[0,1],[0,-1]];
-const TUNE = {lsT:9, pwK:0.6, pwA0:30, pwA1:70, pwL:3, lsStep:0.5, taper:0.06, midCap:0.4, f1hp:1.4, f2hp:1.2, f3hp:1.3, f3extra:1, f3wave:1, waveP:0.7, waveF:0.28, baseN:3, hp:3.0, bossHp:2.2, cap:7.6};
+const TUNE = {wardP:0.15, wardCd:3, lsT:9, pwK:0.6, pwA0:30, pwA1:70, pwL:3, lsStep:0.5, taper:0.06, midCap:0.4, f1hp:1.4, f2hp:1.2, f3hp:1.3, f3extra:1, f3wave:1, waveP:0.7, waveF:0.28, baseN:3, hp:3.0, bossHp:2.2, cap:7.6};
 const CLS_ICON = {'近戰':'⚔️','遠程':'🏹','法術':'🔮','刺客':'🗡️','坦克':'🛡️','輔助':'💚'};
 function atkMult(f){ return f<=2?0.4 : f===3?0.43 : f<=4?0.47 : f<=9?0.58 : Math.min(2.4, 0.65+0.07*(f-9)); }
 function partyScale(){
@@ -704,6 +778,7 @@ const ENEMIES = {
   brute:  {name:'赤鬼',     e:'👹', hp:28, atk:7, mov:2, rng:1},
   onibi:  {name:'鬼火',     e:'🔵', hp:8,  atk:5, mov:4, rng:1, explode:true},
   tanuki: {name:'化け狸',   e:'🦝', hp:14, atk:3, mov:2, rng:3, heal:true},
+  ward:   {name:'結界青鬼', e:'🛡️', hp:12, atk:3, mov:2, rng:2, ward:true, img:'brute'},
 };
 const BOSSES = [
   {img:'orochi', name:'八岐大蛇',   e:'🐍', hp:80, atk:7, mov:2, rng:1},
@@ -806,7 +881,7 @@ function av(src, emoji, cls){
 }
 function preloadImages(){
   HERO_IDS.forEach(id=>{ const i=new Image(); i.src=heroImg(id); });
-  Object.keys(ENEMIES).forEach(k=>{ const i=new Image(); i.src=enemyImg(k); });
+  Object.keys(ENEMIES).forEach(k=>{ const i=new Image(); i.src=enemyImg(ENEMIES[k].img||k); });
   BOSSES.forEach(b=>{ const i=new Image(); i.src=enemyImg(b.img); });
 }
 
@@ -843,11 +918,23 @@ function show(name){
 }
 function refreshGems(){ $$('.gemv').forEach(e=>e.textContent=G.save.gems); $$('.tixv').forEach(e=>e.textContent=G.save.tix||0); }
 function renderHome(){
-  const sr=G.save.run; $('#btnResume').style.display = sr ? 'block' : 'none'; if(sr) $('#btnResume').textContent = `▶ 繼續冒險（第 ${sr.floor} 層）`;
-  { const di=dailyInfo(), nd=di.filter(m=>m.done&&!m.claimed).length, dn=di.filter(m=>m.claimed).length; const b=$('#btnDaily'), dd=dailyEnsure(), bn=(dn===3&&!dd.bonus)?1:0; b.textContent=`📋 每日任務（${dn}/3 已領）`; b.classList.toggle('nudge',nd+bn>0); b.dataset.tip=(nd+bn)>0?'可領取！':''; }
-  const bd=$('#btnDraw'); const can10=G.save.gems>=900, can1=G.save.gems>=100;
-  bd.classList.toggle('nudge', can1); bd.dataset.tip = can10 ? '可十連！' : (can1?'可單抽':''); 
-  $('#btnMute').textContent = G.save.mute?'🔇':'🔊'; $('#homeBest').textContent = G.save.best ? `最高紀錄：第 ${G.save.best} 層　已收集英雄 ${Object.keys(G.save.roster).length}/${HERO_IDS.length}` : `已收集英雄 ${Object.keys(G.save.roster).length}/${HERO_IDS.length}`; }
+  const S=G.save, sr=S.run, ids=Object.keys(S.roster), tot=HERO_IDS.length;
+  const rb=$('#btnResume'); rb.style.display = sr ? 'flex' : 'none'; if(sr){ $('#rsG').textContent=`第 ${sr.floor} 層${sr.diff?' 👹':''}`; }
+  const di=dailyInfo(), nd=di.filter(m=>m.done&&!m.claimed).length, dn=di.filter(m=>m.claimed).length, dd=dailyEnsure(), bn=(dn===3&&!dd.bonus)?1:0;
+  { const b=$('#btnDaily'); $('#dlS').textContent=`${dn}/3`; $('#dlG').textContent=(nd+bn)>0?'可領取！':(dn===3?'今日完成':'每日更新'); b.classList.toggle('nudge',nd+bn>0); b.dataset.tip=(nd+bn)>0?'可領取！':''; }
+  const bd=$('#btnDraw'); const can10=S.gems>=900, can1=S.gems>=100;
+  bd.classList.toggle('nudge', can1); bd.dataset.tip = can10 ? '可十連！' : (can1?'可單抽':'');
+  $('#drS').textContent = can10 ? '可十連！' : (can1?'可單抽':'召喚'); $('#drG').textContent = `單抽 💎100・十連 💎900`;
+  $('#stS').textContent = S.best ? `最高 第${S.best}層` : 'NEW!'; $('#stG').textContent = S.best ? '選擇隊伍出發' : '選擇隊伍，踏入鳥居地城';
+  const un=S.best>=DIFF_UNLOCK; $('#hdS').textContent = un ? (S.diff?'已啟用':'已解鎖') : '🔒'; $('#hdG').textContent = un ? '敵人更強・獎勵 ×1.5' : `通關第 ${DIFF_UNLOCK} 層解鎖`; $('#btnHard').classList.toggle('lock',!un);
+  $('#roS').textContent=`${ids.length}/${tot}`;
+  $('#hLv').textContent = ids.reduce((a,id)=>a+((S.lv&&S.lv[id])||1),0); $('#hExpT').textContent=`收集 ${ids.length}/${tot}`; $('#hExpB').style.width=Math.round(ids.length/tot*100)+'%';
+  $('#hDayT').textContent=`今日任務 ${dn}/3`; $('#hDayB').style.width=Math.round(dn/3*100)+'%'; $('#hBest').textContent = S.best?`最深 第${S.best}層`:'最深 —';
+  $('#hMis').innerHTML = di.map(m=>`<button class="hrow mini" data-mis="1"><span class="hi ${m.claimed?'blue':'gold'}">${m.claimed?'✔':'🎯'}</span><span class="ht">${m.t}</span><span class="hs">${m.claimed?'Clear!':(m.done?'可領取！':m.p+'/'+m.n)}</span><span class="hg">${m.g?'💎'+m.g:''}${m.g&&m.x?'　':''}${m.x?'🎫'+m.x:''}</span></button>`).join('');
+  $$('#hMis .hrow').forEach(b=>b.onclick=()=>$('#btnDaily').click());
+  $('#btnMute .ti').textContent = S.mute?'🔇':'🔊';
+  refreshGems();
+}
 
 /* ========== 每日任務 ========== */
 const DAILY_POOL = [
@@ -1144,12 +1231,12 @@ function genEnemyList(f, ps){
   ps = ps||1;
   const sc = (1 + 0.14*(f-1))*(f===1?TUNE.f1hp:(f===2?TUNE.f2hp:(f===3?TUNE.f3hp:1))), list = [];
   const pool = ['slime','goblin'];
-  if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute');
+  if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute','ward');
   const boss = isBoss(f);
   let n = boss ? 3 : Math.min(TUNE.baseN+Math.floor(f/2)+(ps>1.6?1:0)+((f>=4&&f<=9)?1:0)+(f===3?TUNE.f3extra:0), 6);
   if(boss && ps>1.8) n=4;
-  let nT=0; const maxT = f>=7?2:1;
-  for(let i=0;i<n;i++){ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT) t='goblin'; else nT++; } list.push({...ENEMIES[t], t, sc, boss:false}); }
+  let nT=0, nW=0; const maxT = f>=7?2:1;
+  for(let i=0;i<n;i++){ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1) t='brute'; else nW++; } list.push({...ENEMIES[t], t, sc, boss:false}); }
   if(boss){ const b = BOSSES[(f/5-1)%BOSSES.length]; const bs = 1 + 0.2*(f/5-1); list.unshift({...b, t:'boss', sc:bs, boss:true}); }
   return list;
 }
@@ -1176,7 +1263,7 @@ function startBattle(){ const B0=null;
     let pos = en.boss ? bossSpot : sp.shift();
     if(!en.boss){ while(pos && pos[0]===bossSpot[0]&&pos[1]===bossSpot[1]) pos = sp.shift(); }
     const hp = Math.round(en.hp*en.sc*(en.boss?TUNE.bossHp:TUNE.hp)*ps*Math.max(0.7,1-TUNE.taper*Math.max(0,run.floor-4))*(run.diff?1.35:1)*(run.floor<=2?1.2:1)), atk = Math.max(1,Math.round(en.atk*(1+(en.sc-1)*0.7)*atkMult(run.floor)*(1+(ps-1)*0.25)*(run.diff?1.3:1)));
-    units.push({uid:uid++, team:'e', t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:en.t), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, heal:en.heal, explode:en.explode, cicon:en.heal?'✚':(en.explode?'💣':''), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
+    units.push({uid:uid++, team:'e', t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:(en.img||en.t)), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, heal:en.heal, explode:en.explode, ward:en.ward, cicon:en.heal?'✚':(en.explode?'💣':(en.ward?'🛡':'')), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
   });
   { // 血量池上限：敵方總血量 ≤ 我方攻擊總和 × CAP，避免低輸出隊伍（雙補師等）拖成 20 回合以上
     const fe = units.filter(u=>u.team==='e'), fp = units.filter(u=>u.team==='p');
@@ -1189,7 +1276,7 @@ function startBattle(){ const B0=null;
   }
   // 精英、樓層詞綴、戰鬥目標
   let mod=null, obj=null;
-  { const f=run.floor, fe=units.filter(u=>u.team==='e'&&!u.boss&&!u.heal&&!u.explode);
+  { const f=run.floor, fe=units.filter(u=>u.team==='e'&&!u.boss&&!u.heal&&!u.explode&&!u.ward);
     const strong = ps>1.5;
     if(f>=4 && fe.length>=3 && Math.random() < 0.35+(strong?0.35:0)+(f>=8?0.15:0)){
       const el = fe[Math.floor(Math.random()*fe.length)]; const pb=units.filter(u=>u.team==='e').reduce((a,u)=>a+u.hp,0); el.elite=true; el.name='精英・'+el.name; el.hp=el.maxhp=Math.round(el.hp*1.5); el.atk=Math.round(el.atk*1.3)+1; const pa=units.filter(u=>u.team==='e').reduce((a,u)=>a+u.hp,0); units.filter(u=>u.team==='e').forEach(u=>{ u.hp=u.maxhp=Math.max(4,Math.round(u.hp*pb/pa)); });
@@ -1197,7 +1284,7 @@ function startBattle(){ const B0=null;
     if(f>=4 && !isBoss(f) && Math.random() < 0.28+(strong?0.25:0)){
       { const r=Math.random(); mod = r<0.25 ? {id:'surge', n:'🔥 妖氣高漲', d:'敵人攻擊 +30%，獎勵 +30%', rw:1.3} : r<0.5 ? {id:'ward', n:'🛡 堅壁', d:'敵人開場帶護盾，獎勵 +25%', rw:1.25} : r<0.75 ? {id:'cmd', n:'🚩 指揮官', d:'場上有 1 名指揮官（🚩，多半是躲在後排的遠程或精英）：他存活時其他敵人攻擊 +35%；擊倒他則士氣崩潰、其餘攻擊恢復。獎勵 +30%', rw:1.3} : {id:'storm', n:'⚡ 落雷', d:'每回合標示 2 處十字範圍，回合結束雷擊，站在上面的人（敵我皆然）受 20% 最大生命傷害；獎勵 +30%', rw:1.3}; }
       if(mod.id==='storm'){ }
-      else if(mod.id==='cmd'){ const es=units.filter(u=>u.team==='e'&&!u.heal); const hy=units.filter(u=>u.team==='p').reduce((a,u)=>a+u.y,0)/Math.max(1,units.filter(u=>u.team==='p').length), mh=Math.max(...es.map(u=>u.hp),1); const cs=u=>(u.rng>1?3:0)+(u.elite?3:0)+(hy-u.y)*0.6+u.hp/mh; const c=es.sort((a,b)=>cs(b)-cs(a))[0]||units.find(u=>u.team==='e'); c.cmd=true; c.name='指揮官・'+c.name; units.filter(u=>u.team==='e'&&u!==c).forEach(u=>{ u.cmdBuf=Math.max(1,Math.round(u.atk*0.35)); u.atk+=u.cmdBuf; }); }
+      else if(mod.id==='cmd'){ const es=units.filter(u=>u.team==='e'&&!u.heal&&!u.ward); const hy=units.filter(u=>u.team==='p').reduce((a,u)=>a+u.y,0)/Math.max(1,units.filter(u=>u.team==='p').length), mh=Math.max(...es.map(u=>u.hp),1); const cs=u=>(u.rng>1?3:0)+(u.elite?3:0)+(hy-u.y)*0.6+u.hp/mh; const c=es.sort((a,b)=>cs(b)-cs(a))[0]||units.find(u=>u.team==='e'); c.cmd=true; c.name='指揮官・'+c.name; units.filter(u=>u.team==='e'&&u!==c).forEach(u=>{ u.cmdBuf=Math.max(1,Math.round(u.atk*0.35)); u.atk+=u.cmdBuf; }); }
       else if(mod.id==='surge') units.filter(u=>u.team==='e').forEach(u=>{ u.atk=Math.round(u.atk*1.3)+1; });
       else units.filter(u=>u.team==='e').forEach(u=>{ u.shield=Math.round(u.maxhp*0.15); });
     }
@@ -1208,7 +1295,7 @@ function startBattle(){ const B0=null;
   }
   const tiles = genTiles(obs, run.floor);
   let reserve=[], halfN=0;
-  if(run.floor>=2 && !isBoss(run.floor) && (Math.random()<TUNE.waveP || (run.floor===3 && TUNE.f3wave))){ const es=units.filter(u=>u.team==='e'); if(es.length>=4){ const k=Math.max(1,Math.round(es.length*TUNE.waveF)); const pick=shuffle(es.filter(u=>!u.cmd&&!u.heal&&!u.elite)).slice(0,k); if(pick.length){ pick.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; reserve.push(u); }); halfN=Math.floor((es.length-pick.length)/2); } } }
+  if(run.floor>=2 && !isBoss(run.floor) && (Math.random()<TUNE.waveP || (run.floor===3 && TUNE.f3wave))){ const es=units.filter(u=>u.team==='e'); if(es.length>=4){ const k=Math.max(1,Math.round(es.length*TUNE.waveF)); const pick=shuffle(es.filter(u=>!u.cmd&&!u.heal&&!u.ward&&!u.elite)).slice(0,k); if(pick.length){ pick.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; reserve.push(u); }); halfN=Math.floor((es.length-pick.length)/2); } } }
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, halfN};
   if(mod&&mod.id==='storm') assignStrikes();
   run.picked=false; run.reward=null; saveRun(); G.logs=[]; $('#log').innerHTML='';
@@ -1219,7 +1306,7 @@ function startBattle(){ const B0=null;
   bd.style.setProperty('--c1', th.c1); bd.style.setProperty('--c2', th.c2); bd.style.setProperty('--obs', '"'+th.obs+'"');
   show('battle');
   renderAll(); applySpeed(); $('#tipBox').classList.remove('on');
-  setTimeout(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
+  setTimeout(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); else if(BB&&BB.units.some(u=>u.ward&&u.alive)) showTip('ward'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
   setTimeout(()=>{ const BB=G.B; if(BB&&BB.reserve&&BB.reserve.length) showTip('wave'); }, 7700);
   const ban = $('#banner');
   ban.textContent = (isBoss(run.floor) ? `⚠ 第 ${run.floor} 層・首領戰` : `第 ${run.floor} 層`) + ' ' + th.ic + th.name;
@@ -1302,7 +1389,7 @@ function cellEl(x,y){ return $(`#cells .cell[data-x="${x}"][data-y="${y}"]`); }
 function unitEl(u){
   let el = $(`#units .unit[data-uid="${u.uid}"]`);
   if(!el){
-    el = document.createElement('div'); el.dataset.uid=u.uid;
+    el = document.createElement('div'); el.dataset.uid=u.uid; if(u.t) el.dataset.t=u.t;
     el.innerHTML = `<div class="face">${av(u.img,u.e,u.team==='p'?'hz':'')}</div><div class="hp"><i></i></div><span class="hpn"></span><span class="sh"></span><span class="cdb"></span><span class="cls"></span><span class="intent"></span><span class="thr">⚠</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b></b></span><span class="movb" title="移動力"><b></b></span>`;
     el.style.left = u.x*G.cs+'px'; el.style.top = u.y*G.cs+'px';
     $('#units').appendChild(el);
@@ -1323,6 +1410,7 @@ function renderLines(){
   const cs=G.cs, c=v=>v*cs+cs/2;
   const ns='http://www.w3.org/2000/svg';
   G.intents.forEach((p,uid)=>{
+    if(p.type==='ward'){ const e=G.B.units.find(u=>u.uid===uid); if(!e||!e.alive) return; p.ts.forEach(a=>{ const l=document.createElementNS(ns,'line'); l.setAttribute('class','ward'); l.setAttribute('x1',c(e.x)); l.setAttribute('y1',c(e.y)); l.setAttribute('x2',c(a.x)); l.setAttribute('y2',c(a.y)); svg.appendChild(l); const d=document.createElementNS(ns,'circle'); d.setAttribute('class','tip ward'); d.setAttribute('cx',c(a.x)); d.setAttribute('cy',c(a.y)); d.setAttribute('r',Math.max(4,cs*.13)); svg.appendChild(d); }); return; }
     if(p.type!=='atk' && p.type!=='heal') return;
     const e=G.B.units.find(u=>u.uid===uid); if(!e||!e.alive) return;
     const mk=(cls)=>{ const l=document.createElementNS(ns,'line'); l.setAttribute('class',cls); l.setAttribute('x1',c(p.x)); l.setAttribute('y1',c(p.y)); l.setAttribute('x2',c(p.t.x)); l.setAttribute('y2',c(p.t.y)); svg.appendChild(l); return l; };
@@ -1347,7 +1435,7 @@ function syncUnits(){
     el.querySelector('.cdb').textContent = (u.team==='p' && u.cd>0) ? '⏳'+u.cd : (u.frozen>0 ? '❄️' : (u.boss && u.rage ? '😡'+u.rage : ''));
     const it = el.querySelector('.intent'), th = el.querySelector('.thr');
     const p = G.intents && G.intents.get(u.uid);
-    if(u.alive && p && p.type==='atk'){ it.textContent='⚔'+(foeFlankAt(u,p.x,p.y,p.t)?Math.round(u.atk*1.3)+'⚑':u.atk); it.classList.add('on'); } else if(u.alive && p && p.type==='heal'){ it.textContent='✚'; it.classList.add('on'); } else { it.classList.remove('on'); }
+    if(u.alive && p && p.type==='atk'){ it.textContent='⚔'+(foeFlankAt(u,p.x,p.y,p.t)?Math.round(u.atk*1.3)+'⚑':u.atk); it.classList.add('on'); } else if(u.alive && p && p.type==='heal'){ it.textContent='✚'; it.classList.add('on'); } else if(u.alive && p && p.type==='ward'){ it.textContent='🛡'; it.classList.add('on'); } else { it.classList.remove('on'); }
     const tc = G.threats && G.threats.get(u.uid);
     if(u.alive && tc){ th.textContent = '⚠'+(tc>1?tc:''); th.classList.add('on'); } else th.classList.remove('on');
   });
@@ -1398,7 +1486,7 @@ function renderInfo(){
     const sk = u.skill;
     s = `<b>${u.e} ${u.name}</b>　❤️ ${u.hp}/${u.maxhp}${u.shield?` 🛡${u.shield}`:''}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}<br><b>${sk.name}</b>：${skillDesc(u.hid, G.run.members.find(m=>m.id===u.hid).stars, u.atk)}${u.cd>0?`<br><span style="color:#e5b6ff">冷卻中（還要 ${u.cd} 回合）</span>`:''}`;
   } else {
-    s = `<b>${u.e} ${u.name}${u.boss?'（首領）':''}</b>　❤️ ${u.hp}/${u.maxhp}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}${u.boss?`<br>😡 ${u.rage} 回合後怒吼，對全隊造成傷害`:''}${u.heal?'<br>✚ 會治療受傷的同伴（優先擊倒）':''}${u.explode?'<br>💣 被擊倒時會爆炸，傷害相鄰的英雄':''}${u.frozen>0?'<br>❄️ 凍結中：下回合無法行動':''}<br><span style="color:#ffb27a">橘色格為牠本回合可攻擊的範圍</span>`;
+    s = `<b>${u.e} ${u.name}${u.boss?'（首領）':''}</b>　❤️ ${u.hp}/${u.maxhp}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}${u.boss?`<br>😡 ${u.rage} 回合後怒吼，對全隊造成傷害`:''}${u.heal?'<br>✚ 會治療受傷的同伴（優先擊倒）':''}${u.explode?'<br>💣 被擊倒時會爆炸，傷害相鄰的英雄':''}${u.ward?'<br>🛡 每 3 回合替 2 格內的友軍張開結界（護盾約 15% 生命，青色線＝預告對象），優先擊倒':''}${u.frozen>0?'<br>❄️ 凍結中：下回合無法行動':''}<br><span style="color:#ffb27a">橘色格為牠本回合可攻擊的範圍</span>`;
   }
   box.innerHTML = s;
 }
@@ -1519,7 +1607,7 @@ function damage(target, dmg, att){
     target.hp-=d; const big = d>=target.maxhp*0.25;
     spark(target,big);
     floatText(target,'-'+d,'dmg'+(big?' big':'')); flash(target,'hit'); sfx(big?'big':'hit');
-    if(big){ const b=$('#board'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); }
+    if(big){ const b=$('#board'), huge=d>=target.maxhp*0.45||target.boss||target.elite; b.classList.remove('shake','shake2'); void b.offsetWidth; b.classList.add(huge?'shake2':'shake'); if(!G.fast){ document.body.classList.add('hs'); clearTimeout(damage._hs); damage._hs=setTimeout(()=>document.body.classList.remove('hs'), huge?120:80); } }
   }
   if(target.hp<=0){ target.hp=0; target.alive=false; if(target.member) target.member.hp=0; floatText(target,'💥','info'); sfx('die');
     if(target.team==='e'){ dailyAdd('kills'); if(target.elite) dailyAdd('elites'); if(target.cmd){ G.B.units.filter(u=>u.team==='e'&&u.alive&&u.cmdBuf).forEach(u=>{ u.atk=Math.max(1,u.atk-u.cmdBuf); if(u.baseAtk) u.baseAtk=Math.max(1,u.baseAtk-u.cmdBuf); u.cmdBuf=0; floatText(u,'士氣崩潰','info'); }); logLine('🚩 指揮官倒下，敵軍士氣崩潰！','s'); banner('🚩 士氣崩潰！','me'); } } else G.B.heroDied=true;
@@ -1547,6 +1635,7 @@ const TIPS = {
   card:'🃏 棋子卡：左上大數字＝生命、左下綠徽章＝攻擊力、右下橘徽章＝移動力、右上小圖示＝狀態（⚠ 被鎖定）。藍框我方、紅框敵人、金框精英。',
   wave:'🚩 增援：這層分兩階段！敵人倒到一半或第 4 回合會有援軍從上方出現（那回合不會行動），留點力氣與位置。',
   cmd:'🚩 指揮官：先擊倒有旗的敵人！他活著時其他敵人攻擊 +35%，倒下後士氣崩潰。',
+  ward:'🛡 結界青鬼：每 3 回合替身旁 2 格內的敵人加護盾（青色連線預告），血少、先擊倒牠！',
   syn:'🔗 羈絆：特定英雄相鄰時有加成，看上方粉色標籤；點標籤查看說明'
 };
 function showTip(id){
@@ -1622,7 +1711,7 @@ function maybeReinforce(){
 function checkEnd(){
   const B=G.B; if(B.over) return true;
   maybeReinforce();
-  if(foes().length===0){ B.over=true; G.busy=true; renderAll(); setTimeout(()=>floorCleared(), G.fast?10:700); return true; }
+  if(foes().length===0){ B.over=true; G.busy=true; renderAll(); if(!G.fast){ const cb=$('#clearBan'); cb.innerHTML=`<b>✨ 第 ${G.run.floor} 層 通關！</b><small>${isBoss(G.run.floor)?'首領退治':'妖怪全數擊倒'}</small>`; cb.classList.remove('on'); void cb.offsetWidth; cb.classList.add('on'); sfx('big'); } setTimeout(()=>{ const cb=$('#clearBan'); if(cb) cb.classList.remove('on'); floorCleared(); }, G.fast?10:900); return true; }
   if(heroes().length===0){ B.over=true; G.busy=true; renderAll(); setTimeout(()=>runOver(false), G.fast?10:800); return true; }
   return false;
 }
@@ -1640,7 +1729,7 @@ async function endPlayerTurn0(){
   if(B.over) return;
   if(B.mod&&B.mod.id==='storm'){ await resolveStrikes(); if(checkEnd()) return; }
   // 新回合
-  foes().forEach(e=>{ if(e.hcd>0) e.hcd--; });
+  foes().forEach(e=>{ if(e.hcd>0) e.hcd--; if(e.wcd>0) e.wcd--; });
   T('new turn'); B.turn++; B.phase='player'; G.turnAt=Date.now(); assignStrikes(); maybeReinforce();
   heroes().forEach(h=>{ const rg=talBonus(h.hid).regen; if(rg>0 && h.hp<h.maxhp){ const v=Math.min(h.maxhp-h.hp,Math.max(1,Math.round(h.maxhp*rg))); h.hp+=v; if(h.member) h.member.hp=h.hp; floatText(h,'🌿+'+v,'heal'); } });
   if(B.turn>=TUNE.lsT){ const k=B.turn-TUNE.lsT+1; heroes().forEach(h=>{ if(!h.baseAtk) h.baseAtk=h.atk; h.atk=Math.ceil(h.baseAtk*(1+TUNE.lsStep*k)); });
@@ -1658,6 +1747,10 @@ function distField(){
 }
 function foeFlankAt(e,x,y,t){ if(Math.abs(t.x-x)+Math.abs(t.y-y)!==1) return false; const o=unitAt(t.x-(x-t.x), t.y-(y-t.y)); return !!(o&&o.alive&&o.team==='e'&&o!==e); }
 function planEnemy(e){
+  if(e.ward && !(e.wcd>0) && G.B.turn<Math.min(enrageT(),TUNE.lsT)){
+    const ts = foes().filter(a=>a!==e && !a.ward && !(a.shield>0) && dist(a,e)<=2);
+    if(ts.length) return {type:'ward', x:e.x, y:e.y, t:ts[0], ts};
+  }
   if(e.heal){
     const hurt = (e.hcd>0 || G.B.turn>=enrageT() || !foes().some(a=>!a.heal)) ? null : foes().filter(a=>a!==e && !a.heal && a.hp<a.maxhp && dist(a,e)<=e.rng).sort((a,b)=>(a.hp/a.maxhp)-(b.hp/b.maxhp))[0];
     if(hurt) return {type:'heal', x:e.x, y:e.y, t:hurt};
@@ -1710,6 +1803,11 @@ async function enemyPhase(){
       e.hcd=2; const a=plan.t, v=Math.max(2,Math.round(a.maxhp*0.2)); const real=Math.min(v,a.maxhp-a.hp);
       flash(e,'atk'); floatText(e,'✚ 治療','info'); await sleep(250); a.hp+=real; floatText(a,'+'+real,'heal'); burst(a.x,a.y,0,'heal'); sfx('heal');
       logLine(`${e.name} 治療 ${a.name} +${real}`,'e'); e.acting=false; renderAll(); await sleep(350); continue;
+    }
+    if(plan.type==='ward'){
+      e.wcd=TUNE.wardCd; flash(e,'atk'); floatText(e,'🛡 結界','info'); sfx('heal'); await sleep(250);
+      plan.ts.forEach(a=>{ if(!a.alive) return; const v=Math.max(3,Math.round(a.maxhp*TUNE.wardP)); a.shield=(a.shield||0)+v; floatText(a,'🛡+'+v,'sh'); burst(a.x,a.y,0,'sh'); });
+      logLine(`${e.name} 張開結界，${plan.ts.length} 名友軍獲得護盾`,'e'); e.acting=false; renderAll(); await sleep(350); continue;
     }
     if(plan.type==='atk'){
       if(plan.x!==e.x||plan.y!==e.y){ e.x=plan.x; e.y=plan.y; sfx('move'); renderAll(); await sleep(320); await stepEffect(e); if(!e.alive){ e.acting=false; renderAll(); if(checkEnd()) return; continue; } }
@@ -1821,7 +1919,7 @@ $('#dfN').onclick = ()=>{ G.save.diff=0; persist(); renderRoster(); };
 $('#dfH').onclick = ()=>{ if(G.save.best<DIFF_UNLOCK){ toast(`通關第 ${DIFF_UNLOCK} 層後解鎖修羅難度`); return; } G.save.diff=1; persist(); renderRoster(); };
 $('#btnResume').onclick = ()=>resumeRun();
 $('#tutOk').onclick = ()=>{ G.save.tutSeen=true; persist(); $('#tutOv').classList.remove('on'); };
-function toggleMute(){ G.save.mute=!G.save.mute; persist(); $('#btnMute').textContent=G.save.mute?'🔇':'🔊'; $('#menuMute').textContent=G.save.mute?'🔇 音效：關':'🔊 音效：開'; if(!G.save.mute) sfx('tap'); }
+function toggleMute(){ G.save.mute=!G.save.mute; persist(); $('#btnMute .ti').textContent=G.save.mute?'🔇':'🔊'; $('#menuMute').textContent=G.save.mute?'🔇 音效：關':'🔊 音效：開'; if(!G.save.mute) sfx('tap'); }
 $('#btnMute').onclick = toggleMute; $('#menuMute').onclick = toggleMute;
 document.addEventListener('click', e=>{ if(e.target.closest('.btn')) sfx('tap'); }, true);
 $('#btnRoster').onclick = ()=>show('roster');
@@ -1831,6 +1929,9 @@ $('#btnGo').onclick = ()=>newRun();
 $('#btnDaily').onclick = ()=>{ renderDaily(); $('#dailyOv').classList.add('on'); };
 $('#dailyOk').onclick = ()=>$('#dailyOv').classList.remove('on');
 $('#btnHelp').onclick = ()=>$('#helpOv').classList.add('on');
+$('#btnHard').onclick = ()=>{ if(G.save.best<DIFF_UNLOCK){ toast(`通關第 ${DIFF_UNLOCK} 層後解鎖修羅難度`); return; } G.save.diff=1; persist(); show('roster'); };
+$('#tabAdv').onclick = ()=>{ $('#hList').scrollTop=0; };
+$('#tabTeam').onclick = ()=>show('roster'); $('#tabDraw').onclick = ()=>show('draw'); $('#tabDaily').onclick = ()=>$('#btnDaily').click(); $('#tabHelp').onclick = ()=>$('#btnHelp').click();
 $('#helpOk').onclick = ()=>$('#helpOv').classList.remove('on');
 $('#btnReset').onclick = ()=>{ if(confirm('確定要清除所有存檔（英雄與靈玉）嗎？')){ G.save=defaultSave(); persist(); $('#helpOv').classList.remove('on'); show('home'); toast('已清除存檔'); } };
 $('#btnDraw1').onclick = ()=>{ const r=doDraw(1); if(r) playReveal(r); };
