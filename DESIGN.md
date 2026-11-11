@@ -181,3 +181,9 @@
 ## v23 備註：非正方形格與壓縮下方區域
 - 格寬 `cs=floor((w-10)/5)`（≤80），格高 `ch=min(floor(avail/5), round(cs*1.32))`，`avail` 為 `#boardwrap`（flex:1、棋盤垂直置中）扣除 12px；`G.ch` 用於單位 top、意圖線 y、特效、長按判定。`fitBoard()` 在每次 `renderAll` 後重量，只在尺寸改變時重排。
 - 下方：手牌列＋單行資訊（`#uinfo` 26px，整行可點開詳情卡，ⓘ 28px）＋按鈕列（中央結束回合放大）；目標／羈絆標籤列（`#objRow`）併入 HUD 第三列；提示（`#hint`）改為棋盤上短暫浮現的膠囊（2.6 秒）。
+
+## v24 備註：版型、範圍型態、徽章
+- `LAYOUTS`（open／pillars／zigzag／river）由 `genObstacles(floor)` 抽選；第 1 層與首領層只出 open／pillars；每個版型過連通檢查（底列到頂列），失敗回退 open。河與橋以 `.obs.riv` 繪成水面（仍視為障礙）。`B.layout` 可由 `__game.board().layout` 讀取。
+- 新敵方型態 `bomb`（鬼火爆彈）：十字 1～2 格攻擊並波及目標周圍 8 格（60%），懲罰擠在一起；套用於鬼火（onibi）。
+- 單位上所有徽章（⚔×N、⚠、HP、ATK、移動、護盾、冷卻）限制在格內；提示膠囊只在第 1～2 層或教學未完成時顯示。
+- **標題畫面（v24）**：`#title` 為第一個畫面（`showTitle()`）；`save.name` 存暱稱（驗證 1–10 字元、拒絕 `<>&"'` 等）；navigator.webdriver 或 `?skip=1` 略過、`?title=1` 強制顯示。無帳號／密碼／網路。

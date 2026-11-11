@@ -428,9 +428,9 @@ body.spd2 .unit{transition:left .14s ease,top .14s ease,opacity .2s,transform .1
 
 /* ===== v15 全畫面改版：暖木底＋羊皮紙面板＋金框（與戰鬥畫面一致）===== */
 #app{background:radial-gradient(ellipse at top,#7a4a1e 0%,#4a2c12 55%,#2a190a 100%)}
-.screen:not(#battle){background:radial-gradient(ellipse at top,#7f4f22 0%,#4d2f14 58%,#2b1a0b 100%)}
-.screen:not(#battle)::after{content:'';position:absolute;inset:4px;border:2px solid #d9b45a88;border-radius:16px;pointer-events:none;box-shadow:inset 0 0 0 1px #3b240c}
-.screen:not(#battle)>*:not(.petal){position:relative;z-index:1}
+.screen:not(#battle):not(#title){background:radial-gradient(ellipse at top,#7f4f22 0%,#4d2f14 58%,#2b1a0b 100%)}
+.screen:not(#battle):not(#title)::after{content:'';position:absolute;inset:4px;border:2px solid #d9b45a88;border-radius:16px;pointer-events:none;box-shadow:inset 0 0 0 1px #3b240c}
+.screen:not(#battle):not(#title)>*:not(.petal){position:relative;z-index:1}
 h1{background:linear-gradient(#fff3c4,#f0b030 60%,#c97812);-webkit-background-clip:text;background-clip:text;text-shadow:none;filter:drop-shadow(0 2px 0 #3a2000) drop-shadow(0 0 14px #ffb30066)}
 .sub{color:#ecd9a4}
 .btn{background:linear-gradient(#8a5f26,#4a2f10);color:#ffe9a0;border:2px solid #e2bb55;box-shadow:0 4px 0 #1f1405,0 6px 14px #0008;text-shadow:0 2px 0 #000a}
@@ -698,14 +698,62 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #actions .btn{padding:8px 2px}
 #actions #bEnd{margin-top:-6px;padding:11px 2px;font-size:18px}
 @media (max-height:779px){ #uinfo{--uih:auto} #actions .btn{padding:6px 2px} #actions #bEnd{padding:9px 2px;font-size:17px} }
+
+/* ===== v24：徽章收進格內、河流地形 ===== */
+#units .unit .intent,#units .unit .thr.on{right:2px!important;top:2px!important;font-size:calc(var(--cs)*.2)!important;padding:0 2px!important;border-radius:5px!important;line-height:1.2!important}
+#units .unit .thr{right:2px!important;top:1px!important;font-size:calc(var(--cs)*.24)!important}
+.unit.boss::before{top:-2px!important}.unit.elite:not(.boss)::before{top:-2px!important}
+#cells .cell.obs.riv{background-image:linear-gradient(145deg,#5ab4e8,#2a78c0)!important;box-shadow:inset 0 2px 0 #ffffff55,inset 0 -3px 0 #164a80!important}
+#cells .cell.obs.riv::after{content:'🌊'!important}
+
+/* ===== v24：標題畫面 ===== */
+#title{background:radial-gradient(ellipse at 50% 38%,#ffe9a0 0%,#e0b050 30%,#a8742a 62%,#4d2f14 100%);padding:0;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#title::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,#0000 0 38px,#3b240c18 38px 40px);pointer-events:none}
+#title::after{content:'';position:absolute;inset:6px;border:3px solid #7a5416;border-radius:18px;box-shadow:inset 0 0 0 2px #fff3b0aa,0 0 0 2px #e9c35e;pointer-events:none}
+.tt-rays{position:absolute;left:50%;top:44%;width:900px;height:900px;transform:translate(-50%,-50%);background:repeating-conic-gradient(#fff6c855 0 6deg,#0000 6deg 15deg);animation:ttspin 40s linear infinite;pointer-events:none}
+@keyframes ttspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.tt-art{position:absolute;left:0;right:0;top:25%;height:46%}
+.tt-card{position:absolute;border:4px solid #fff3b0;border-radius:14px;box-shadow:0 0 0 2px #8a6414,0 10px 20px #0008;overflow:hidden;background:#222}
+.tt-card img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
+.tt-card.c0{left:7%;top:9%;width:34%;height:62%;transform:rotate(-7deg)}
+.tt-card.c1{left:50%;top:0;width:52%;height:90%;transform:translateX(-50%);z-index:3;border-width:5px;box-shadow:0 0 0 3px #8a6414,0 0 34px #fff6c0,0 14px 24px #000a}
+.tt-card.c2{right:7%;top:11%;width:34%;height:62%;transform:rotate(7deg);z-index:1}
+.tt-card.c3{left:11%;bottom:-2%;width:26%;height:40%;transform:rotate(5deg);z-index:4}
+.tt-card.c4{right:11%;bottom:-2%;width:26%;height:40%;transform:rotate(-5deg);z-index:4}
+.tt-logo{position:absolute;left:0;right:0;top:5%;text-align:center;z-index:5;pointer-events:none}
+.tt-sub{font-size:12px;font-weight:800;color:#5a3a0e;letter-spacing:2px}
+.tt-logo h1{margin:2px 0 0;font-size:68px;line-height:1.05;letter-spacing:4px;font-weight:900;display:flex;justify-content:center;gap:14px}
+.tt-logo h1 span{background:linear-gradient(#fffbe0 10%,#ffd24a 45%,#c8861a 80%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:3px #4a2a06;paint-order:stroke fill;filter:drop-shadow(0 4px 0 #3a2208) drop-shadow(0 6px 8px #0008)}
+.tt-rib{display:inline-block;margin-top:2px;padding:3px 26px;font-size:17px;font-weight:900;letter-spacing:4px;color:#ffe9a0;background:linear-gradient(#7a2418,#4a1008);border:2px solid #e0b53a;border-radius:4px;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);text-shadow:0 2px 0 #000}
+.tt-start{position:absolute;left:0;right:0;bottom:17%;text-align:center;font-size:26px;font-weight:900;letter-spacing:6px;color:#fff;-webkit-text-stroke:4px #4a2a06;paint-order:stroke fill;text-shadow:0 3px 0 #3a2208,0 0 16px #ffe9a0;z-index:6;animation:ttpulse 1.3s ease-in-out infinite;pointer-events:none}
+@keyframes ttpulse{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
+.tt-load{position:absolute;left:12%;right:12%;bottom:14%;z-index:7;display:none;text-align:center}.tt-load.on{display:block}
+.tt-bar{height:14px;border-radius:8px;background:#3b240c;border:2px solid #e0b53a;overflow:hidden}.tt-bar i{display:block;height:100%;width:0;background:linear-gradient(#fff3a0,#e0a020)}
+.tt-tip{margin-top:8px;font-size:12.5px;font-weight:800;color:#3a2208;text-shadow:0 1px 0 #fff8}
+.tt-btns{position:absolute;left:0;right:0;bottom:6.5%;display:flex;justify-content:center;gap:14px;z-index:8}
+.tt-b{min-width:104px;min-height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:900;color:#ffe9a0;background:linear-gradient(#6a4418,#3a2208);border:2px solid #e0b53a;box-shadow:0 3px 0 #1f1405}
+.tt-ver{position:absolute;left:0;right:0;bottom:2.4%;text-align:center;font-size:11.5px;font-weight:800;color:#4a2f0a;z-index:8;pointer-events:none;text-shadow:0 1px 0 #fff6}
+@media (max-height:700px){.tt-logo h1{font-size:56px}.tt-art{top:24%;height:44%}.tt-start{bottom:19%;font-size:23px}.tt-btns{bottom:8%}}
+#hName{cursor:pointer}
 </style>
 </head>
 <body>
 <div id="app">
 
+<!-- 標題／登入畫面 -->
+<section id="title" class="screen">
+  <div class="tt-rays"></div>
+  <div class="tt-art" id="ttArt"></div>
+  <div class="tt-logo"><div class="tt-sub">⛩️ 日式地城 ・ 格子戰術 ⛩️</div><h1><span>地城</span><span>戰棋</span></h1><div class="tt-rib">（試作版）</div></div>
+  <div class="tt-start" id="ttStart">點擊開始</div>
+  <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
+  <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
+  <div class="tt-ver" id="ttVer">v24　・　單機版，無需登入</div>
+</section>
+
 <!-- 主選單 -->
 <section id="home" class="screen">
-  <div id="hStrip"><span class="hcoin"><i class="coin">🪙</i><span class="tixv">0</span></span><span class="hname">地城戰棋</span><span class="hcoin gem"><i>💎</i><span class="gemv">0</span></span></div>
+  <div id="hStrip"><span class="hcoin"><i class="coin">🪙</i><span class="tixv">0</span></span><span class="hname" id="hName" title="點擊修改暱稱">地城戰棋</span><span class="hcoin gem"><i>💎</i><span class="gemv">0</span></span></div>
   <div id="hStat">
     <div class="hl"><div class="lvb"><small>LV</small><b id="hLv">1</b></div><div class="hbarw"><span id="hExpT">收集 0/16</span><div class="hbar2 org"><i id="hExpB"></i></div></div></div>
     <div class="emb"><span>⛩️</span></div>
@@ -821,12 +869,11 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 <div id="detailOv" class="overlay"><div class="modal" id="detailBox"></div></div>
 <div id="tutOv" class="overlay"><div class="modal">
   <h2>🎓 新手教學</h2>
-  <p><b>① 點選英雄</b>（下方頭像或棋盤上的英雄）</p>
-  <p><b>② 點藍色格子移動</b>，也可以點自己原地不動</p>
-  <p><b>③ 點紅框敵人攻擊</b>，或按「✨技能」再點目標；用完自動待機</p>
-  <p><b>④ 全員行動完換敵人</b>。<span style="color:#ff9a9a">紅色虛線＝敵人下回合想打的目標</span>，頭像上的 ⚠ 代表會被攻擊，⚔數字是傷害。點敵人可看威脅範圍。</p>
-  <p><b>⑤ 地形：</b>🔺尖刺——停在上面會受傷（敵我皆然）；♨️溫泉——回合開始時回復 25% 生命。</p>
-  <p style="color:#a99fd0">技巧：把血少的英雄躲到敵人打不到的地方，坦克擋在前面，遠程在後面輸出。</p>
+  <p><b>① 點選英雄</b>，再點藍色格子移動（也可點自己原地不動）</p>
+  <p><b>② 點紅框敵人攻擊</b>，或按「✨技能」再點目標</p>
+  <p><b>③ 橘框＝這位棋子「攻擊型態」打得到的格子</b>——每個棋子型態都不同，站位很重要</p>
+  <p><b>④ 紅色虛線＝敵人下回合想打的目標</b>（⚠ 代表會被攻擊，⚔數字是傷害）。全員行動完換敵人。</p>
+  <p><b>⑤ 長按棋子或按 ⓘ</b> 看技能與型態詳情；🔺尖刺會傷人、♨️溫泉回血。</p>
   <button class="btn gold" id="tutOk">開始戰鬥！</button>
 </div></div>
 <div id="helpOv" class="overlay"><div class="modal">
@@ -860,6 +907,28 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
     <div class="ud-badges"><span class="bdg atk"><i>⚔</i><b id="udAtk">0</b></span><span class="bdg hp"><b id="udHp">0</b><small id="udHpM"></small></span><span class="bdg mv"><i>👟</i><b id="udMv">0</b></span></div></div>
   <div class="ud-panel" id="udPanel"></div>
   <button class="btn gold" id="udClose">關閉</button>
+</div></div>
+<div id="nameOv" class="overlay"><div class="modal" style="text-align:center">
+  <h2 id="nameTitle">歡迎，冒險者！</h2>
+  <p id="nameSub" style="color:#c9b98a">請替自己取個名字（1～10 個字）</p>
+  <div style="display:flex;gap:6px;margin:10px 0 4px"><input id="nameIn" type="text" maxlength="20" autocomplete="off" style="flex:1;font-size:18px;font-weight:800;padding:10px;border-radius:10px;border:2px solid #e0b53a;background:#2a1a08;color:#ffe9a0;text-align:center"><button class="btn small" id="nameDice" aria-label="隨機名字" style="min-width:48px">🎲</button></div>
+  <div id="nameErr" style="color:#ff8a8a;min-height:20px;font-size:13px"></div>
+  <div style="display:flex;gap:8px;margin-top:6px"><button class="btn gray" id="nameCancel" style="flex:1;display:none">取消</button><button class="btn gold" id="nameOk" style="flex:2">確定</button></div>
+</div></div>
+<div id="newsOv" class="overlay"><div class="modal">
+  <h2>📢 公告</h2><div id="newsBody" style="max-height:56vh;overflow-y:auto;text-align:left;font-size:13.5px;line-height:1.55"></div>
+  <button class="btn gold" id="newsOk" style="margin-top:10px">關閉</button>
+</div></div>
+<div id="setOv" class="overlay"><div class="modal" style="text-align:center">
+  <h2>⚙ 設定</h2>
+  <p id="setName" style="color:#ffe9a0;font-weight:800"></p>
+  <button class="btn" id="setRename" style="margin:6px 0">✏️ 修改暱稱</button>
+  <button class="btn gray" id="setClear" style="margin:6px 0;border-color:#c0504a">🗑 清除存檔</button>
+  <button class="btn gold" id="setOk" style="margin-top:8px">關閉</button>
+</div></div>
+<div id="confOv" class="overlay"><div class="modal" style="text-align:center">
+  <h2>確定清除存檔？</h2><p>英雄、靈玉、進度與暱稱都會被刪除，<b style="color:#ff9a9a">無法復原</b>。</p>
+  <div style="display:flex;gap:8px;margin-top:8px"><button class="btn gray" id="confNo" style="flex:1">取消</button><button class="btn" id="confYes" style="flex:1;background:linear-gradient(#c8403a,#802020)">清除</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
 </div>
@@ -947,17 +1016,18 @@ const PATS = {
   iai:   {n:'居合',      d:'攻擊相鄰 4 格，或跨過一格攻擊直線 2 格處', offs:O4.concat(O2)},
   blast: {n:'冰霜轟擊',  d:'攻擊 2 格內任一格，並波及目標周圍 8 格（50% 傷害）', offs:within2, splash:'t8', sf:0.5, proj:1},
   moon:  {n:'月輪斬',    d:'攻擊周圍 8 格，並波及目標上下左右（50% 傷害）', offs:O8, splash:'t4', sf:0.5},
+  bomb:  {n:'鬼火爆彈',  d:'攻擊上下左右 1～2 格處，並波及目標周圍 8 格（60% 傷害）——別讓英雄擠在一起', offs:O4.concat(O2), splash:'t8', sf:0.6, proj:1},
   sakura:{n:'櫻舞',      d:'攻擊上下左右 2 格內，加上周圍斜角 1 格（可越過單位）', offs:O4.concat(O2,OD), proj:1},
 };
 Object.keys(PATS).forEach(k=>{ PATS[k].id=k; });
 const HERO_PAT = {samurai:'adj4',kyudo:'line4',onmyoji:'x2',ninja:'jump',sohei:'adj8',tengu:'star8',miko:'cross2',kitsune:'beam',ryujin:'lance',grandonmyoji:'star2',kagenin:'shadow',naginata:'sweep',ronin:'iai',yukionna:'blast',okami:'moon',kagura:'sakura'};
 const HERO_TITLE = {samurai:'鳥居守衛',kyudo:'破魔弓手',onmyoji:'式神見習',ninja:'影中足輕',sohei:'金剛護法',tengu:'疾風天狗',miko:'祓禊巫女',kitsune:'狐火術師',ryujin:'龍神化身',grandonmyoji:'星落陰陽師',kagenin:'無音之影',naginata:'旋風薙女',ronin:'二刀浪人',yukionna:'霜雪之姬',okami:'月輪神使',kagura:'櫻舞神樂'};
-const ENEMY_PAT = {slime:'adj4',goblin:'adj8',skel:'line4',bat:'jump',brute:'sweep',onibi:'x2',tanuki:'cross2',ward:'cross2'};
+const ENEMY_PAT = {slime:'adj4',goblin:'adj8',skel:'line4',bat:'jump',brute:'sweep',onibi:'bomb',tanuki:'cross2',ward:'cross2'};
 const BOSS_PAT = {orochi:'moon',gashadokuro:'blast',shuten:'lance',kyubi:'star8'};
 const ENEMY_NOTE = {
   slime:'提燈小僧：最基礎的妖怪，只會逼近你的英雄。', goblin:'河童：行動快，周圍 8 格都會被攻擊，別讓英雄站在牠斜角。',
   skel:'亡靈弓手：遠距離直線射擊，被第一個單位擋住——用前排或障礙擋箭。', bat:'鎌鼬：移動 4 格並跳「日」字突襲，後排也不安全。',
-  brute:'赤鬼：高血量高攻擊，橫掃會波及目標左右的英雄。', onibi:'鬼火：沿斜線攻擊；被擊倒時爆炸，傷害相鄰英雄。',
+  brute:'赤鬼：高血量高攻擊，橫掃會波及目標左右的英雄。', onibi:'鬼火：投出爆彈，波及目標周圍 3×3（60%）——別讓英雄擠在一起；被擊倒時爆炸，傷害相鄰英雄。',
   tanuki:'化け狸：會治療受傷的同伴（每 2 回合），優先擊倒。', ward:'結界青鬼：每 3 回合替 2 格內的友軍張開護盾，優先擊倒。'
 };
 function patReach(p){ let m=1; (p.offs||[]).forEach(([x,y])=>{ m=Math.max(m,Math.abs(x)+Math.abs(y)); }); (p.rays||[]).forEach(r=>{ m=Math.max(m,r.n); }); return m; }
@@ -1028,13 +1098,13 @@ const UPGRADES = [
 /* ========== 存檔 ========== */
 function defaultSave(){
   const roster = {}; START_ROSTER.forEach(id=>roster[id]={stars:1});
-  return {v:1, gems:1000, tix:0, lv:{}, diff:0, roster, party:START_ROSTER.slice(), pity:0, draws:0, best:0, runs:0, tutSeen:false, tutDone:false, mute:false, run:null};
+  return {v:1, gems:1000, tix:0, lv:{}, diff:0, roster, party:START_ROSTER.slice(), pity:0, draws:0, best:0, runs:0, tutSeen:false, tutDone:false, mute:false, run:null, name:''};
 }
 function loadSave(){
   try{
     const s = JSON.parse(localStorage.getItem(SAVE_KEY));
     if(s && s.v===1 && s.roster && typeof s.gems==='number'){
-      s.lv = s.lv||{}; s.tix = s.tix||0; s.diff = s.diff||0;
+      s.lv = s.lv||{}; s.tix = s.tix||0; s.diff = s.diff||0; s.name = (typeof s.name==='string')?s.name:'';
       s.party = (s.party||[]).filter(id=>s.roster[id]).slice(0,3);
       if(!s.party.length) s.party = Object.keys(s.roster).slice(0,3);
       return s;
@@ -1136,6 +1206,7 @@ function show(name){
 }
 function refreshGems(){ $$('.gemv').forEach(e=>e.textContent=G.save.gems); $$('.tixv').forEach(e=>e.textContent=G.save.tix||0); }
 function renderHome(){
+  { const n=$('#hName'); if(n) n.textContent = (G.save.name?('👤 '+G.save.name):'地城戰棋'); }
   const S=G.save, sr=S.run, ids=Object.keys(S.roster), tot=HERO_IDS.length;
   const rb=$('#btnResume'); rb.style.display = sr ? 'flex' : 'none'; if(sr){ $('#rsG').textContent=`第 ${sr.floor} 層${sr.diff?' 👹':''}`; }
   const di=dailyInfo(), nd=di.filter(m=>m.done&&!m.claimed).length, dn=di.filter(m=>m.claimed).length, dd=dailyEnsure(), bn=(dn===3&&!dd.bonus)?1:0;
@@ -1270,7 +1341,8 @@ function partyWarning(){
   const sup = id=>{ const h=HEROES[id]; return h.cls==='坦克'||h.cls==='輔助'||['heal','healall','shield'].includes(h.skill.type); };
   if(S.party.some(sup)) return '';
   const cand = Object.keys(S.roster).filter(id=>sup(id)&&!S.party.includes(id)).slice(0,2).map(id=>HEROES[id].name);
-  return '⚠ 隊伍沒有補師或坦克，後面幾層血量會比較吃緊。'+(cand.length?`可考慮換上：${cand.join('、')}。`:'去抽卡找僧兵、巫女之類的英雄吧。');
+  if(!cand.length) return '';
+  return '⚠ 隊伍沒有補師或坦克，後面幾層血量會比較吃緊。'+`可考慮換上：${cand.join('、')}。`;
 }
 function renderRoster(){
   const S = G.save;
@@ -1430,18 +1502,27 @@ function newRun(){
 }
 
 function isBoss(f){ return f%5===0; }
-function genObstacles(){
+const LAYOUTS = {
+  open:    {n:'開闊', cells:null},
+  pillars: {n:'柱陣', cells:[[1,2],[3,2]]},
+  zigzag:  {n:'走廊', cells:[[1,1],[1,2],[3,2],[3,3]]},
+  river:   {n:'河與橋', cells:[[0,2],[1,2],[3,2],[4,2]]}
+};
+function genObstacles(f){
+  f = f||1;
+  const names = (f<=1||isBoss(f)) ? ['open','pillars'] : ['open','pillars','zigzag','river'];
   for(let tries=0;tries<50;tries++){
-    const obs = new Set(); const n = 1+rnd(2);
-    while(obs.size<n) obs.add(key(rnd(COLS), 1+rnd(3)));
-    // 連通檢查：底部到頂部
+    const lay = tries<30 ? pick(names) : 'open'; G._layout = lay;
+    const obs = new Set();
+    if(LAYOUTS[lay].cells) LAYOUTS[lay].cells.forEach(([x,y])=>obs.add(key(x,y)));
+    else { const n = 1+rnd(2); while(obs.size<n) obs.add(key(rnd(COLS), 1+rnd(3))); }
     const seen = new Set([key(0,ROWS-1)]); const q=[[0,ROWS-1]];
     for(let i=0;i<q.length;i++){ const [x,y]=q[i]; for(const [dx,dy] of DIRS){ const nx=x+dx,ny=y+dy,k=key(nx,ny); if(nx<0||ny<0||nx>=COLS||ny>=ROWS||seen.has(k)||obs.has(k)) continue; seen.add(k); q.push([nx,ny]); } }
     let ok = !obs.has(key(0,ROWS-1));
     for(let x=0;x<COLS && ok;x++){ if(!obs.has(key(x,ROWS-1)) && !seen.has(key(x,ROWS-1))) ok=false; if(!obs.has(key(x,0)) && !seen.has(key(x,0))) ok=false; }
     if(ok) return obs;
   }
-  return new Set();
+  G._layout='open'; return new Set();
 }
 function genTiles(obs, f){
   const tiles = new Map(); if(f<2) return tiles;
@@ -1468,7 +1549,7 @@ function genEnemyList(f, ps){
 }
 function startBattle(){ const B0=null;
   const run = G.run;
-  const obs = genObstacles();
+  const obs = genObstacles(run.floor);
   const units = [];
   let uid = 1;
   // 我方
@@ -1522,7 +1603,7 @@ function startBattle(){ const B0=null;
   const tiles = genTiles(obs, run.floor);
   let reserve=[], halfN=0;
   if(run.floor>=2 && !isBoss(run.floor) && (Math.random()<TUNE.waveP || (run.floor===3 && TUNE.f3wave))){ const es=units.filter(u=>u.team==='e'); if(es.length>=3){ const k=Math.max(1,Math.round(es.length*TUNE.waveF)); const pick=shuffle(es.filter(u=>!u.cmd&&!u.heal&&!u.ward&&!u.elite)).slice(0,k); if(pick.length){ pick.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; reserve.push(u); }); halfN=Math.floor((es.length-pick.length)/2); } } }
-  G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, halfN};
+  G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, halfN, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
   run.picked=false; run.reward=null; saveRun(); G.logs=[]; $('#log').innerHTML='';
   G.ui = {sel:null, mode:'move', inspect:null};
@@ -1695,7 +1776,7 @@ function renderCells(){
   $$('#cells .cell').forEach(c=>{
     const x=+c.dataset.x, y=+c.dataset.y, k=key(x,y);
     const tm = (!G.save.tutDone && B.turn===1 && !sel && B.phase==='player' && !G.busy && (unitAt(x,y)||{}).team==='p');
-    c.className = 'cell'+(tm?' tapme':'')+(B.obs.has(k)?' obs':'')+(B.tiles.get(k)?' t-'+B.tiles.get(k):'')+(H.mv.has(k)?' mv':'')+(H.at.has(k)?' at':'')+(H.pt.has(k)&&!H.at.has(k)?' pt':'')+(H.sk.has(k)?' sk':'')+(H.hl.has(k)?' hl':'')+(H.th.has(k)?' th':'')+(H.fl.has(k)?' fl':'')+(B.strikes&&B.strikes.has(k)?' strike':'')+((B.reserve&&B.reserve.length&&y<=1&&!B.obs.has(k)&&!unitAt(x,y))?' sp':'')+(sel&&sel.x===x&&sel.y===y&&sel.alive?' sel':'');
+    c.className = 'cell'+(tm?' tapme':'')+(B.obs.has(k)?' obs'+(B.layout==='river'?' riv':''):'')+(B.tiles.get(k)?' t-'+B.tiles.get(k):'')+(H.mv.has(k)?' mv':'')+(H.at.has(k)?' at':'')+(H.pt.has(k)&&!H.at.has(k)?' pt':'')+(H.sk.has(k)?' sk':'')+(H.hl.has(k)?' hl':'')+(H.th.has(k)?' th':'')+(H.fl.has(k)?' fl':'')+(B.strikes&&B.strikes.has(k)?' strike':'')+((B.reserve&&B.reserve.length&&y<=1&&!B.obs.has(k)&&!unitAt(x,y))?' sp':'')+(sel&&sel.x===x&&sel.y===y&&sel.alive?' sel':'');
   });
 }
 function renderChips(){
@@ -1764,7 +1845,7 @@ function fitBoard(){
   if(ch!==G.ch||cs0!==G.cs) layoutBoard();
 }
 function renderAll(){ computeIntents(); renderCells(); syncUnits(); renderLines(); renderChips(); renderObjRow(); renderInfo(); renderButtons(); fitBoard(); }
-function setHint(t){ const h=$('#hint'); h.textContent = t; h.classList.add('show'); clearTimeout(setHint._t); setHint._t=setTimeout(()=>h.classList.remove('show'),2600); }
+function setHint(t){ const h=$('#hint'); h.textContent = t; if(!(G.run&&G.run.floor<=2) && G.save.tutDone){ h.classList.remove('show'); return; } h.classList.add('show'); clearTimeout(setHint._t); setHint._t=setTimeout(()=>h.classList.remove('show'),2600); }
 function floatText(u, text, cls){
   const el = document.createElement('div');
   el.className = 'float '+cls; el.textContent = text;
@@ -2280,7 +2361,7 @@ window.__game = {
     alive().forEach(u=>{ grid[u.y][u.x] = u.team==='p'?'H':(u.boss?'B':'E'); });
     return {cols:COLS, rows:ROWS, rows_text:grid.map(r=>r.join('')), floor:G.run.floor, turn:B.turn, phase:B.phase, busy:G.busy, over:B.over,
       units:B.units.map(u=>({uid:u.uid, team:u.team, id:u.hid||u.t, name:u.name, x:u.x, y:u.y, hp:u.hp, maxhp:u.maxhp, atk:u.atk, mov:u.mov, rng:u.rng, alive:u.alive, done:u.done, moved:!!u.moved, cd:u.cd, shield:u.shield, skill:u.skill?u.skill.type:null, boss:!!u.boss, cmd:!!u.cmd})),
-      strikes:[...(B.strikes||[])], reserve:(B.reserve||[]).length, obstacles:[...B.obs], tiles:[...B.tiles].map(([k,t])=>k.split(',').map(Number).concat(t))};
+      layout:B.layout, strikes:[...(B.strikes||[])], reserve:(B.reserve||[]).length, obstacles:[...B.obs], tiles:[...B.tiles].map(([k,t])=>k.split(',').map(Number).concat(t))};
   },
   reach: uid=>{ const u=G.B.units.find(x=>x.uid===uid); return u?[...reachTiles(u).keys()].map(k=>k.split(',').map(Number)):[]; },
   skillTargets: uid=>{ const u=G.B.units.find(x=>x.uid===uid); return u?skillTargets(u).map(t=>t.uid):[]; },
@@ -2296,7 +2377,57 @@ window.__game = {
 };
 (function(){ const h=$('#home'); for(let i=0;i<14;i++){ const p=document.createElement('span'); p.className='petal'; p.textContent='🌸'; p.style.left=(Math.random()<0.5?Math.random()*5:91+Math.random()*5)+'%'; p.style.animationDuration=(7+Math.random()*7)+'s'; p.style.animationDelay=(-Math.random()*10)+'s'; p.style.fontSize=(10+Math.random()*10)+'px'; h.appendChild(p);} })();
 preloadImages();
-show('home');
+
+/* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
+const NEWS = [
+  ['v24','5×5 棋盤新增 4 種版型（開闊／柱陣／走廊／河與橋）；鬼火改為 3×3 範圍爆彈；徽章不再溢出；新增標題畫面與玩家暱稱。'],
+  ['v23','棋盤成為主角：格子略高於寬，下方資訊壓縮為單行，結束回合按鈕放大。'],
+  ['v22','棋盤放大至滿版；詳情卡立繪滿版、星星放大；提示不再遮擋資訊。'],
+  ['v21','全新 5×5 棋盤；每位英雄與敵人都有獨特攻擊型態；長按棋子或按 ⓘ 開啟詳情卡。'],
+  ['v20','首頁改版、手機觸控優化、可加入主畫面。']
+];
+const NAME_A=['櫻下','月夜','風之','雪原','赤焰','星河','青嵐','白狼'], NAME_B=['劍客','旅人','巫女','忍者','射手','武者','術士'];
+const suggestName = ()=> NAME_A[Math.floor(Math.random()*NAME_A.length)]+NAME_B[Math.floor(Math.random()*NAME_B.length)]+(10+Math.floor(Math.random()*90));
+const nameLen = v=>Array.from(v).length;
+function validName(v){ v=(v||'').trim(); if(!v) return '名字不能是空的'; if(nameLen(v)>10) return '最多 10 個字（目前 '+nameLen(v)+' 個）'; if(/[<>&"'`\\]/.test(v)) return '不能包含 < > & " \' ` \\ 等符號'; return ''; }
+function askName(first, done){
+  const ov=$('#nameOv'), inp=$('#nameIn'), err=$('#nameErr');
+  $('#nameTitle').textContent = first?'歡迎，冒險者！':'修改暱稱';
+  $('#nameSub').textContent = first?'請替自己取個名字（1～10 個字）':'輸入新的暱稱（1～10 個字）';
+  $('#nameCancel').style.display = first?'none':'block';
+  inp.value = first?suggestName():G.save.name; err.textContent=''; ov.classList.add('on');
+  const submit=()=>{ const e=validName(inp.value); if(e){ err.textContent=e; return; } G.save.name=inp.value.trim(); persist(); ov.classList.remove('on'); sfx('tap'); renderHome(); if(done) done(); };
+  $('#nameOk').onclick=submit; inp.onkeydown=ev=>{ if(ev.key==='Enter') submit(); }; inp.oninput=()=>{ err.textContent=validName(inp.value)&&nameLen(inp.value)>10?validName(inp.value):''; };
+  $('#nameDice').onclick=()=>{ inp.value=suggestName(); err.textContent=''; };
+  $('#nameCancel').onclick=()=>ov.classList.remove('on');
+  setTimeout(()=>{ try{ inp.focus(); inp.select(); }catch(e){} },60);
+}
+const LOAD_TIPS=['小提示：長按棋子或按 ⓘ 可以看技能與攻擊型態。','小提示：橘框是這位棋子攻擊型態打得到的格子。','小提示：把血少的英雄躲到敵人打不到的地方。','小提示：河與橋的地形只有一格橋，守住它！','小提示：鬼火爆彈會波及周圍 8 格，別讓英雄擠在一起。'];
+function startFromTitle(){
+  if(G.titleBusy) return; G.titleBusy=true;
+  const go=()=>{ const L=$('#ttLoad'), bar=$('#ttBar'); $('#ttTip').textContent=LOAD_TIPS[Math.floor(Math.random()*LOAD_TIPS.length)]; L.classList.add('on'); $('#ttStart').style.visibility='hidden'; bar.style.transition='none'; bar.style.width='0'; void bar.offsetWidth; bar.style.transition='width .9s ease-out'; bar.style.width='100%';
+    setTimeout(()=>{ L.classList.remove('on'); $('#ttStart').style.visibility='visible'; G.titleBusy=false; show('home'); },950); };
+  sfx('tap');
+  if(!G.save.name) { G.titleBusy=false; askName(true, ()=>{ G.titleBusy=true; go(); }); } else go();
+}
+function showTitle(){
+  const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
+  $('#ttVer').textContent='v24　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  show('title');
+}
+$('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
+$('#ttNews').onclick=()=>{ $('#newsBody').innerHTML=NEWS.map(([v,t])=>`<p><b style="color:#ffd24a">${v}</b>　${t}</p>`).join(''); $('#newsOv').classList.add('on'); };
+$('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
+$('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
+$('#setOk').onclick=()=>$('#setOv').classList.remove('on');
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v24　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
+$('#confNo').onclick=()=>$('#confOv').classList.remove('on');
+$('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
+$('#hName').onclick=()=>askName(false);
+window.__game.skipTitle = ()=>show('home'); window.__game.showTitle = showTitle; window.__game.news = NEWS;
+
+{ const q=new URLSearchParams(location.search); if(q.get('title')==='1' || (!navigator.webdriver && q.get('skip')!=='1')) showTitle(); else show('home'); }
 </script>
 </body>
 </html>
