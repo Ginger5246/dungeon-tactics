@@ -606,6 +606,40 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #hList{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #hHead{height:52px}
 @media (min-height:760px){ .hrow:not(.mini){height:64px} .hrow:not(.mini) .hi{width:52px;height:52px;font-size:28px} .hrow:not(.mini) .ht{font-size:21px} }
+/* v21: 5x5 棋盤、攻擊型態格、單位詳情卡 */
+.cell.pt{box-shadow:inset 0 0 0 3px #ff9d3acc,inset 0 0 14px #ffb34a88;background-image:linear-gradient(#ffb34a38,#ffb34a38)}
+.cell.pt.mv{box-shadow:inset 0 0 0 3px #ff9d3acc,inset 0 0 0 5px #5aa0ff}
+#uwrap .uiBtn{position:absolute;right:2px;top:-2px;width:44px;height:44px;border-radius:50%;border:2px solid #fff3b0;background:linear-gradient(#5aa8f0,#2468b8);color:#fff;font-size:22px;font-weight:900;box-shadow:0 2px 0 #124a80;padding:0;font-family:inherit;z-index:3}
+#uinfo{padding-right:48px}
+.pgrid{display:grid;grid-template-columns:repeat(7,12px);grid-auto-rows:12px;gap:1px;padding:3px;background:#5a1010;border:3px solid #e0b53a;border-radius:4px;box-shadow:0 2px 6px #0007}
+.pgrid i{display:block;background:#a02828;border-radius:1px}.pgrid i.t{background:#ffd24a;box-shadow:0 0 3px #fff8}.pgrid i.c{background:#fff;border-radius:50%;box-shadow:0 0 4px #fff}
+#udOv{padding:8px;background:#120a03f4}
+#udCard{width:min(100%,380px);max-height:100%;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:3px solid #e0b53a;background:#3a2a10;box-shadow:0 8px 30px #000a}
+.ud-head{flex:none;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;background:linear-gradient(#5a431a,#3a2810);border-bottom:3px solid #e0b53a}
+#udCard.foe .ud-head{background:linear-gradient(#7a2418,#4a1008)}
+.ud-cls{flex:none;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;background:radial-gradient(#fff6d8,#d8b050);border:3px solid #8a6414;box-shadow:0 0 0 2px #fff3b0}
+.ud-hm{flex:1;min-width:0}.ud-no{font-size:13px;color:#ffe9a0;font-weight:700;letter-spacing:1px}.ud-nm{font-size:19px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 2px #000a}
+.ud-st{flex:none;color:#ffd24a;font-size:15px;letter-spacing:1px;text-shadow:0 1px 2px #000}
+.ud-stage{position:relative;flex:none;height:min(42vh,330px);background:radial-gradient(ellipse at 50% 38%,#fff2b8 0%,#e9c564 38%,#b88a2a 78%,#8a6218 100%);overflow:hidden;border-bottom:3px solid #e0b53a}
+#udCard.foe .ud-stage{background:radial-gradient(ellipse at 50% 38%,#ffd8c0 0%,#e98a64 38%,#a8402a 78%,#6a2010 100%)}
+.ud-floor{position:absolute;left:-10%;right:-10%;bottom:-6%;height:34%;background:repeating-conic-gradient(#f3dd9a 0 25%,#c9a24a 0 50%) 0 0/36px 36px;transform:perspective(260px) rotateX(58deg);transform-origin:bottom;opacity:.75}
+.ud-sp{position:absolute;inset:0;pointer-events:none}.ud-sp span{position:absolute;color:#fffbe0;text-shadow:0 0 6px #fff;animation:tw 2.4s ease-in-out infinite;opacity:.2}
+@keyframes tw{50%{opacity:1;transform:scale(1.4) rotate(20deg)}}
+.ud-port{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);height:86%;aspect-ratio:1;max-width:80%}
+.ud-frame{width:100%;height:100%;border-radius:14px;border:4px solid #fff3b0;box-shadow:0 0 0 2px #8a6414,0 0 26px #fff6c0aa,0 8px 14px #0006;overflow:hidden;background:#222}
+.ud-frame .av,.ud-frame img{width:100%;height:100%;object-fit:cover;display:block}.ud-frame .emf{font-size:90px}
+.ud-pat{position:absolute;left:8px;bottom:8px;display:flex;flex-direction:column;align-items:center;gap:2px}.ud-pat small{font-size:11px;font-weight:900;color:#fff;-webkit-text-stroke:2px #5a3a00;paint-order:stroke fill}
+.ud-badges{position:absolute;right:8px;bottom:8px;display:flex;align-items:flex-end;gap:6px}
+.bdg{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;box-shadow:0 2px 5px #0008}
+.bdg.atk{width:46px;height:46px;border-radius:50%;background:radial-gradient(#7be05a,#2f8f22);border:3px solid #e8ffd0;gap:0;flex-direction:column;line-height:1}.bdg.atk i{font-style:normal;font-size:11px}.bdg.atk b{font-size:20px}
+.bdg.hp{min-width:44px;height:52px;padding:0 6px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;background:radial-gradient(#ffb347,#e05a14);border:3px solid #fff0d0;flex-direction:column;line-height:1}.bdg.hp b{font-size:20px}.bdg.hp small{font-size:10px;opacity:.9}
+.bdg.mv{height:34px;padding:0 8px;border-radius:17px;background:linear-gradient(#ffa84a,#d8761a);border:2px solid #fff0d0;gap:3px;font-size:13px}.bdg.mv b{font-size:16px}
+.ud-panel{flex:1;min-height:90px;overflow-y:auto;overscroll-behavior:contain;padding:8px 14px 10px;background:linear-gradient(#6b5a2a,#4e4020);color:#fff3d0;font-size:13.5px;line-height:1.5;-webkit-overflow-scrolling:touch}
+.ud-panel h4{margin:8px 0 2px;color:#ffd24a;font-size:14.5px}.ud-panel h4:first-child{margin-top:0}.ud-panel p{margin:0 0 4px;color:#fff3d0}
+#udCard>.btn{flex:none;margin:6px 10px 8px;min-height:44px}
+@media (max-height:700px){ .ud-stage{height:min(36vh,230px)} .ud-panel{min-height:70px;font-size:12.5px} .ud-frame .emf{font-size:60px} }
+#cells .cell.pt{background-image:linear-gradient(#ffa52b66,#ffa52b66),linear-gradient(145deg,#f7efd9,#e3d2a9)!important;box-shadow:inset 0 0 0 3px #f08a00!important}
+#cells .cell.pt.mv{background-image:linear-gradient(#3b82f655,#3b82f655),linear-gradient(#ffa52b44,#ffa52b44),linear-gradient(145deg,#f7efd9,#e3d2a9)!important;box-shadow:inset 0 0 0 3px #f08a00,inset 0 0 0 6px #3b82f6!important}
 </style>
 </head>
 <body>
@@ -747,6 +781,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <p><b>棋子卡牌：</b>左上大數字＝生命，左下綠徽章（⚔）＝攻擊力，右下橘徽章＝移動力，右上小圖示＝狀態（⚠ 被鎖定、敵人預告攻擊…）。藍框是我方、紅框是敵人、金框是精英、👑 是首領。淡紅色魔法陣格＝危險／增援出現位置。</p>
   <p><b>羈絆 🔗：</b>特定英雄相鄰時觸發加成（初始隊伍：並肩作戰、遠程連攜；另有雙巫共鳴、劍心相映、掩護射擊、龍狼合擊），戰場上方會出現粉色標籤，英雄詳情可查看。</p>
   <p><b>妖怪種類：</b>🦝 化け狸會治療同伴；🔵 鬼火被擊倒會爆炸；🛡 結界青鬼每 3 回合替身邊 2 格內的敵人加護盾（青色連線預告）；🚩 指揮官讓其他敵人攻擊 +35%。這些都是優先擊倒的目標。</p>
+  <p><b>攻擊型態：</b>每個英雄與妖怪的普通攻擊範圍都不同（十字、八方、直線、斜線、日字跳躍、貫穿、橫掃…）。選中英雄後，橘框格＝這位英雄現在可以攻擊的格子；點敵人可看牠的攻擊範圍。<b>長按棋子（約 0.5 秒）或按資訊欄的 ⓘ</b> 可開啟詳情卡（圖像、攻擊型態、技能介紹）。</p>
   <p><b>動畫速度：</b>戰鬥右上角 ⏩ 可切換 1×／2×。<button class="btn small gray" id="btnTips" style="padding:3px 8px">重看戰鬥提示</button></p>
   <p><b>護符：</b>首領與精英會掉落 🧿 護符，在英雄詳情裝備（每人 1 個），提供攻擊／生命／護盾／回春加成。</p>
   <p><b>每層通關：</b>獲得 💎 靈玉並三選一強化，隊伍會回復一些生命，倒下的英雄會以少量生命復活。</p>
@@ -761,6 +796,14 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <button class="btn gray" id="menuMute">🔊 音效：開</button>
   <button class="btn red" id="menuQuit">放棄這次冒險</button>
 </div></div>
+<div id="udOv" class="overlay"><div id="udCard">
+  <div class="ud-head"><span class="ud-cls" id="udCls">⚔️</span><div class="ud-hm"><div class="ud-no" id="udNo">No. 001</div><div class="ud-nm" id="udNm">名稱</div></div><div class="ud-st" id="udSt">★★★</div></div>
+  <div class="ud-stage" id="udStage"><div class="ud-floor"></div><div class="ud-sp" id="udSp"></div><div class="ud-port" id="udPort"></div>
+    <div class="ud-pat" id="udPat"></div>
+    <div class="ud-badges"><span class="bdg atk"><i>⚔</i><b id="udAtk">0</b></span><span class="bdg hp"><b id="udHp">0</b><small id="udHpM"></small></span><span class="bdg mv"><i>👟</i><b id="udMv">0</b></span></div></div>
+  <div class="ud-panel" id="udPanel"></div>
+  <button class="btn gold" id="udClose">關閉</button>
+</div></div>
 <div class="toast" id="toast"></div>
 </div>
 
@@ -768,9 +811,9 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 'use strict';
 /* ========== 基本資料 ========== */
 const SAVE_KEY = 'abyss_tactics_save_v1';
-const COLS = 7, ROWS = 9;
+const COLS = 5, ROWS = 5;
 const DIRS = [[1,0],[-1,0],[0,1],[0,-1]];
-const TUNE = {wardP:0.15, wardCd:3, lsT:9, pwK:0.6, pwA0:30, pwA1:70, pwL:3, lsStep:0.5, taper:0.06, midCap:0.4, f1hp:1.4, f2hp:1.2, f3hp:1.3, f3extra:1, f3wave:1, waveP:0.7, waveF:0.28, baseN:3, hp:3.0, bossHp:2.2, cap:7.6};
+const TUNE = {wardP:0.15, wardCd:3, lsT:9, pwK:0.6, pwA0:30, pwA1:70, pwL:3, lsStep:0.5, taper:0.06, midCap:0.4, f1hp:1.8, f2hp:1.5, f3hp:1.4, f3extra:0, f3wave:1, waveP:0.7, waveF:0.28, baseN:3, hp:3.0, bossHp:2.2, cap:10.4};
 const CLS_ICON = {'近戰':'⚔️','遠程':'🏹','法術':'🔮','刺客':'🗡️','坦克':'🛡️','輔助':'💚'};
 function atkMult(f){ return f<=2?0.4 : f===3?0.43 : f<=4?0.47 : f<=9?0.58 : Math.min(2.4, 0.65+0.07*(f-9)); }
 function partyScale(){
@@ -825,6 +868,85 @@ const BOSSES = [
   {img:'shuten', name:'酒吞童子',   e:'👺', hp:110,atk:9, mov:2, rng:1},
   {img:'kyubi', name:'九尾妖狐',   e:'🦊', hp:100,atk:9, mov:3, rng:2},
 ];
+
+/* ========== 攻擊型態（每個英雄／敵人不同）========== */
+const O4=[[1,0],[-1,0],[0,1],[0,-1]], OD=[[1,1],[1,-1],[-1,1],[-1,-1]], O8=O4.concat(OD), O2=[[2,0],[-2,0],[0,2],[0,-2]];
+const KN=[[1,2],[2,1],[-1,2],[-2,1],[1,-2],[2,-1],[-1,-2],[-2,-1]];
+const rays=(dirs,n,block)=>dirs.map(d=>({d,n,block:!!block}));
+const within2=[]; for(let dx=-2;dx<=2;dx++) for(let dy=-2;dy<=2;dy++){ const m=Math.abs(dx)+Math.abs(dy); if(m>=1&&m<=2) within2.push([dx,dy]); }
+const PATS = {
+  adj4:  {n:'十字斬',    d:'攻擊上下左右相鄰的 1 格', offs:O4},
+  adj8:  {n:'環斬',      d:'攻擊周圍相鄰的 8 格（含斜角）', offs:O8},
+  line4: {n:'直線射擊',  d:'朝上下左右射出直線，最遠 4 格，被第一個單位擋住', rays:rays(O4,4,true), proj:1},
+  x2:    {n:'斜線術',    d:'沿 4 條斜線攻擊，最遠 2 格（可越過單位）', rays:rays(OD,2,false), proj:1},
+  jump:  {n:'跳躍突襲',  d:'攻擊相鄰 4 格，或像騎士一樣跳到「日」字位置（2＋1 格）攻擊', offs:O4.concat(KN)},
+  star8: {n:'八方箭',    d:'朝 8 個方向射擊，最遠 3 格，被第一個單位擋住', rays:rays(O8,3,true), proj:1},
+  cross2:{n:'十字祈禱',  d:'攻擊上下左右 2 格內（可越過單位）', rays:rays(O4,2,false), proj:1},
+  beam:  {n:'貫穿火線',  d:'朝上下左右噴出火線，最遠 3 格，貫穿線上所有敵人（後方受 70% 傷害）', rays:rays(O4,3,false), pierce:1, proj:1},
+  lance: {n:'龍爪貫穿',  d:'攻擊上下左右 2 格內，並貫穿線上第二名敵人（受 70% 傷害）', rays:rays(O4,2,false), pierce:1},
+  star2: {n:'星陣',      d:'朝 8 個方向攻擊 2 格內（可越過單位）', rays:rays(O8,2,false), proj:1},
+  shadow:{n:'影遁突襲',  d:'攻擊周圍 8 格，或跳到「日」字位置攻擊', offs:O8.concat(KN)},
+  sweep: {n:'橫掃',      d:'攻擊上下左右 1～2 格，並橫掃目標上下左右相鄰的敵人（50% 傷害）', offs:O4, rays:rays(O4,2,true), splash:'t4', sf:0.5},
+  iai:   {n:'居合',      d:'攻擊相鄰 4 格，或跨過一格攻擊直線 2 格處', offs:O4.concat(O2)},
+  blast: {n:'冰霜轟擊',  d:'攻擊 2 格內任一格，並波及目標周圍 8 格（50% 傷害）', offs:within2, splash:'t8', sf:0.5, proj:1},
+  moon:  {n:'月輪斬',    d:'攻擊周圍 8 格，並波及目標上下左右（50% 傷害）', offs:O8, splash:'t4', sf:0.5},
+  sakura:{n:'櫻舞',      d:'攻擊上下左右 2 格內，加上周圍斜角 1 格（可越過單位）', offs:O4.concat(O2,OD), proj:1},
+};
+Object.keys(PATS).forEach(k=>{ PATS[k].id=k; });
+const HERO_PAT = {samurai:'adj4',kyudo:'line4',onmyoji:'x2',ninja:'jump',sohei:'adj8',tengu:'star8',miko:'cross2',kitsune:'beam',ryujin:'lance',grandonmyoji:'star2',kagenin:'shadow',naginata:'sweep',ronin:'iai',yukionna:'blast',okami:'moon',kagura:'sakura'};
+const HERO_TITLE = {samurai:'鳥居守衛',kyudo:'破魔弓手',onmyoji:'式神見習',ninja:'影中足輕',sohei:'金剛護法',tengu:'疾風天狗',miko:'祓禊巫女',kitsune:'狐火術師',ryujin:'龍神化身',grandonmyoji:'星落陰陽師',kagenin:'無音之影',naginata:'旋風薙女',ronin:'二刀浪人',yukionna:'霜雪之姬',okami:'月輪神使',kagura:'櫻舞神樂'};
+const ENEMY_PAT = {slime:'adj4',goblin:'adj8',skel:'line4',bat:'jump',brute:'sweep',onibi:'x2',tanuki:'cross2',ward:'cross2'};
+const BOSS_PAT = {orochi:'moon',gashadokuro:'blast',shuten:'lance',kyubi:'star8'};
+const ENEMY_NOTE = {
+  slime:'提燈小僧：最基礎的妖怪，只會逼近你的英雄。', goblin:'河童：行動快，周圍 8 格都會被攻擊，別讓英雄站在牠斜角。',
+  skel:'亡靈弓手：遠距離直線射擊，被第一個單位擋住——用前排或障礙擋箭。', bat:'鎌鼬：移動 4 格並跳「日」字突襲，後排也不安全。',
+  brute:'赤鬼：高血量高攻擊，橫掃會波及目標左右的英雄。', onibi:'鬼火：沿斜線攻擊；被擊倒時爆炸，傷害相鄰英雄。',
+  tanuki:'化け狸：會治療受傷的同伴（每 2 回合），優先擊倒。', ward:'結界青鬼：每 3 回合替 2 格內的友軍張開護盾，優先擊倒。'
+};
+function patReach(p){ let m=1; (p.offs||[]).forEach(([x,y])=>{ m=Math.max(m,Math.abs(x)+Math.abs(y)); }); (p.rays||[]).forEach(r=>{ m=Math.max(m,r.n); }); return m; }
+function patBonus(u){ return (u.team==='p'&&G.run&&G.run.buffs)?(G.run.buffs.rng||0):0; }
+/* 回傳 Map<key,{x,y}>：u 站在 (x,y) 時可以攻擊的格子（射線會被障礙擋住；block 型射線被第一個單位擋住） */
+function patTiles(u,x,y){
+  const p=u.pat||PATS.adj4, b=patBonus(u), res=new Map(), B=G.B;
+  const inb=(a,c)=>a>=0&&c>=0&&a<COLS&&c<ROWS;
+  const occ=(a,c)=>alive().some(w=>w!==u&&w.x===a&&w.y===c);
+  (p.offs||[]).forEach(([dx,dy])=>{
+    const L=[[dx,dy]]; if(b>0) L.push([dx+Math.sign(dx)*b,dy+Math.sign(dy)*b]);
+    L.forEach(([ox,oy])=>{ const a=x+ox,c=y+oy; if(inb(a,c)&&!B.obs.has(key(a,c))) res.set(key(a,c),{x:a,y:c}); });
+  });
+  (p.rays||[]).forEach(r=>{
+    for(let i=1;i<=r.n+b;i++){ const a=x+r.d[0]*i,c=y+r.d[1]*i; if(!inb(a,c)||B.obs.has(key(a,c))) break; res.set(key(a,c),{x:a,y:c}); if(r.block&&occ(a,c)) break; }
+  });
+  res.delete(key(x,y));
+  return res;
+}
+function hitsFrom(u,x,y){ const pt=patTiles(u,x,y); return enemiesOf(u).filter(t=>pt.has(key(t.x,t.y))); }
+/* 貫穿／橫掃：額外波及的單位 */
+function extraVictims(a,t){
+  const p=a.pat||PATS.adj4, out=[], B=G.B, seen=new Set([t.uid]);
+  if(p.pierce){
+    const dx=Math.sign(t.x-a.x), dy=Math.sign(t.y-a.y), straight=(a.x===t.x||a.y===t.y||Math.abs(t.x-a.x)===Math.abs(t.y-a.y));
+    if(straight){ const k0=Math.max(Math.abs(t.x-a.x),Math.abs(t.y-a.y)), n=Math.max(...(p.rays||[{n:1}]).map(r=>r.n))+patBonus(a);
+      for(let i=k0+1;i<=n;i++){ const x=a.x+dx*i,y=a.y+dy*i; if(x<0||y<0||x>=COLS||y>=ROWS||B.obs.has(key(x,y))) break; const w=alive().find(w=>w.x===x&&w.y===y&&w.team===t.team); if(w&&!seen.has(w.uid)){ seen.add(w.uid); out.push({u:w,f:0.7}); } } }
+  }
+  if(p.splash){ (p.splash==='t8'?O8:O4).forEach(([dx,dy])=>{ const w=alive().find(w=>w.x===t.x+dx&&w.y===t.y+dy&&w.team===t.team&&w!==a); if(w&&!seen.has(w.uid)){ seen.add(w.uid); out.push({u:w,f:p.sf||0.5}); } }); }
+  return out;
+}
+function applyExtra(a,t,base){
+  const ex=extraVictims(a,t); if(!ex.length) return 0;
+  ex.forEach(({u,f})=>{ floatText(u,'波及','info'); damage(u,Math.max(1,Math.round(base*f)),a); });
+  logLine(`${a.name}「${(a.pat||PATS.adj4).n}」波及 ${ex.map(e=>e.u.name).join('、')}`,a.team==='p'?'s':'e');
+  return ex.length;
+}
+function patIconHTML(p, cls){
+  const N=7,c=3, on=new Set();
+  const add=(x,y)=>{ if(x>=0&&y>=0&&x<N&&y<N&&!(x===c&&y===c)) on.add(x+','+y); };
+  (p.offs||[]).forEach(([dx,dy])=>add(c+dx,c+dy));
+  (p.rays||[]).forEach(r=>{ for(let i=1;i<=r.n;i++) add(c+r.d[0]*i,c+r.d[1]*i); });
+  let h=''; for(let y=0;y<N;y++) for(let x=0;x<N;x++) h+=`<i class="${x===c&&y===c?'c':(on.has(x+','+y)?'t':'')}"></i>`;
+  return `<div class="pgrid ${cls||''}" title="${p.n}">${h}</div>`;
+}
+
 /* 日式地城主題：每 5 層一個區域，最後一層為首領 */
 const THEMES = [
   {name:'鳥居參道', ic:'⛩️', obs:'🪨', c1:'#3a1f2e', c2:'#2f1826'},
@@ -1077,7 +1199,7 @@ function skillDesc(id, stars=1, atk){
   const n = m=>Math.round(A*m);
   let d = '';
   if(s.type==='power') d = `${rr}對單一敵人造成 ${Math.round(s.mult*100)}% 攻擊力傷害（約 ${n(s.mult)} 點）`;
-  if(s.type==='aoe') d = `${rr}命中目標及周圍 ${s.rad} 格內所有敵人，各造成 ${Math.round(s.mult*100)}% 攻擊力傷害（約 ${n(s.mult)} 點）${s.freeze?'，並使其凍結（下回合無法行動）':''}`;
+  if(s.type==='aoe') d = `${rr}命中目標及周圍 ${s.rad} 格內所有敵人，各造成 ${Math.round(s.mult*100)}% 攻擊力傷害（約 ${n(s.mult)} 點）${s.freeze?'，並凍結 1 回合':''}`;
   if(s.type==='heal') d = `${rr}治療一位友軍（約 ${n(s.mult)} 點生命）`;
   if(s.type==='healall') d = `治療全隊每人約 ${n(s.mult)} 點生命`;
   if(s.type==='shield') d = `${s.rad} 格內友軍各獲得約 ${n(s.mult)+s.add} 點護盾`;
@@ -1253,8 +1375,8 @@ function newRun(){
 function isBoss(f){ return f%5===0; }
 function genObstacles(){
   for(let tries=0;tries<50;tries++){
-    const obs = new Set(); const n = 3+rnd(3);
-    while(obs.size<n) obs.add(key(rnd(COLS), 3+rnd(3)));
+    const obs = new Set(); const n = 1+rnd(2);
+    while(obs.size<n) obs.add(key(rnd(COLS), 1+rnd(3)));
     // 連通檢查：底部到頂部
     const seen = new Set([key(0,ROWS-1)]); const q=[[0,ROWS-1]];
     for(let i=0;i<q.length;i++){ const [x,y]=q[i]; for(const [dx,dy] of DIRS){ const nx=x+dx,ny=y+dy,k=key(nx,ny); if(nx<0||ny<0||nx>=COLS||ny>=ROWS||seen.has(k)||obs.has(k)) continue; seen.add(k); q.push([nx,ny]); } }
@@ -1266,12 +1388,12 @@ function genObstacles(){
 }
 function genTiles(obs, f){
   const tiles = new Map(); if(f<2) return tiles;
-  const cand = []; for(let y=2;y<=6;y++) for(let x=0;x<COLS;x++) if(!obs.has(key(x,y))) cand.push([x,y]);
+  const cand = []; for(let y=1;y<=3;y++) for(let x=0;x<COLS;x++) if(!obs.has(key(x,y))) cand.push([x,y]);
   const sp = shuffle(cand);
-  const ns = f>=6?3:(f>=4?2:1)+(Math.random()<0.4?1:0);
+  const ns = f>=6?2:(f>=4?2:1);
   for(let i=0;i<ns && sp.length;i++){ const [x,y]=sp.shift(); tiles.set(key(x,y),'spike'); }
   if(f>=3 && sp.length && (f<=4 || Math.random()<0.7)){ const [x,y]=sp.shift(); tiles.set(key(x,y),'spring'); }
-  if(f>=3 && sp.length && Math.random()<0.6){ const c2=shuffle(cand.filter(([x,y])=>!tiles.has(key(x,y)) && y>=3 && y<=6)); if(c2.length){ const [x,y]=c2[0]; tiles.set(key(x,y),'high'); } }
+  if(f>=3 && sp.length && Math.random()<0.6){ const c2=shuffle(cand.filter(([x,y])=>!tiles.has(key(x,y)) && y>=1 && y<=3)); if(c2.length){ const [x,y]=c2[0]; tiles.set(key(x,y),'high'); } }
   return tiles;
 }
 function genEnemyList(f, ps){
@@ -1280,8 +1402,8 @@ function genEnemyList(f, ps){
   const pool = ['slime','goblin'];
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute','ward');
   const boss = isBoss(f);
-  let n = boss ? 3 : Math.min(TUNE.baseN+Math.floor(f/2)+(ps>1.6?1:0)+((f>=4&&f<=9)?1:0)+(f===3?TUNE.f3extra:0), 6);
-  if(boss && ps>1.8) n=4;
+  let n = boss ? 2 : Math.min(TUNE.baseN+Math.floor(f/3)+(ps>1.6?1:0)+((f>=5&&f<=9)?1:0)+(f===3?TUNE.f3extra:0), 5);
+  if(boss && ps>1.8) n=3;
   let nT=0, nW=0; const maxT = f>=7?2:1;
   for(let i=0;i<n;i++){ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1) t='brute'; else nW++; } list.push({...ENEMIES[t], t, sc, boss:false}); }
   if(boss){ const b = BOSSES[(f/5-1)%BOSSES.length]; const bs = 1 + 0.2*(f/5-1); list.unshift({...b, t:'boss', sc:bs, boss:true}); }
@@ -1293,24 +1415,24 @@ function startBattle(){ const B0=null;
   const units = [];
   let uid = 1;
   // 我方
-  const starts = [[3,ROWS-1],[2,ROWS-1],[4,ROWS-1],[1,ROWS-1],[5,ROWS-1]];
+  const starts = [[2,ROWS-1],[1,ROWS-1],[3,ROWS-1],[0,ROWS-1],[4,ROWS-1]];
   const members = run.members;
   members.forEach((m,i)=>{
     const st = heroStats(m.id, m.stars, run.buffs), h = HEROES[m.id];
-    units.push({uid:uid++, team:'p', hid:m.id, name:h.name, e:h.e, img:heroImg(m.id), cicon:CLS_ICON[h.cls]||'', x:starts[i][0], y:starts[i][1], hp:Math.min(m.hp,st.maxhp), maxhp:st.maxhp, atk:st.atk, mov:st.mov, rng:st.rng, skill:h.skill, cdMax:st.cdMax, cd:0, shield:run.buffs.shield+talBonus(m.id).shield, moved:false, done:false, alive:m.hp>0, member:m});
+    units.push({uid:uid++, team:'p', hid:m.id, name:h.name, e:h.e, img:heroImg(m.id), cicon:CLS_ICON[h.cls]||'', pat:PATS[HERO_PAT[m.id]], x:starts[i][0], y:starts[i][1], hp:Math.min(m.hp,st.maxhp), maxhp:st.maxhp, atk:st.atk, mov:st.mov, rng:st.rng, skill:h.skill, cdMax:st.cdMax, cd:0, shield:run.buffs.shield+talBonus(m.id).shield, moved:false, done:false, alive:m.hp>0, member:m});
   });
   // 敵方
   const ps = partyScale();
   const list = genEnemyList(run.floor, ps);
   const spots = [];
-  for(let y=0;y<=2;y++) for(let x=0;x<COLS;x++) if(!obs.has(key(x,y))) spots.push([x,y]);
+  for(let y=0;y<=1;y++) for(let x=0;x<COLS;x++) if(!obs.has(key(x,y))) spots.push([x,y]);
   const sp = shuffle(spots);
   const bossSpot = [Math.floor(COLS/2), 0];
   list.forEach((en,i)=>{
     let pos = en.boss ? bossSpot : sp.shift();
     if(!en.boss){ while(pos && pos[0]===bossSpot[0]&&pos[1]===bossSpot[1]) pos = sp.shift(); }
     const hp = Math.round(en.hp*en.sc*(en.boss?TUNE.bossHp:TUNE.hp)*ps*Math.max(0.7,1-TUNE.taper*Math.max(0,run.floor-4))*(run.diff?1.35:1)*(run.floor<=2?1.2:1)), atk = Math.max(1,Math.round(en.atk*(1+(en.sc-1)*0.7)*atkMult(run.floor)*(1+(ps-1)*0.25)*(run.diff?1.3:1)));
-    units.push({uid:uid++, team:'e', t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:(en.img||en.t)), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, heal:en.heal, explode:en.explode, ward:en.ward, cicon:en.heal?'✚':(en.explode?'💣':(en.ward?'🛡':'')), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
+    units.push({uid:uid++, team:'e', t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:(en.img||en.t)), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, pat:PATS[en.boss?BOSS_PAT[en.img]:ENEMY_PAT[en.t]], heal:en.heal, explode:en.explode, ward:en.ward, cicon:en.heal?'✚':(en.explode?'💣':(en.ward?'🛡':'')), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
   });
   { // 血量池上限：敵方總血量 ≤ 我方攻擊總和 × CAP，避免低輸出隊伍（雙補師等）拖成 20 回合以上
     const fe = units.filter(u=>u.team==='e'), fp = units.filter(u=>u.team==='p');
@@ -1342,7 +1464,7 @@ function startBattle(){ const B0=null;
   }
   const tiles = genTiles(obs, run.floor);
   let reserve=[], halfN=0;
-  if(run.floor>=2 && !isBoss(run.floor) && (Math.random()<TUNE.waveP || (run.floor===3 && TUNE.f3wave))){ const es=units.filter(u=>u.team==='e'); if(es.length>=4){ const k=Math.max(1,Math.round(es.length*TUNE.waveF)); const pick=shuffle(es.filter(u=>!u.cmd&&!u.heal&&!u.ward&&!u.elite)).slice(0,k); if(pick.length){ pick.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; reserve.push(u); }); halfN=Math.floor((es.length-pick.length)/2); } } }
+  if(run.floor>=2 && !isBoss(run.floor) && (Math.random()<TUNE.waveP || (run.floor===3 && TUNE.f3wave))){ const es=units.filter(u=>u.team==='e'); if(es.length>=3){ const k=Math.max(1,Math.round(es.length*TUNE.waveF)); const pick=shuffle(es.filter(u=>!u.cmd&&!u.heal&&!u.ward&&!u.elite)).slice(0,k); if(pick.length){ pick.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; reserve.push(u); }); halfN=Math.floor((es.length-pick.length)/2); } } }
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, halfN};
   if(mod&&mod.id==='storm') assignStrikes();
   run.picked=false; run.reward=null; saveRun(); G.logs=[]; $('#log').innerHTML='';
@@ -1367,7 +1489,7 @@ function assignStrikes(){
   const B=G.B; B.strikes=new Set(); if(!B.mod||B.mod.id!=='storm') return;
   const hs=heroes(); const centers=[];
   if(hs.length){ const h=hs[Math.floor(Math.random()*hs.length)]; centers.push([h.x,h.y]); }
-  for(let i=0;i<20 && centers.length<2;i++){ const x=Math.floor(Math.random()*COLS), y=2+Math.floor(Math.random()*6); if(!B.obs.has(key(x,y)) && !centers.some(c=>Math.abs(c[0]-x)+Math.abs(c[1]-y)<3)) centers.push([x,y]); }
+  for(let i=0;i<20 && centers.length<1;i++){ const x=Math.floor(Math.random()*COLS), y=1+Math.floor(Math.random()*3); if(!B.obs.has(key(x,y)) && !centers.some(c=>Math.abs(c[0]-x)+Math.abs(c[1]-y)<3)) centers.push([x,y]); }
   centers.forEach(([x,y])=>{ [[0,0],[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{ const xx=x+dx,yy=y+dy; if(xx>=0&&yy>=0&&xx<COLS&&yy<ROWS&&!B.obs.has(key(xx,yy))) B.strikes.add(key(xx,yy)); }); });
 }
 async function resolveStrikes(){
@@ -1396,7 +1518,7 @@ function reachTiles(u){
   return res;
 }
 function enemiesOf(u){ return u.team==='p'?foes():heroes(); }
-function inRange(u, r, from){ const p = from||u; return enemiesOf(u).filter(t=>dist(p,t)<=r); }
+function inRange(u, r, from){ const p = from||u; return hitsFrom(u,p.x,p.y); }
 function skillTargets(u){
   const s = u.skill, r = s.rng + (u.team==='p'?G.run.buffs.rng:0);
   if(s.type==='power'||s.type==='aoe') return foes().filter(t=>dist(u,t)<=r);
@@ -1410,7 +1532,7 @@ function skillReady(u){ return u.cd<=0; }
 const TUNE_UI = 30;
 function layoutBoard(){
   const app = $('#app'), w = app.clientWidth, h = app.clientHeight;
-  const compact = h<=760, fixedH = compact ? 56+8+10+222+14+TUNE_UI : 70+12+10+284+14+TUNE_UI-4; const cs = Math.max(30, Math.min(Math.floor((w-26)/COLS), Math.floor((h-fixedH)/ROWS), 64));
+  const compact = h<=760, fixedH = compact ? 56+8+10+222+14+TUNE_UI : 70+12+10+284+14+TUNE_UI-4; const cs = Math.max(30, Math.min(Math.floor((w-26)/COLS), Math.floor((h-fixedH)/ROWS), 76));
   G.cs = cs;
   const board = $('#board');
   board.style.setProperty('--cs', cs+'px');
@@ -1488,7 +1610,7 @@ function syncUnits(){
   });
 }
 function computeHighlights(){
-  const B = G.B, ui = G.ui, u = ui.sel, H = {mv:new Set(), at:new Set(), sk:new Set(), hl:new Set(), th:new Set(), fl:new Set()};
+  const B = G.B, ui = G.ui, u = ui.sel, H = {pt:new Set(), mv:new Set(), at:new Set(), sk:new Set(), hl:new Set(), th:new Set(), fl:new Set()};
   if(B.phase!=='player'||B.over) return H;
   if(u && u.alive && u.team==='p' && !u.done){
     if(ui.mode==='skill'){
@@ -1499,10 +1621,11 @@ function computeHighlights(){
       { const stand = new Set(H.mv); stand.add(key(u.x,u.y)); const allies = heroes().filter(h=>h!==u);
         foes().forEach(e=>{ DIRS.forEach(([dx,dy])=>{ const p2=key(e.x-dx,e.y-dy); if(stand.has(p2) && allies.some(h=>h.x===e.x+dx&&h.y===e.y+dy)) H.fl.add(p2); }); }); }
       inRange(u,u.rng).forEach(t=>H.at.add(key(t.x,t.y)));
+      patTiles(u,u.x,u.y).forEach((v,k)=>H.pt.add(k));
     }
   } else if(ui.inspect && ui.inspect.alive && ui.inspect.team==='e'){
     const e = ui.inspect, rt = reachTiles(e);
-    rt.forEach((s,k)=>{ const [x,y]=k.split(',').map(Number); for(let yy=0;yy<ROWS;yy++) for(let xx=0;xx<COLS;xx++){ if(Math.abs(xx-x)+Math.abs(yy-y)<=e.rng) H.th.add(key(xx,yy)); } });
+    rt.forEach((s,k)=>{ const [x,y]=k.split(',').map(Number); patTiles(e,x,y).forEach((v,kk)=>H.th.add(kk)); });
   }
   return H;
 }
@@ -1511,7 +1634,7 @@ function renderCells(){
   $$('#cells .cell').forEach(c=>{
     const x=+c.dataset.x, y=+c.dataset.y, k=key(x,y);
     const tm = (!G.save.tutDone && B.turn===1 && !sel && B.phase==='player' && !G.busy && (unitAt(x,y)||{}).team==='p');
-    c.className = 'cell'+(tm?' tapme':'')+(B.obs.has(k)?' obs':'')+(B.tiles.get(k)?' t-'+B.tiles.get(k):'')+(H.mv.has(k)?' mv':'')+(H.at.has(k)?' at':'')+(H.sk.has(k)?' sk':'')+(H.hl.has(k)?' hl':'')+(H.th.has(k)?' th':'')+(H.fl.has(k)?' fl':'')+(B.strikes&&B.strikes.has(k)?' strike':'')+((B.reserve&&B.reserve.length&&y<=1&&!B.obs.has(k)&&!unitAt(x,y))?' sp':'')+(sel&&sel.x===x&&sel.y===y&&sel.alive?' sel':'');
+    c.className = 'cell'+(tm?' tapme':'')+(B.obs.has(k)?' obs':'')+(B.tiles.get(k)?' t-'+B.tiles.get(k):'')+(H.mv.has(k)?' mv':'')+(H.at.has(k)?' at':'')+(H.pt.has(k)&&!H.at.has(k)?' pt':'')+(H.sk.has(k)?' sk':'')+(H.hl.has(k)?' hl':'')+(H.th.has(k)?' th':'')+(H.fl.has(k)?' fl':'')+(B.strikes&&B.strikes.has(k)?' strike':'')+((B.reserve&&B.reserve.length&&y<=1&&!B.obs.has(k)&&!unitAt(x,y))?' sp':'')+(sel&&sel.x===x&&sel.y===y&&sel.alive?' sel':'');
   });
 }
 function renderChips(){
@@ -1521,7 +1644,8 @@ function renderChips(){
     c.className = 'chip'+(G.ui.sel===u?' sel':'')+(u.done&&u.alive?' done':'')+(u.alive?'':' dead');
     c.dataset.uid = u.uid;
     c.innerHTML = `<div class="em">${av(u.img,u.e,'hz')}</div><span class="hpn">${Math.max(0,u.hp)}</span><span class="st">${u.alive?(u.done?'✔':(u.cd>0?'⏳'+u.cd:'✨')):''}</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b>${u.atk}</b></span><span class="movb" title="移動力"><b>${u.mov}</b></span><div class="nm">${u.name}</div><div class="bar"><i style="width:${Math.max(0,u.hp/u.maxhp*100)}%"></i></div>`;
-    c.onclick = ()=>{ if(!G.busy && G.B.phase==='player' && u.alive && !u.done) selectUnit(u); else if(u.alive){ G.ui.inspect=u; G.ui.sel=null; renderAll(); } };
+    attachLongPress(c, ()=>u);
+    c.onclick = ()=>{ if(G.lpAt && Date.now()-G.lpAt<700){ G.lpAt=0; return; } if(!G.busy && G.B.phase==='player' && u.alive && !u.done) selectUnit(u); else if(u.alive){ G.ui.inspect=u; G.ui.sel=null; renderAll(); } };
     wrap.appendChild(c);
   });
 }
@@ -1533,9 +1657,11 @@ function renderInfo(){
     const sk = u.skill;
     s = `<b>${u.e} ${u.name}</b>　❤️ ${u.hp}/${u.maxhp}${u.shield?` 🛡${u.shield}`:''}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}<br><b>${sk.name}</b>：${skillDesc(u.hid, G.run.members.find(m=>m.id===u.hid).stars, u.atk)}${u.cd>0?`<br><span style="color:#e5b6ff">冷卻中（還要 ${u.cd} 回合）</span>`:''}`;
   } else {
-    s = `<b>${u.e} ${u.name}${u.boss?'（首領）':''}</b>　❤️ ${u.hp}/${u.maxhp}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}${u.boss?`<br>😡 ${u.rage} 回合後怒吼，對全隊造成傷害`:''}${u.heal?'<br>✚ 會治療受傷的同伴（優先擊倒）':''}${u.explode?'<br>💣 被擊倒時會爆炸，傷害相鄰的英雄':''}${u.ward?'<br>🛡 每 3 回合替 2 格內的友軍張開結界（護盾約 15% 生命，青色線＝預告對象），優先擊倒':''}${u.frozen>0?'<br>❄️ 凍結中：下回合無法行動':''}<br><span style="color:#ffb27a">橘色格為牠本回合可攻擊的範圍</span>`;
+    s = `<b>${u.e} ${u.name}${u.boss?'（首領）':''}</b>　❤️ ${u.hp}/${u.maxhp}　🗡️ ${u.atk}　👟 ${u.mov}　🎯 ${u.rng}${u.boss?`<br>😡 ${u.rage} 回合後怒吼，對全隊造成傷害`:''}${u.heal?'<br>✚ 會治療受傷的同伴（優先擊倒）':''}${u.explode?'<br>💣 被擊倒時會爆炸，傷害相鄰的英雄':''}${u.ward?'<br>🛡 每 3 回合替 2 格內的友軍張開結界（護盾約 15% 生命，青色線＝預告對象），優先擊倒':''}${u.frozen>0?'<br>❄️ 凍結中：下回合無法行動':''}`;
   }
-  box.innerHTML = s;
+  s += (u.team==='p'&&u.cd>0?'　':'<br>')+`<span style="color:#8a5a1a">⚔ <b>${(u.pat||PATS.adj4).n}</b>${u.team==='p'?'（橘框＝攻擊範圍）':'（橘色格＝牠可攻擊的範圍）'}</span>`;
+  box.innerHTML = s + `<button class="uiBtn" id="uiBtn" aria-label="詳情">ⓘ</button>`;
+  $('#uiBtn').onclick = ()=>showUnitCard(u);
 }
 function renderButtons(){
   const u = G.ui.sel, B = G.B, pl = B.phase==='player' && !G.busy && !B.over;
@@ -1605,7 +1731,7 @@ function burst(x,y,rad,cls){
   d.style.left=(x*G.cs+G.cs/2)+'px'; d.style.top=(y*G.cs+G.cs/2)+'px';
   $('#fx').appendChild(d); setTimeout(()=>d.remove(),480);
 }
-async function strike(a,t){ if(a.rng>1 && dist(a,t)>1){ sfx('shoot'); await projectile(a,t); } else { sfx('slash'); await lunge(a,t); } }
+async function strike(a,t){ if(dist(a,t)>1 && !(a.pat&&a.pat.id==='jump'||a.pat&&a.pat.id==='shadow'||a.pat&&a.pat.id==='iai')){ sfx('shoot'); await projectile(a,t); } else { sfx('slash'); await lunge(a,t); } }
 
 /* ========== 玩家操作 ========== */
 function selectUnit(u){
@@ -1615,6 +1741,7 @@ function selectUnit(u){
   setHint(u.moved ? '點紅色敵人攻擊、按技能或待機' : (G.ui.fl_hint||'點藍色格移動；點紅色敵人直接攻擊；點自己原地行動'));
 }
 function onCell(x,y){
+  if(G.lpAt && Date.now()-G.lpAt<700){ G.lpAt=0; return; }
   const B = G.B; if(!B || G.busy || B.phase!=='player' || B.over) return;
   const ui = G.ui, sel = ui.sel, u = unitAt(x,y);
   if(sel && sel.alive && !sel.done){
@@ -1623,7 +1750,7 @@ function onCell(x,y){
       if(u && u.team==='p' && !u.done && u!==sel) return selectUnit(u);
       ui.mode='move'; renderAll(); setHint('已取消技能'); return;
     }
-    if(u && u.team==='e' && dist(sel,u)<=sel.rng) return basicAttack(sel,u);
+    if(u && u.team==='e' && patTiles(sel,sel.x,sel.y).has(key(u.x,u.y))) return basicAttack(sel,u);
     if(!u && !sel.moved && reachTiles(sel).has(key(x,y))) return doMove(sel,x,y);
     if(u===sel){ sel.moved=true; renderAll(); setHint('點紅色敵人攻擊、按技能或待機'); return; }
     if(sel.moved && !(u && u.team==='p' && !u.done && u!==sel)){ renderAll(); setHint(u&&u.team==='e' ? '⚠ 目標超出射程 — 攻擊、技能或待機' : '這位英雄已移動：點紅色敵人攻擊、按技能或「待機」'); return; }
@@ -1698,7 +1825,7 @@ async function basicAttack(a,t){
   G.busy=true; flash(a,'atk');
   await strike(a,t);
   const ab=atkBonus(a,t); const d=damage(t, Math.round(a.atk*ab.m), a); if(ab.tags.length) floatText(a, ab.tags.join('+')+'!','info');
-  logLine(`${a.name} 攻擊 ${t.name} -${d}`+(ab.tags.length?`（${ab.tags.join('+')}）`:'')+(t.alive?'':`（${t.name} 被擊倒）`),'p');
+  logLine(`${a.name} 攻擊 ${t.name} -${d}`+(ab.tags.length?`（${ab.tags.join('+')}）`:'')+(t.alive?'':`（${t.name} 被擊倒）`),'p'); applyExtra(a,t,a.atk);
   a.done=true; a.moved=true; G.ui.sel=null; renderAll();
   await sleep(350);
   await afterPlayerAction();
@@ -1749,7 +1876,7 @@ function maybeReinforce(){
   const B=G.B; if(!B||B.over||!B.reserve||!B.reserve.length) return false;
   if(!(B.turn>=4 || foes().length<=B.halfN)) return false;
   const free=(x,y)=>!B.obs.has(key(x,y)) && !B.units.some(u=>u.alive&&u.x===x&&u.y===y);
-  let spots=[]; for(let y=0;y<=3&&spots.length<B.reserve.length+3;y++) for(let x=0;x<COLS;x++) if(free(x,y)) spots.push([x,y]);
+  let spots=[]; for(let y=0;y<=1&&spots.length<B.reserve.length+3;y++) for(let x=0;x<COLS;x++) if(free(x,y)) spots.push([x,y]);
   spots=shuffle(spots.filter(p=>p[1]<=1)).concat(shuffle(spots.filter(p=>p[1]>1)));
   const n=B.reserve.length; B.reserve.forEach(u=>{ const p=spots.shift(); if(p){ u.x=p[0]; u.y=p[1]; B.units.push(u); floatText(u,'🚩增援','info'); } });
   B.reserve=[]; banner('🚩 敵軍增援！','enemy'); sfx('rage'); logLine(`🚩 敵軍增援 ${n} 名從上方出現（本回合不會行動）`,'e'); showTip('wave');
@@ -1799,15 +1926,15 @@ function planEnemy(e){
     if(ts.length) return {type:'ward', x:e.x, y:e.y, t:ts[0], ts};
   }
   if(e.heal){
-    const hurt = (e.hcd>0 || G.B.turn>=enrageT() || !foes().some(a=>!a.heal)) ? null : foes().filter(a=>a!==e && !a.heal && a.hp<a.maxhp && dist(a,e)<=e.rng).sort((a,b)=>(a.hp/a.maxhp)-(b.hp/b.maxhp))[0];
+    const hpt = patTiles(e,e.x,e.y); const hurt = (e.hcd>0 || G.B.turn>=enrageT() || !foes().some(a=>!a.heal)) ? null : foes().filter(a=>a!==e && !a.heal && a.hp<a.maxhp && hpt.has(key(a.x,a.y))).sort((a,b)=>(a.hp/a.maxhp)-(b.hp/b.maxhp))[0];
     if(hurt) return {type:'heal', x:e.x, y:e.y, t:hurt};
   }
   const rt = reachTiles(e); let best=null;
   rt.forEach((steps,k)=>{
-    const [x,y]=k.split(',').map(Number);
+    const [x,y]=k.split(',').map(Number); const pt=patTiles(e,x,y);
     heroes().forEach(h=>{
       const dd = Math.abs(h.x-x)+Math.abs(h.y-y);
-      if(dd<=e.rng){
+      if(pt.has(key(h.x,h.y))){
         const kill = h.hp+h.shield<=e.atk;
         const sc = (kill?1000:0) + (h.maxhp-h.hp)*0.5 + (100-(h.hp+h.shield)) - steps*0.5 + (e.rng>1&&G.B.turn<5?dd*2:0) - (G.B.tiles.get(k)==='spike'?8:0) + (foeFlankAt(e,x,y,h)?30:0);
         if(!best || sc>best.sc) best={sc,x,y,t:h};
@@ -1863,6 +1990,7 @@ async function enemyPhase(){
       const fk = foeFlankAt(e,e.x,e.y,plan.t); if(fk){ floatText(e,'包夾!','dmg'); showTip('eflank'); }
       const d = damage(plan.t, Math.round(e.atk*(fk?1.3:1)), e);
       logLine(`${e.name} 攻擊 ${plan.t.name} -${d}`+(fk?'（包夾）':'')+(plan.t.alive?'':`（${plan.t.name} 倒下）`),'e');
+      applyExtra(e,plan.t,e.atk);
       plan.t.tgt=false; e.acting=false; renderAll(); T('e'+e.uid+' pre380'); await sleep(380); T('e'+e.uid+' post380');
       if(checkEnd()) return;
     } else {
@@ -2013,8 +2141,58 @@ $('#ovLv').onclick = ()=>show('roster');
 $('#ovHome').onclick = ()=>show('home');
 
 /* ========== 除錯介面（自動測試用）========== */
+
+/* ========== 單位詳情卡（英雄／敵人）========== */
+function starRowHTML(n){ return '★'.repeat(n)+'<span style="opacity:.35">'+'★'.repeat(5-n)+'</span>'; }
+function showUnitCard(u){
+  if(!u) return;
+  const isP = u.team==='p', p = u.pat||PATS.adj4;
+  const card = $('#udCard'); card.className = isP?'hero':'foe';
+  let no, nm, stars, cls, secs = [];
+  if(isP){
+    const h=HEROES[u.hid], mem=G.run&&G.run.members.find(m=>m.id===u.hid), sv=G.save.roster[u.hid];
+    stars = (mem&&mem.stars)||(sv&&sv.stars)||1; no = 'No. '+String(HERO_IDS.indexOf(u.hid)+1).padStart(3,'0'); nm = `${HERO_TITLE[u.hid]||h.cls}・${h.name}`; cls = CLS_ICON[h.cls]||'⚔️';
+    secs.push(['攻擊型態：'+p.n, p.d+(p.splash?'（附帶範圍波及）':'')+(patBonus(u)?`　👁️ 天眼：射程 +${patBonus(u)}`:'')]);
+    secs.push(['技能：'+u.skill.name, skillDesc(u.hid, stars, u.atk)]);
+    const sy = SYNS.filter(x=>x.a===u.hid||x.b===u.hid);
+    secs.push(['職業：'+h.cls, {'近戰':'貼身作戰，適合站在前排吸引火力。','遠程':'站後排輸出，注意被敵人的射線與跳躍攻擊鎖定。','法術':'範圍或斜線傷害，血量較低，需要保護。','刺客':'高機動、跳躍突襲，擅長收拾殘血與後排。','坦克':'高血量與護盾，站前排保護隊友。','輔助':'治療與強化，隊伍沒有補師時血量會很吃緊。'}[h.cls]||'']);
+    if(sy.length) secs.push(['羈絆', sy.map(x=>`🔗 ${x.n}（${HEROES[x.a].name}＋${HEROES[x.b].name}）：${x.d}`).join('\n')]);
+  } else {
+    stars = u.boss?5:(u.elite?4:Math.min(3,1+Math.floor(((G.run&&G.run.floor)||1)/4))); no = 'No. E'+String(Object.keys(ENEMIES).indexOf(u.t)+1).padStart(2,'0'); if(u.boss) no='No. BOSS';
+    nm = (u.elite?'精英・':'')+u.name; cls = u.boss?'👑':(u.e||'👹');
+    secs.push(['攻擊型態：'+p.n, p.d+(p.splash?'（附帶範圍波及）':'')]);
+    const sp=[]; if(u.boss) sp.push(`😡 ${u.rage} 回合後怒吼，對全隊造成傷害`); if(u.heal) sp.push('✚ 會治療受傷的同伴（優先擊倒）'); if(u.explode) sp.push('💣 被擊倒時會爆炸，傷害相鄰的英雄'); if(u.ward) sp.push('🛡 每 3 回合替 2 格內的友軍張開護盾'); if(u.elite) sp.push('👑 精英：更強壯，擊倒有額外獎勵'); if(u.cmd) sp.push('🚩 指揮官：存活時其他敵人攻擊 +35%'); if(u.frozen>0) sp.push('❄️ 凍結中：下回合無法行動');
+    if(sp.length) secs.push(['特性', sp.join('\n')]);
+    secs.push(['圖鑑', ENEMY_NOTE[u.t]||'首領級妖怪：血量高、會怒吼，集中火力並注意站位。']);
+    secs.push(['提示','點選敵人可在棋盤上看到牠「所有可能攻擊到的格子」（橘色）。']);
+  }
+  $('#udCls').textContent = cls; $('#udNo').textContent = no; $('#udNm').textContent = nm; $('#udSt').innerHTML = starRowHTML(stars);
+  $('#udPort').innerHTML = `<div class="ud-frame">${av(u.img,u.e,'')}</div>`;
+  $('#udPat').innerHTML = patIconHTML(p)+`<small>${p.n}</small>`;
+  $('#udAtk').textContent = u.atk; $('#udHp').textContent = Math.max(0,u.hp); $('#udHpM').textContent = '/'+u.maxhp; $('#udMv').textContent = u.mov;
+  $('#udPanel').innerHTML = secs.map(([t,d])=>`<h4>${t}</h4><p>${String(d).replace(/\n/g,'<br>')}</p>`).join('');
+  $('#udPanel').scrollTop = 0;
+  { const sp=$('#udSp'); if(!sp.childElementCount){ let h=''; for(let i=0;i<16;i++) h+=`<span style="left:${Math.round(Math.random()*96)}%;top:${Math.round(Math.random()*88)}%;animation-delay:${(Math.random()*2.4).toFixed(2)}s;font-size:${8+Math.round(Math.random()*12)}px">✦</span>`; sp.innerHTML=h; } }
+  $('#udOv').classList.add('on'); sfx('tap');
+}
+$('#udClose').onclick = ()=>$('#udOv').classList.remove('on');
+$('#udOv').onclick = e=>{ if(e.target.id==='udOv') $('#udOv').classList.remove('on'); };
+/* 長按（450ms）開啟詳情；不影響一般點選 */
+function attachLongPress(el, getUnit){
+  let t=null, sx=0, sy=0;
+  const clear=()=>{ clearTimeout(t); t=null; };
+  el.addEventListener('pointerdown',ev=>{ sx=ev.clientX; sy=ev.clientY; clear(); t=setTimeout(()=>{ t=null; const u=getUnit(ev); if(u){ G.lpAt=Date.now(); showUnitCard(u); } },450); });
+  el.addEventListener('pointermove',ev=>{ if(t&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>12) clear(); });
+  ['pointerup','pointercancel','pointerleave'].forEach(n=>el.addEventListener(n,clear));
+}
+attachLongPress($('#board'), ev=>{ const r=$('#cells').getBoundingClientRect(), x=Math.floor((ev.clientX-r.left)/G.cs), y=Math.floor((ev.clientY-r.top)/G.cs); return (G.B&&x>=0&&y>=0&&x<COLS&&y<ROWS)?unitAt(x,y):null; });
+
 window.__game = {
   poolInfo:()=>G.pi,
+  patHits:(uid,list)=>{ const u=G.B.units.find(x=>x.uid===uid); const o={}; list.forEach(([x,y])=>{ o[x+','+y]=hitsFrom(u,x,y).map(t=>t.uid); }); return o; },
+  patTilesOf:(uid,x,y)=>{ const u=G.B.units.find(w=>w.uid===uid); return [...patTiles(u,x==null?u.x:x,y==null?u.y:y).keys()]; },
+  threatMap:()=>{ const thr={}; foes().forEach(e=>{ if(e.frozen>0||e.wait>0) return; const cov=new Set(); reachTiles(e).forEach((s,k)=>{ const [x,y]=k.split(',').map(Number); patTiles(e,x,y).forEach((v,kk)=>cov.add(kk)); }); cov.forEach(k=>{ thr[k]=(thr[k]||0)+e.atk; }); }); return thr; },
+  showUnitCard:(uid)=>showUnitCard(G.B.units.find(u=>u.uid===uid)), PATS,
   trace:()=>TR.slice(), G, HEROES, TUNE, renderInfo, layoutBoard,
   get errors(){ return G.errors; },
   set fast(v){ G.fast = !!v; }, get fast(){ return G.fast; },
