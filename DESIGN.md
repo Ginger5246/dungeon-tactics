@@ -187,3 +187,13 @@
 - 新敵方型態 `bomb`（鬼火爆彈）：十字 1～2 格攻擊並波及目標周圍 8 格（60%），懲罰擠在一起；套用於鬼火（onibi）。
 - 單位上所有徽章（⚔×N、⚠、HP、ATK、移動、護盾、冷卻）限制在格內；提示膠囊只在第 1～2 層或教學未完成時顯示。
 - **標題畫面（v24）**：`#title` 為第一個畫面（`showTitle()`）；`save.name` 存暱稱（驗證 1–10 字元、拒絕 `<>&"'` 等）；navigator.webdriver 或 `?skip=1` 略過、`?title=1` 強制顯示。無帳號／密碼／網路。
+
+## v25
+- 隊伍畫面：`#rosterBar`（排序／職業篩選，狀態在 `G.rf`，不存檔）＋ `#rosterGrid` 內 `.rg`（已擁有，3 欄滿版卡）與 `#lockHd` + `.rg.small`（未獲得，5 欄小卡，預設收合）。
+- BGM：`BGM` 物件（`bgmSync()` 依畫面 title/home 與 `save.bgm`、`save.mute` 開關）；`save.bgm` 預設 true。測試鉤 `__game.bgm()`、`__game.toggleBgm()`。
+- 抽卡結果 `#revealAgain`；獎勵畫面 `#rwDrawHint`。
+
+### v25 數值經濟（小數字）
+- `heroStats()`：maxhp = 基礎 + 2×(★-1) + (Lv-1) + 升級 + 護符；atk = 基礎 + (★≥3) + (★≥5) + floor((Lv-1)/3) + 升級 + 護符。
+- 技能欄位：power/aoe 用 `add`（傷害 = 攻擊 + add），heal/healall/shield 用 `amt`。
+- 敵方血量池：`TUNE.K × sumAtk^TUNE.ex`（首層×f12、修羅×hard、首領×bossK），整數分配後單隻 ≤ `TUNE.hpMax`（+ 隊伍加成）／首領 ≤ `TUNE.bossMax`。存檔 `econ:2`，舊版冒險中存檔會重置。
