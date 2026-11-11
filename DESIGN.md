@@ -177,3 +177,7 @@
 - `layoutBoard`：`cs = min(floor((w-10)/5), floor((h-fixedH)/5), 80)`，`fixedH` 在 h≤779 為 312、否則 330（含 HUD、手牌、目標列、固定高度資訊區、提示、按鈕列）。資訊區用 `--uih`（78／88px）固定高度，選取不同單位時版面不跳動。
 - 戰鬥中的 `toast()` 加 `.tb`（置頂、單行、不攔截點擊）；`#banner` 置於棋盤中央。
 - 詳情卡舞台高 `min(55vh,460px)`（≤700 高：`min(46vh,310px)`），立繪 `object-fit:cover` 滿版。
+
+## v23 備註：非正方形格與壓縮下方區域
+- 格寬 `cs=floor((w-10)/5)`（≤80），格高 `ch=min(floor(avail/5), round(cs*1.32))`，`avail` 為 `#boardwrap`（flex:1、棋盤垂直置中）扣除 12px；`G.ch` 用於單位 top、意圖線 y、特效、長按判定。`fitBoard()` 在每次 `renderAll` 後重量，只在尺寸改變時重排。
+- 下方：手牌列＋單行資訊（`#uinfo` 26px，整行可點開詳情卡，ⓘ 28px）＋按鈕列（中央結束回合放大）；目標／羈絆標籤列（`#objRow`）併入 HUD 第三列；提示（`#hint`）改為棋盤上短暫浮現的膠囊（2.6 秒）。
