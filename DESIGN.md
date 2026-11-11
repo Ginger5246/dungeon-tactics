@@ -197,3 +197,7 @@
 - `heroStats()`：maxhp = 基礎 + 2×(★-1) + (Lv-1) + 升級 + 護符；atk = 基礎 + (★≥3) + (★≥5) + floor((Lv-1)/3) + 升級 + 護符。
 - 技能欄位：power/aoe 用 `add`（傷害 = 攻擊 + add），heal/healall/shield 用 `amt`。
 - 敵方血量池：`TUNE.K × sumAtk^TUNE.ex`（首層×f12、修羅×hard、首領×bossK），整數分配後單隻 ≤ `TUNE.hpMax`（+ 隊伍加成）／首領 ≤ `TUNE.bossMax`。存檔 `econ:2`，舊版冒險中存檔會重置。
+
+### v26 分波
+- `genEnemyList(f, strong)` 產生帶 `wv`（0 在場／1、2 增援）與 `wt`（出場回合）的清單；`startBattle` 把 `wv>0` 的單位移到 `B.reserve`（`wait=1`）。`maybeReinforce()` 每次 `checkEnd` 與回合開始檢查：最小波次到期（回合 ≥ wt）或場上敵人 ≤1 就進場，沒空位的留在 reserve。
+- 敵人 `armor`：`damage()` 對有來源的傷害 `-armor`（≥1）；尖刺／落雷等無來源傷害不受影響。`TUNE.K=10, f12=0.85, hpMax=15, bossMax=30, lsT=12, ENRAGE_BASE=12`。
