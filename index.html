@@ -4,11 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#14111f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="地城戰棋">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E⛩️%3C/text%3E%3C/svg%3E">
 <title>地城戰棋（試作版）</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
-html,body{margin:0;height:100%;background:#0a0812;color:#eee;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;overflow:hidden;touch-action:manipulation}
+html,body{margin:0;height:100%;background:#0a0812;color:#eee;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;overflow:hidden;touch-action:manipulation;overscroll-behavior:none;-webkit-touch-callout:none}
 #app{position:relative;width:min(100vw,430px);height:100dvh;max-height:932px;margin:0 auto;background:radial-gradient(ellipse at top,#4a1d36 0%,#1c1230 55%,#0f0b1a 100%);overflow:hidden}
 .petal{position:absolute;top:-30px;font-size:16px;opacity:.8;pointer-events:none;animation:fall linear infinite;z-index:1}
 @keyframes fall{to{transform:translate(16px,900px) rotate(540deg)}}
@@ -568,6 +575,37 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #hMis{display:flex;flex-direction:column;gap:6px}
 .hrow.mini{height:46px;border-radius:10px}.hrow.mini .hi{width:32px;height:32px;font-size:17px;border-width:2px}.hrow.mini .ht{font-size:14px;font-weight:700}.hrow.mini .hs{font-size:14px}.hrow.mini .hg{font-size:11px}
 @media (min-height:760px){ .hrow:not(.mini){height:68px} .hrow:not(.mini) .ht{font-size:19px} }
+/* v20: 首頁細節（更大圖示框／標題／名牌／分頁）、觸控目標、警告 */
+#hStrip{height:34px;overflow:visible;z-index:5!important}
+.hname{height:50px;min-width:176px;justify-content:center;padding:0 26px;font-size:17px;letter-spacing:3px;border-radius:0 0 28px 28px;border:3px solid #e0b53a;border-top:0;box-shadow:0 3px 6px #0006,inset 0 -3px 0 #0006;z-index:6}
+#hStat{height:80px;padding:16px 10px 4px;align-items:center}
+.emb{width:54px;height:54px;font-size:30px;margin-top:6px;border-width:4px;box-shadow:0 0 0 2px #fff3b0,0 3px 6px #0006}
+.lvb{width:52px;height:52px;border-width:4px;margin-top:6px;box-shadow:0 0 0 2px #7a5410,0 2px 5px #0005}.lvb b{font-size:22px}
+.hrow:not(.mini){height:72px;grid-template-columns:auto 1fr auto;column-gap:14px;padding:6px 12px 6px 8px}
+.hrow:not(.mini) .hi{width:58px;height:58px;font-size:32px;border:5px solid #e6c866;border-radius:8px;box-shadow:0 0 0 2px #5a3f0c,inset 0 0 0 2px #fff4b8,inset 0 0 10px #0007;text-shadow:0 2px 2px #0007}
+.hrow:not(.mini) .hi.blue{border-color:#e6c866;background:radial-gradient(#7cc0ff,#2a68c0)}
+.hrow:not(.mini) .ht{font-size:22px;font-weight:800;letter-spacing:1px}
+.hrow:not(.mini) .hs{font-size:20px}.hrow:not(.mini) .hg{font-size:13px}
+.hrow.mini .hi{width:36px;height:36px;border:3px solid #e6c866;font-size:18px}.hrow.mini{height:50px}
+.pill{min-height:44px;padding:0 16px;display:inline-flex;align-items:center}
+#hTabs{gap:4px;padding:8px 6px calc(8px + env(safe-area-inset-bottom))}
+.tab{position:relative;height:76px;border-radius:10px;border:3px solid #fff3b0;outline:2px solid #6a4608;justify-content:flex-start;padding-top:6px}
+.tab i{width:46px;height:42px;display:flex;align-items:center;justify-content:center;font-size:32px;border-radius:7px;background:radial-gradient(#fffbe0,#f6d870 70%,#e0a420);box-shadow:inset 0 0 0 2px #fff6c0,inset 0 -3px 5px #b8801c88}
+.tab span{position:absolute;left:0;right:0;bottom:2px;font-size:13px;letter-spacing:1px;-webkit-text-stroke:3px #5a3a00;paint-order:stroke fill;text-shadow:none;color:#fff}
+.tab.on{outline-color:#1f6a1c}.tab.on i{background:radial-gradient(#f4fff0,#a8f08a 70%,#4fbf4a);box-shadow:inset 0 0 0 2px #e8ffd8,inset 0 -3px 5px #2f7a2a88}
+@media (max-height:700px){ #hStat{height:68px;padding:12px 10px 2px}.emb{width:44px;height:44px;font-size:24px}.lvb{width:44px;height:44px}.lvb b{font-size:18px}.hname{height:44px}
+ .hrow:not(.mini){height:56px}.hrow:not(.mini) .hi{width:44px;height:44px;font-size:24px;border-width:4px}.hrow:not(.mini) .ht{font-size:18px}.hrow:not(.mini) .hs{font-size:16px}
+ .tab{height:62px}.tab i{width:38px;height:32px;font-size:24px}.tab span{font-size:12px} }
+@media (min-height:760px){ .hrow:not(.mini){height:72px} .hrow:not(.mini) .ht{font-size:22px} }
+.btn.small{min-height:44px}
+.hud .btn.small,.hud .btn.small:hover{min-height:0}
+#btnSpeed,#btnMenu{position:relative}
+#btnSpeed::before,#btnMenu::before{content:"";position:absolute;inset:-9px -8px}
+#partyWarn{margin-top:6px;padding:7px 10px;border-radius:10px;background:#ffe9a8;color:#6a3d00;border:2px solid #e0a020;font-size:12.5px;font-weight:700;line-height:1.4}
+#battle{overscroll-behavior:contain}
+#hList{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#hHead{height:52px}
+@media (min-height:760px){ .hrow:not(.mini){height:64px} .hrow:not(.mini) .hi{width:52px;height:52px;font-size:28px} .hrow:not(.mini) .ht{font-size:21px} }
 </style>
 </head>
 <body>
@@ -608,6 +646,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="sub" style="margin:4px 0 0">點選英雄加入／移出出戰隊伍（最多 3 位）</div>
   <div id="partyRow"></div>
   <div id="rosterGrid"></div>
+  <div id="partyWarn" style="display:none"></div>
   <div id="diffRow" style="display:flex;gap:6px;align-items:center;margin-top:8px;font-size:13px"><span style="color:#bfb6e6">難度</span><button class="btn small" id="dfN" style="flex:1">普通</button><button class="btn small gray" id="dfH" style="flex:2">🔥 修羅（更強敵人・獎勵×1.5）</button></div>
   <div style="display:flex;gap:8px;margin-top:8px">
     <button class="btn" id="btnRosterDraw" style="flex:1">🎴 抽卡</button>
@@ -1047,6 +1086,13 @@ function skillDesc(id, stars=1, atk){
 
 /* ========== 英雄隊伍畫面 ========== */
 function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
+function partyWarning(){
+  const S=G.save; if(!S.party||!S.party.length) return '';
+  const sup = id=>{ const h=HEROES[id]; return h.cls==='坦克'||h.cls==='輔助'||['heal','healall','shield'].includes(h.skill.type); };
+  if(S.party.some(sup)) return '';
+  const cand = Object.keys(S.roster).filter(id=>sup(id)&&!S.party.includes(id)).slice(0,2).map(id=>HEROES[id].name);
+  return '⚠ 隊伍沒有補師或坦克，後面幾層血量會比較吃緊。'+(cand.length?`可考慮換上：${cand.join('、')}。`:'去抽卡找僧兵、巫女之類的英雄吧。');
+}
 function renderRoster(){
   const S = G.save;
   const row = $('#partyRow'); row.innerHTML='';
@@ -1076,6 +1122,7 @@ function renderRoster(){
     grid.appendChild(c);
   });
   $('#btnGo').disabled = S.party.length<1;
+  { const w=partyWarning(), el=$('#partyWarn'); el.style.display=w?'block':'none'; el.textContent=w||''; }
   const unlocked = S.best>=DIFF_UNLOCK, hard = unlocked && S.diff;
   $('#dfN').className = 'btn small'+(hard?' gray':''); $('#dfH').className = 'btn small'+(hard?' red':' gray');
   $('#dfH').textContent = unlocked ? '🔥 修羅（更強敵人・獎勵×1.5）' : `🔒 修羅（通關第 ${DIFF_UNLOCK} 層解鎖）`;
@@ -1925,7 +1972,7 @@ document.addEventListener('click', e=>{ if(e.target.closest('.btn')) sfx('tap');
 $('#btnRoster').onclick = ()=>show('roster');
 $('#btnDraw').onclick = ()=>show('draw');
 $('#btnRosterDraw').onclick = ()=>show('draw');
-$('#btnGo').onclick = ()=>newRun();
+$('#btnGo').onclick = ()=>{ const w=partyWarning(); newRun(); if(w) setTimeout(()=>toast('⚠ 沒有補師／坦克：注意站位與血量'),500); };
 $('#btnDaily').onclick = ()=>{ renderDaily(); $('#dailyOv').classList.add('on'); };
 $('#dailyOk').onclick = ()=>$('#dailyOv').classList.remove('on');
 $('#btnHelp').onclick = ()=>$('#helpOv').classList.add('on');

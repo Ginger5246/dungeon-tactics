@@ -162,3 +162,6 @@
 ## v19 備註
 - 結界青鬼：`ENEMIES.ward`，計畫類型 `ward`（planEnemy），CSS 調色重用 brute 立繪。
 - 重擊頓幀 `body.hs`；通關橫幅 `#clearBan`。
+
+## v20 備註
+- 首頁：名牌壓住狀態列、圖示框加厚、分頁大方塊。觸控目標 ≥44px；`#partyWarn` 組隊提示；manifest.json＋assets/icon-*.png。
