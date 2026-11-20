@@ -925,7 +925,8 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 .bdg.atk{position:relative}
 .bdg.atk .atk-ico{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:18px;height:18px;display:block;filter:drop-shadow(0 1px 1px #0008);pointer-events:none}
 .bdg.atk b{padding-top:8px}
-.unit .atkb,.chip .atkb{position:relative;padding-left:calc(var(--cs,48px)*.28)}
+.chip .atkb{position:relative;padding-left:calc(var(--cs,48px)*.28)}
+#units .unit .atkb{padding-left:calc(var(--cs,48px)*.22)}
 .unit .atkb .atk-ico,.chip .atkb .atk-ico{position:absolute;left:1px;top:50%;transform:translateY(-55%);width:calc(var(--cs,48px)*.26);height:calc(var(--cs,48px)*.26);display:block;filter:drop-shadow(0 1px 1px #000);pointer-events:none}
 .chip .atkb{padding-left:14px}
 .chip .atkb .atk-ico{width:12px;height:12px;left:1px}
@@ -971,10 +972,36 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 
 
 /* ===== v30：全身立繪、臉部裁切、統一角色池 ===== */
-.ud-port{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;height:92%!important;width:auto!important;aspect-ratio:2/3!important;max-width:94%!important}
+/* ===== v31：棋盤正方格、臉部不被角標擋住、詳情卡滿寬 ===== */
+.ud-stage{width:100%!important;height:auto!important;aspect-ratio:2/3!important;max-height:min(62vh,520px)!important}
+.ud-port{position:absolute!important;inset:0!important;left:0!important;top:0!important;right:0!important;bottom:0!important;width:100%!important;height:100%!important;max-width:none!important;transform:none!important;aspect-ratio:auto!important}
 .ud-frame{position:relative;width:100%;height:100%;overflow:hidden}
 .ud-frame .av{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;overflow:hidden}
-.ud-frame .av img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:50% 50%!important;transform:none!important}
+.ud-frame .av img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:50% 18%!important;transform:none!important}
+#boardwrap{align-items:center!important;justify-content:center!important;flex-direction:column}
+#cells .cell{aspect-ratio:1}
+#units .unit{display:block}
+#units .unit .face{position:absolute!important;left:4%!important;top:4%!important;width:92%!important;height:92%!important;aspect-ratio:1!important;min-width:92%!important;min-height:92%!important;max-width:92%!important;max-height:92%!important;box-sizing:border-box!important;border-radius:10px!important;flex:none!important;margin:0!important}
+#units .unit .face .av,#units .unit .face .av img{width:100%!important;height:100%!important;inset:0}
+#chips .chip .em img{object-fit:cover!important;object-position:var(--face,50% 14%)!important;transform:none!important}
+
+/* 角標縮小並固定四角，把臉讓出來 */
+#units .unit .hpn{left:2px;top:1px;font-size:calc(var(--cs)*.26)!important;line-height:1;z-index:5}
+#units .unit .sh{top:1px!important;left:calc(var(--cs)*.34)!important;right:auto!important;font-size:calc(var(--cs)*.15)!important;padding:0 2px!important;line-height:1.15;z-index:5;background:#0a3a5add}
+#units .unit .cdb{top:calc(var(--cs)*.28)!important;right:2px!important;left:auto!important;font-size:calc(var(--cs)*.16)!important;padding:0 2px!important}
+#units .unit .atkb,#units .unit .movb{position:absolute!important;height:calc(var(--cs)*.22)!important;min-width:calc(var(--cs)*.24)!important;width:auto!important;font-size:calc(var(--cs)*.18)!important;padding:0 2px 0 calc(var(--cs)*.20)!important;bottom:1px!important;top:auto!important;border-radius:5px;display:flex!important}
+#units .unit .atkb{left:1px!important;right:auto!important}
+#units .unit .movb{right:1px!important;left:auto!important;padding:0 2px!important}
+#units .unit .atkb .atk-ico{width:calc(var(--cs)*.18)!important;height:calc(var(--cs)*.18)!important;left:1px}
+#units .unit .hp{left:22%;right:22%;bottom:1px;height:3px}
+#units .unit .intent,#units .unit .thr.on{top:1px!important;right:2px!important;font-size:calc(var(--cs)*.16)!important;padding:0 2px!important}
+#units .unit .cls{display:none}
+@media (max-height:700px){
+  #boardwrap{align-items:center!important}
+  .ud-stage{max-height:min(46vh,310px)!important}
+  #objRow{flex-wrap:wrap;overflow:visible}
+  #objRow .oc{white-space:normal;line-height:1.25;max-width:100%}
+}
 .av img.hz,.unit .face img,.chip .em img,.pav img,.hav img,.ssp img{
   object-fit:cover!important;
   object-position:var(--face, 50% 16%)!important;
@@ -996,7 +1023,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="tt-start" id="ttStart">點擊開始</div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
   <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v30　・　單機版，無需登入</div>
+  <div class="tt-ver" id="ttVer">v31　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -1242,7 +1269,7 @@ const HERO_IDS = CHAR_IDS;
 const START_ROSTER = ['samurai','kyudo','onmyoji'];
 const CHAR_ART = {samurai:'heroes',kyudo:'heroes',onmyoji:'heroes',ninja:'heroes',naginata:'heroes',sohei:'heroes',tengu:'heroes',miko:'heroes',kitsune:'heroes',ronin:'heroes',yukionna:'heroes',ryujin:'heroes',grandonmyoji:'heroes',kagenin:'heroes',okami:'heroes',kagura:'heroes',slime:'enemies',goblin:'enemies',skel:'enemies',bat:'enemies',brute:'enemies',onibi:'enemies',tanuki:'enemies',orochi:'enemies',gashadokuro:'enemies',shuten:'enemies',kyubi:'enemies',ward:'enemies'};
 const ART_FILE = {ward:'brute'};
-const ART_FOCUS = {samurai:'50% 16%',kyudo:'50% 16%',onmyoji:'50% 18%',ninja:'50% 16%',naginata:'50% 15%',sohei:'50% 14%',tengu:'50% 15%',miko:'50% 16%',kitsune:'50% 16%',ronin:'50% 15%',yukionna:'50% 15%',ryujin:'50% 14%',grandonmyoji:'50% 14%',kagenin:'50% 15%',okami:'50% 14%',kagura:'50% 15%',slime:'50% 16%',goblin:'50% 18%',skel:'50% 16%',bat:'50% 18%',tanuki:'50% 20%',brute:'50% 14%',onibi:'50% 16%',orochi:'50% 14%',gashadokuro:'50% 12%',shuten:'50% 14%',kyubi:'50% 14%',ward:'50% 14%'};
+const ART_FOCUS = {samurai:'54% 12%',kyudo:'40% 10%',onmyoji:'50% 12%',ninja:'50% 8%',naginata:'50% 16%',sohei:'50% 8%',tengu:'52% 12%',miko:'50% 12%',kitsune:'50% 12%',ronin:'50% 12%',yukionna:'50% 12%',ryujin:'52% 10%',grandonmyoji:'50% 10%',kagenin:'52% 12%',okami:'52% 10%',kagura:'50% 12%',slime:'50% 12%',goblin:'50% 14%',skel:'50% 12%',bat:'50% 14%',tanuki:'50% 16%',brute:'50% 10%',onibi:'50% 12%',orochi:'50% 10%',gashadokuro:'50% 8%',shuten:'50% 10%',kyubi:'50% 10%',ward:'50% 10%'};
 
 const ENEMIES = {
   slime:  {name:'提燈小僧', e:'🏮', hp:5, atk:1, mov:2, rng:1},
@@ -2108,18 +2135,18 @@ function skillReady(u){ return u.cd<=0; }
 const TUNE_UI = 30;
 function layoutBoard(){
   const app = $('#app'), w = app.clientWidth, h = app.clientHeight;
-  const cs0 = Math.max(30, Math.min(Math.floor((w-10)/COLS), 80));
   const board = $('#board'), bw = $('#boardwrap');
   board.style.height = '0px';
-  const avail = Math.max(0, bw.clientHeight - 12);
-  const ch = Math.max(40, Math.min(Math.floor(avail/ROWS), Math.round(cs0*1.32)));
-  const cs = cs0;
+  const availW = Math.max(0, (bw.clientWidth||w) - 10);
+  const availH = Math.max(0, bw.clientHeight - 12);
+  const side = Math.max(30, Math.min(Math.floor(availW/COLS), Math.floor(availH/ROWS), 80));
+  const cs = side, ch = side; /* v31：棋盤格與棋子改為 1:1 正方形 */
   G.cs = cs; G.ch = ch;
   board.style.setProperty('--cs', cs+'px'); board.style.setProperty('--ch', ch+'px');
   board.style.width = cs*COLS+'px'; board.style.height = ch*ROWS+'px';
   $('#cells').style.gridTemplateColumns = `repeat(${COLS},${cs}px)`;
   $('#cells').style.gridAutoRows = ch+'px';
-  $$('#units .unit').forEach(el=>{ el.style.width=cs+'px'; el.style.height=ch+'px'; });
+  $$('#units .unit').forEach(el=>{ el.style.width=cs+'px'; el.style.height=ch+'px'; const f=el.querySelector('.face'); if(f){ const s=Math.round(cs*0.92); f.style.width=s+'px'; f.style.height=s+'px'; } });
   if(G.B) syncUnits();
 }
 window.addEventListener('resize', ()=>{ if(G.screen==='battle') layoutBoard(); });
@@ -2279,8 +2306,9 @@ function fitBoard(){
   if(G.screen!=='battle') return;
   const w=$('#app').clientWidth, board=$('#board'), bw=$('#boardwrap'), hh=board.style.height;
   board.style.height='0px'; const avail=Math.max(0,bw.clientHeight-12); board.style.height=hh;
-  const cs0=Math.max(30,Math.min(Math.floor((w-10)/COLS),80)), ch=Math.max(40,Math.min(Math.floor(avail/ROWS),Math.round(cs0*1.32)));
-  if(ch!==G.ch||cs0!==G.cs) layoutBoard();
+  const availW=Math.max(0,(bw.clientWidth||w)-10);
+  const side=Math.max(30,Math.min(Math.floor(availW/COLS),Math.floor(avail/ROWS),80));
+  if(side!==G.ch||side!==G.cs) layoutBoard();
 }
 function renderAll(){ computeIntents(); renderCells(); syncUnits(); renderLines(); renderChips(); renderObjRow(); renderInfo(); renderButtons(); fitBoard(); }
 function setHint(t){ const h=$('#hint'); h.textContent = t; if(!(G.run&&G.run.floor<=2) && G.save.tutDone){ h.classList.remove('show'); return; } h.classList.add('show'); clearTimeout(setHint._t); setHint._t=setTimeout(()=>h.classList.remove('show'),2600); }
@@ -2897,6 +2925,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v31','棋盤格子與角色棋子改為正方形；立繪裁成臉部特寫，數字角標不再擋住臉。詳情卡立繪改為滿版寬度。'],
   ['v30','全部換成新立繪；角色不再分成英雄與敵人，27 人都可抽來組隊，戰場上也會遇上任何角色。燈籠仍是關卡物件。'],
   ['v29','修好召喚燈籠詳情卡當掉；沒有護甲就不顯示護甲；十連底欄不再擋住卡片；預設隊較好過第一次首領，第 6 層不再突然變難。'],
   ['v28','浮動提示不再蓋住彈窗與出發鈕；新手第 4–5 層較好過；攻擊圓標改槌子；短屏首頁／抽卡不再裁切；十連卡放大、手牌用短名、攻擊上限 6。'],
@@ -2935,7 +2964,7 @@ function startFromTitle(){
 }
 function showTitle(){
   const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v30　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  $('#ttVer').textContent='v31　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -2944,7 +2973,7 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v30　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v31　・　單機版，無需登入　・　👤 '+G.save.name; }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
