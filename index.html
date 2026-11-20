@@ -720,20 +720,26 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #ttPid{white-space:nowrap}
 #title .tt-ver,#ttVer{position:static;left:auto;right:auto;bottom:auto;transform:none;width:auto;max-width:none;margin:0;padding:0;
   background:none;color:#6a4a18;text-shadow:none;font-size:12px;font-weight:700;white-space:nowrap;border-radius:0}
-.tt-logo{position:relative;z-index:5;flex:none;text-align:center;padding:2px 6px 4px;pointer-events:none}
+.tt-top{text-shadow:0 1px 0 #fff6,0 0 4px #ffe9a088}
+.tt-logo{position:relative;z-index:5;flex:none;text-align:center;padding:8px 6px 6px;pointer-events:none}
 .tt-sub{display:none}
-.tt-logo h1{margin:0;display:flex;justify-content:center;align-items:center;gap:2px;
+.tt-logo h1{margin:0;display:flex;justify-content:center;align-items:center;
   font-family:"Noto Sans CJK TC","Noto Sans CJK JP","Source Han Sans TC","PingFang TC","Hiragino Sans","Microsoft JhengHei","Noto Sans TC",sans-serif;
   font-size:clamp(46px,17cqw,68px);line-height:1.05;letter-spacing:.02em;font-weight:900}
-.tt-logo h1 span,.tt-logo h1 .tt-star{
+.tt-logo-stack{position:relative;display:inline-block}
+.tt-logo-stroke,.tt-logo-fill{display:flex;justify-content:center;align-items:center;gap:2px;white-space:nowrap}
+.tt-logo-stroke{position:absolute;left:0;right:0;top:0;color:#16316c;-webkit-text-stroke:8px #16316c;paint-order:stroke fill;z-index:0;
+  filter:drop-shadow(0 3px 0 #0d1e48) drop-shadow(0 5px 6px #0005);pointer-events:none}
+.tt-logo-fill{position:relative;z-index:1}
+.tt-logo-fill span,.tt-logo-fill .tt-star{
   display:inline-block;
-  background:linear-gradient(#fff6c4 0%,#f3cc3a 48%,#d49a14 100%);
+  background:linear-gradient(#fffbe0 0%,#f3cc3a 46%,#d49a14 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  -webkit-text-stroke:7px #16316c;paint-order:stroke fill;
-  filter:drop-shadow(0 3px 0 #0d1e48) drop-shadow(0 5px 6px #0005)}
-.tt-logo h1 span:first-child{transform:rotate(-1.8deg);margin-right:1px}
-.tt-logo h1 span:last-child{transform:rotate(1.6deg);margin-left:1px}
-.tt-logo h1 .tt-star{font-style:normal;transform:rotate(-12deg) scale(1.12);font-size:.78em;margin:0 .02em .08em;color:#f0c430;-webkit-text-stroke:6px #16316c}
+  -webkit-text-stroke:0;paint-order:fill}
+.tt-logo-stroke span,.tt-logo-stroke .tt-star{display:inline-block;color:#16316c}
+.tt-logo-stroke>span:first-of-type,.tt-logo-fill>span:first-of-type{transform:rotate(-1.8deg);margin-right:1px}
+.tt-logo-stroke>span:last-of-type,.tt-logo-fill>span:last-of-type{transform:rotate(1.6deg);margin-left:1px}
+.tt-logo h1 .tt-star{font-style:normal;transform:rotate(-12deg) scale(1.12);font-size:.78em;margin:0 .02em .08em}
 .tt-rib{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;padding:0;margin:0;background:none;color:transparent;text-shadow:none}
 .tt-band{flex:none;height:18px;margin:0;background:url('assets/title/band.svg') repeat-x center;background-size:auto 100%;
   box-shadow:inset 0 1px 0 #fff6c288,0 1px 0 #8a5a1288;z-index:4;pointer-events:none}
@@ -748,23 +754,27 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 .tt-cell:nth-child(9){border-radius:14px 17px 15px 18px}
 .tt-cell img{position:absolute;width:200%;height:auto;max-width:none;
   filter:drop-shadow(1px 1px 0 #fff8e8) drop-shadow(-1px 1px 0 #fff8e8) drop-shadow(0 3px 4px #0004);pointer-events:none}
-.tt-cell.c0 img{width:210%;left:-42%;top:-2%}
-.tt-cell.c2 img{width:200%;left:auto;right:-38%;top:-6%}
-.tt-cell.c6 img{width:190%;left:-6%;top:30%;bottom:auto}
-.tt-cell.c8 img{width:155%;left:auto;right:-18%;top:58%;bottom:auto}
-.tt-heroes{position:absolute;inset:0;z-index:4;pointer-events:none}
-.tt-heroes .th{position:absolute;width:auto;height:90%;bottom:-2%;
+.tt-cell.c0 img{width:200%;left:-40%;top:-2%}
+.tt-cell.c2 img{width:190%;left:auto;right:-36%;top:-6%}
+.tt-cell.c3 img{width:145%;left:-18%;top:0}
+.tt-cell.c5 img{width:155%;left:-8%;top:-4%}
+.tt-cell.c6 img{width:150%;left:-6%;top:0;bottom:auto}
+.tt-cell.c8 img{width:155%;left:-20%;top:0;bottom:auto}
+.tt-heroes{position:absolute;inset:0;z-index:4;pointer-events:none;
+  display:flex;align-items:flex-end;justify-content:center;gap:0;padding:0}
+.tt-heroes .th{position:relative;left:auto;right:auto;bottom:0;width:auto;height:72%;
+  max-width:none;object-fit:contain;object-position:bottom center;flex:0 0 auto;
   filter:drop-shadow(0 0 1px #fffce8) drop-shadow(2px 3px 0 #fff6d8) drop-shadow(0 8px 10px #0004)}
-.tt-heroes .th-l{height:70%;left:16%;bottom:18%;z-index:2}
-.tt-heroes .th-r{height:74%;right:6%;bottom:1%;z-index:2}
-.tt-heroes .th-c{height:95%;left:50%;transform:translateX(-46%);bottom:-2%;z-index:3}
+.tt-heroes .th-l{z-index:3;margin-right:-18px}
+.tt-heroes .th-r{z-index:3;margin-left:-18px}
 #title .tt-start,#ttStart{
-  position:absolute;left:50%;right:auto;bottom:7%;transform:translateX(-50%);
-  z-index:6;font-size:clamp(16px,5.4cqw,22px);font-weight:800;letter-spacing:.22em;
-  color:#5a3a10cc;text-shadow:0 1px 0 #fff8;-webkit-text-stroke:0;background:none;border:none;box-shadow:none;
+  position:absolute;left:50%;right:auto;bottom:6%;transform:translateX(-50%);
+  z-index:6;font-size:clamp(18px,6cqw,24px);font-weight:900;letter-spacing:.18em;
+  color:#fff6c8;-webkit-text-stroke:0;background:none;border:none;box-shadow:none;
+  text-shadow:2px 0 #2a1608,-2px 0 #2a1608,0 2px #2a1608,0 -2px #2a1608,2px 2px #2a1608,-2px 2px #2a1608,2px -2px #2a1608,-2px -2px #2a1608,0 0 8px #0008;
   padding:0;margin:0;border-radius:0;white-space:nowrap;pointer-events:none;
   animation:ttpulse 1.6s ease-in-out infinite}
-@keyframes ttpulse{0%,100%{opacity:.4;transform:translateX(-50%) scale(1)}50%{opacity:.95;transform:translateX(-50%) scale(1)}}
+@keyframes ttpulse{0%,100%{opacity:.72;transform:translateX(-50%) scale(.98)}50%{opacity:1;transform:translateX(-50%) scale(1.05)}}
 @keyframes ttpulse2{0%,100%{opacity:.28;transform:translateX(-50%)}50%{opacity:.9;transform:translateX(-50%)}}
 .tt-foot{flex:none;z-index:8;background:linear-gradient(#efc45c,#d4a230);box-shadow:inset 0 2px 0 #f8e7a0,0 -1px 0 #a07820;padding:6px 8px 8px}
 .tt-btns{position:static;left:auto;right:auto;bottom:auto;display:flex;justify-content:center;gap:8px;margin:0 0 5px}
@@ -776,9 +786,9 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 .tt-tip{margin-top:8px;font-size:12.5px;font-weight:800;color:#3a2208;text-shadow:0 1px 0 #fff8}
 @media (max-height:700px){
   .tt-top{padding:4px 12px 0;font-size:11px}
-  .tt-logo{padding:0 4px 2px}
-  .tt-logo h1{font-size:clamp(40px,15cqw,56px)}
-  .tt-logo h1 span,.tt-logo h1 .tt-star{-webkit-text-stroke:6px #16316c}
+  .tt-logo{padding:4px 4px 2px}
+  .tt-logo h1{font-size:clamp(36px,14cqw,52px)}
+  .tt-logo-stroke{-webkit-text-stroke:7px #16316c}
   .tt-band{height:14px}
   .tt-art{margin:4px 10px 3px}
   .tt-grid{gap:5px}
@@ -786,7 +796,8 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   .tt-foot{padding:4px 6px 5px}
   .tt-b{min-width:82px;min-height:38px;font-size:12px;padding:0 8px}
   .tt-copy{font-size:10px}
-  #title .tt-start,#ttStart{font-size:15px;bottom:6%;letter-spacing:.16em}
+  .tt-heroes .th{height:78%}
+  #title .tt-start,#ttStart{font-size:16px;bottom:5%;letter-spacing:.16em}
 }
 #hName{cursor:pointer}
 
@@ -1379,25 +1390,24 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 
 <!-- 標題／登入畫面 -->
 <section id="title" class="screen">
-  <div class="tt-top"><span id="ttPid">玩家ID: ———</span><span class="tt-ver" id="ttVer">Version v35</span></div>
-  <div class="tt-logo"><h1><span>地城</span><i class="tt-star">★</i><span>戰棋</span></h1><div class="tt-rib">（試作版）</div></div>
+  <div class="tt-top"><span id="ttPid">玩家ID: ———</span><span class="tt-ver" id="ttVer">Version v36</span></div>
+  <div class="tt-logo"><h1><span class="tt-logo-stack"><span class="tt-logo-stroke" aria-hidden="true"><span>地城</span><i class="tt-star">★</i><span>戰棋</span></span><span class="tt-logo-fill"><span>地城</span><i class="tt-star">★</i><span>戰棋</span></span></span></h1><div class="tt-rib">（試作版）</div></div>
   <div class="tt-band" aria-hidden="true"></div>
   <div class="tt-art" id="ttArt">
     <div class="tt-grid">
-      <div class="tt-cell c0"><img src="assets/title/kagura.webp?v=1" alt=""></div>
+      <div class="tt-cell c0"><img src="assets/title/kagura.webp?v=2" alt=""></div>
       <div class="tt-cell"></div>
-      <div class="tt-cell c2"><img src="assets/title/naginata.webp?v=1" alt=""></div>
+      <div class="tt-cell c2"><img src="assets/title/naginata.webp?v=2" alt=""></div>
+      <div class="tt-cell c3"><img src="assets/title/kyudo.webp?v=2" alt=""></div>
       <div class="tt-cell"></div>
+      <div class="tt-cell c5"><img src="assets/title/tengu.webp?v=2" alt=""></div>
+      <div class="tt-cell c6"><img src="assets/title/onmyoji.webp?v=2" alt=""></div>
       <div class="tt-cell"></div>
-      <div class="tt-cell"></div>
-      <div class="tt-cell c6"><img src="assets/title/onmyoji.webp?v=1" alt=""></div>
-      <div class="tt-cell"></div>
-      <div class="tt-cell c8"><img src="assets/title/sohei.webp?v=1" alt=""></div>
+      <div class="tt-cell c8"><img src="assets/title/kitsune.webp?v=2" alt=""></div>
     </div>
     <div class="tt-heroes">
-      <img class="th th-l" src="assets/title/kyudo.webp?v=1" alt="">
-      <img class="th th-r" src="assets/title/miko.webp?v=1" alt="">
-      <img class="th th-c" src="assets/title/samurai.webp?v=1" alt="">
+      <img class="th th-l" src="assets/title/samurai.webp?v=2" alt="">
+      <img class="th th-r" src="assets/title/miko.webp?v=2" alt="">
     </div>
     <div class="tt-start" id="ttStart">點擊開始</div>
   </div>
@@ -3395,6 +3405,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v36','標題金字改為金填色加海軍藍描邊；中央放逐騎士與巫女改為左右並排、全身可辨（不再互相擋住）。點擊開始提高對比。'],
   ['v35','標題畫面改版（玩家ID、地城★戰棋、自家立繪去背）。第一次第 5 層優待不再因武運之刃關掉，並加「先打隨從」提示；座敷童子改標法術。十連提示捲回頂端會再出現。'],
   ['v34','棋子特寫改以臉為中心（放逐騎士看得到額頭與眼睛，河童看得到頭）；短屏層名不再壓到最上排。預設／推薦第一次首領再放寬一點。十連提示捲回來還會出現。'],
   ['v33','戰鬥棋子改為近距離臉部特寫（不再用全身立繪裁切）；層名改到棋盤上方並快速淡出，不再壓到棋子。預設隊前五層稍鬆、強隊第 5 層拉長到約 8 回合以上。河童特性不再與環斬重複；十連提示會在捲到底時收起。'],
@@ -3445,7 +3456,7 @@ function fmtPid(id){ return String(id).replace(/(\d{3})(\d{3})(\d{3})/,'$1,$2,$3
 function paintTitleChrome(){
   ensurePid();
   const pidEl=$('#ttPid'); if(pidEl) pidEl.textContent='玩家ID: '+fmtPid(G.save.pid);
-  const ver=$('#ttVer'); if(ver) ver.textContent='Version v35';
+  const ver=$('#ttVer'); if(ver) ver.textContent='Version v36';
 }
 function showTitle(){
   paintTitleChrome();
