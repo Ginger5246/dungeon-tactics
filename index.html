@@ -875,9 +875,9 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 /* ===== v27 測試回饋：彈窗關閉、提示不擋棋、詳情卡短屏 ===== */
 #helpOv{align-items:center;justify-content:center}
 #helpOv .help-modal{max-height:min(92%,calc(100% - 12px));width:100%;overflow:hidden;display:flex;flex-direction:column;padding:12px 14px 10px;gap:8px}
-#helpOv .help-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;padding-bottom:16px}
+#helpOv .help-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;padding-bottom:28px;scroll-padding-bottom:28px;mask-image:linear-gradient(#000 0,#000 calc(100% - 14px),transparent);-webkit-mask-image:linear-gradient(#000 0,#000 calc(100% - 14px),transparent)}
 #helpOv .help-body p{margin:0 0 10px}
-#helpOv .help-foot{flex:none;padding-top:4px}
+#helpOv .help-foot{flex:none;position:relative;z-index:2;padding:10px 0 4px;background:#2a1a0c;box-shadow:0 -12px 14px #2a1a0c}
 #helpOv .help-foot .btn{width:100%;min-height:44px}
 #helpOv .help-hint{text-align:center;font-size:11px;color:#c9b98a;margin:0 0 6px}
 
@@ -914,6 +914,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 
 
 /* ===== v28：toast 層級、短屏版面、槌子圖示、十連卡 ===== */
+/* ===== v29：燈籠卡、十連底欄、新手第 6 層、槌子徽章 ===== */
 #toast{z-index:40!important;max-width:86%;pointer-events:auto}
 #toast.tr{top:auto;bottom:auto}
 #toast.t-top{top:10px;bottom:auto}
@@ -924,6 +925,10 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 .bdg.atk{position:relative}
 .bdg.atk .atk-ico{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:18px;height:18px;display:block;filter:drop-shadow(0 1px 1px #0008);pointer-events:none}
 .bdg.atk b{padding-top:8px}
+.unit .atkb,.chip .atkb{position:relative;padding-left:calc(var(--cs,48px)*.28)}
+.unit .atkb .atk-ico,.chip .atkb .atk-ico{position:absolute;left:1px;top:50%;transform:translateY(-55%);width:calc(var(--cs,48px)*.26);height:calc(var(--cs,48px)*.26);display:block;filter:drop-shadow(0 1px 1px #000);pointer-events:none}
+.chip .atkb{padding-left:14px}
+.chip .atkb .atk-ico{width:12px;height:12px;left:1px}
 #chips .chip .nm{display:block!important;left:4px;right:4px;bottom:1px;height:auto;padding:0;background:none;font-size:10px;font-weight:800;text-shadow:0 0 3px #000,0 1px 2px #000;z-index:3;white-space:nowrap;overflow:visible;text-overflow:clip;text-align:center;pointer-events:none}
 
 #hList{padding-bottom:18px}
@@ -947,19 +952,22 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   #hList{padding-bottom:22px}
   #tipBox{max-height:36px;font-size:11px;margin:2px 6px 2px;padding:3px 22px 3px 6px}
   #boardwrap{overflow:hidden;align-items:flex-start!important}
-  #helpOv .help-body{padding-bottom:16px}
+  #helpOv .help-body{padding-bottom:32px}
   .ud-stage{height:min(30vh,200px)}
   #detailBox.ud-card .ud-extra{max-height:22vh;overflow-y:auto}
 }
 #boardwrap{overflow:hidden}
 
-#revealGrid.ten{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,380px);max-height:62vh;overflow-y:auto;padding:4px;-webkit-overflow-scrolling:touch}
+#revealOv.on{display:flex!important;flex-direction:column;height:100%;overflow:hidden;padding:10px 8px 0;gap:8px;justify-content:stretch}
+#revealOv #revealTitle{flex:none;margin:4px 0 0}
+#revealGrid.ten{flex:1 1 0%;min-height:0;max-height:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,380px);margin:0 auto;overflow-y:auto;padding:4px 4px 12px;-webkit-overflow-scrolling:touch}
 #revealGrid.ten .rcard{aspect-ratio:3/4;min-height:150px}
 #revealGrid.ten .rcard .f .nm{font-size:15px}
 #revealGrid.ten .rcard .f .tag{font-size:12px}
 #revealGrid.ten .rcard .f .rr{font-size:13px}
 #revealGrid.ten .rcard .f .av{font-size:64px}
-#revealBtns{position:relative;z-index:2}
+#revealBtns{flex:none;position:relative;z-index:3;background:#140c06;padding:10px 8px 14px;margin:0 -8px 0;border-top:2px solid #c9a34a66;width:auto}
+#revealGrid .rcard.ssr.flipped{outline:2px solid #ffe066;outline-offset:2px}
 
 </style>
 </head>
@@ -974,7 +982,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="tt-start" id="ttStart">點擊開始</div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
   <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v28　・　單機版，無需登入</div>
+  <div class="tt-ver" id="ttVer">v29　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -1113,7 +1121,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <p><b>操作：</b>點英雄 → 點藍色格移動 → 點紅色敵人攻擊，或按「技能」再點目標，最後自動待機。全部行動完（或按「結束回合」）換怪物行動。點敵人可查看資料與威脅範圍。</p>
   <p><b>成長：</b>通關會得到 🎫 御札，在「英雄隊伍」點英雄的 ⓘ 可升級（每級生命 +1、每 3 級攻擊 +1）；通關第 4 層後可選「修羅」難度（戰鬥時標題列顯示 👹），敵人更強、獎勵 ×1.5。</p>
   <p><b>站位：</b>橘色「挾」格＝從那裡攻擊，若敵人另一側有友軍夾擊，傷害 +1；⛰️ 高台上的英雄攻擊 +1；⚡ 落雷詞綴會標示十字範圍，回合結束前離開！</p>
-  <p><b>棋子卡牌：</b>左上大數字＝生命，左下綠徽章（⚔）＝攻擊力，右下橘徽章＝移動力，右上小圖示＝狀態（⚠ 被鎖定、敵人預告攻擊…）。藍框是我方、紅框是敵人、金框是精英、👑 是首領。淡紅色魔法陣格＝危險／增援出現位置。</p>
+  <p><b>棋子卡牌：</b>左上大數字＝生命，左下綠色槌子徽章＝攻擊力，右下橘徽章＝移動力，右上小圖示＝狀態（⚠ 被鎖定、敵人預告攻擊…）。藍框是我方、紅框是敵人、金框是精英、👑 是首領。淡紅色魔法陣格＝危險／增援出現位置。</p>
   <p><b>羈絆 🔗：</b>特定英雄相鄰時觸發加成（初始隊伍：並肩作戰、遠程連攜；另有雙巫共鳴、劍心相映、掩護射擊、龍狼合擊），戰場上方會出現粉色標籤，英雄詳情可查看。</p>
   <p><b>妖怪種類：</b>🦝 化け狸會治療同伴；🔵 鬼火被擊倒會爆炸；🛡 結界青鬼每 3 回合替身邊 2 格內的敵人加護盾（青色連線預告）；🚩 指揮官讓其他敵人攻擊 +1。這些都是優先擊倒的目標。</p>
   <p><b>攻擊型態：</b>每個英雄與妖怪的普通攻擊範圍都不同（十字、八方、直線、斜線、日字跳躍、貫穿、橫掃…）。選中英雄後，橘框格＝這位英雄現在可以攻擊的格子；點敵人可看牠的攻擊範圍。<b>長按棋子（約 0.5 秒）或按資訊欄的 ⓘ</b> 可開啟詳情卡（圖像、攻擊型態、技能介紹）。</p>
@@ -1489,8 +1497,9 @@ function toast(msg){
   } else if(G.screen==='draw'){ t.classList.add('tg'); }
   else if(G.screen==='roster'){
     t.classList.add('tr');
-    const go=$('#btnGo');
-    if(go){ t.style.top='auto'; t.style.bottom=Math.max(8, Math.round(ar.bottom-go.getBoundingClientRect().top+8))+'px'; }
+    const warn=$('#partyWarn'), diff=$('#diffRow'), go=$('#btnGo');
+    const anchor=(warn && warn.style.display!=='none' && warn.offsetParent && warn.getBoundingClientRect().height>4)?warn:(diff||go);
+    if(anchor){ t.style.top='auto'; t.style.bottom=Math.max(8, Math.round(ar.bottom-anchor.getBoundingClientRect().top+6))+'px'; }
     else { t.classList.add('t-top'); }
   } else { t.classList.add('t-top'); }
   t.style.display='block'; t.onclick=()=>hideToast();
@@ -1836,6 +1845,8 @@ function playReveal(results){
     { const n=results.length, cost=n===10?COST10:COST1, ag=$('#revealAgain'); ag.dataset.n=n; ag.innerHTML=`再抽 ×${n}<small>💎 ${cost}</small>`; ag.disabled=G.save.gems<cost; ag.style.display='block'; ag.style.opacity=ag.disabled?.45:1; }
     ov.onclick = null;
     cards.forEach(c=>{ c.style.cursor='pointer'; c.onclick=ev=>{ ev.stopPropagation(); if(c.dataset.hero) showDetail(c.dataset.hero); }; });
+    const hi=grid.querySelector('.rcard.ssr')||[...cards].slice(-2)[0];
+    if(hi){ try{ hi.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} }
   };
   cards.forEach((c,i)=>{ timers.push(setTimeout(()=>{ c.classList.add('flipped'); sfx(c.dataset.rarity==='SSR'?'ssr':'flip'); if(i===cards.length-1) setTimeout(finish, 450); }, G.fast?10: 500+i*260)); });
   ov.onclick = (e)=>{ if(e.target.id==='revealOk') return; finish(); };
@@ -1887,12 +1898,21 @@ function genTiles(obs, f){
   if(f>=3 && sp.length && Math.random()<0.6){ const c2=shuffle(cand.filter(([x,y])=>!tiles.has(key(x,y)) && y>=1 && y<=3)); if(c2.length){ const [x,y]=c2[0]; tiles.set(key(x,y),'high'); } }
   return tiles;
 }
+function partyPower(){
+  const run=G.run; if(!run||!run.members) return 0;
+  return run.members.reduce((a,m)=>{
+    const h=HEROES[m.id], st=heroStats(m.id, m.stars, run.buffs||NOBUFF);
+    const heal=h&&h.skill&&['heal','healall','shield'].includes(h.skill.type);
+    return a+st.atk*(heal?0.65:1);
+  },0);
+}
 function genEnemyList(f, strong, totem){
   const list = [];
   const pool = ['slime','goblin'];
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute','ward');
   const boss = isBoss(f);
-  const nb = boss ? (f<=5?2:2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?1 : (f>=9?3:2)));
+  const strongParty = partyPower()>=10;
+  const nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?(strongParty?2:1) : (f===6 && (G.save.best||0)<6?1 : (f>=9?3:2))));
   let nT=0, nW=0; const maxT = f>=7?2:1;
   const mk = (wv)=>{ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT||wv>0) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1||wv>0) t='brute'; else nW++; } const o={...ENEMIES[t], t, boss:false, wv}; if(wv){ o.wt = wv===1?TUNE.w1t:TUNE.w2t; } return o; };
   for(let i=0;i<nb;i++) list.push(mk(0));
@@ -1955,9 +1975,16 @@ function startBattle(){ const B0=null;
       obj.g = Math.round((20+6*f)*(run.diff?1.5:1)); obj.x = Math.round((8+2*f)*(run.diff?1.5:1));
     }
   }
-  if(run.floor<=5){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
-  if((G.save.best||0)<5 && run.floor<=5){ units.filter(u=>u.team==='p').forEach(u=>{ u.shield=(u.shield||0)+(run.floor===5?4:2); }); }
-  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if((G.save.best||0)<5) boss.armor=0; } } }
+  const best=G.save.best||0;
+  if(run.floor<=5 || (best<6 && run.floor===6)){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
+  units.filter(u=>u.team==='p').forEach(u=>{
+    let sh=0;
+    if(best<5 && run.floor<=5) sh = run.floor===5?4:3;
+    else if(best===5 && run.floor===6) sh=2;
+    else if(best===5 && run.floor===7) sh=1;
+    if(sh) u.shield=(u.shield||0)+sh;
+  });
+  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=1; } } }
   const tiles = genTiles(obs, run.floor);
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
@@ -2060,7 +2087,7 @@ function unitEl(u){
   let el = $(`#units .unit[data-uid="${u.uid}"]`);
   if(!el){
     el = document.createElement('div'); el.dataset.uid=u.uid; if(u.t) el.dataset.t=u.t;
-    el.innerHTML = `<div class="face">${av(u.img,u.e,u.team==='p'?'hz':'')}</div><div class="hp"><i></i></div><span class="hpn"></span><span class="sh"></span><span class="cdb"></span><span class="cls"></span><span class="intent"></span><span class="thr">⚠</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b></b></span><span class="movb" title="移動力"><b></b></span>`;
+    el.innerHTML = `<div class="face">${av(u.img,u.e,u.team==='p'?'hz':'')}</div><div class="hp"><i></i></div><span class="hpn"></span><span class="sh"></span><span class="cdb"></span><span class="cls"></span><span class="intent"></span><span class="thr">⚠</span><span class="atkb">${ATK_ICO}<b></b></span><span class="movb" title="移動力"><b></b></span>`;
     el.style.left = u.x*G.cs+'px'; el.style.top = u.y*G.ch+'px';
     $('#units').appendChild(el);
   }
@@ -2144,7 +2171,7 @@ function renderChips(){
     const c = document.createElement('div');
     c.className = 'chip'+(G.ui.sel===u?' sel':'')+(u.done&&u.alive?' done':'')+(u.alive?'':' dead');
     c.dataset.uid = u.uid;
-    c.innerHTML = `<div class="em">${av(u.img,u.e,'hz')}</div><span class="hpn">${Math.max(0,u.hp)}</span><span class="st">${u.alive?(u.done?'✔':(u.cd>0?'⏳'+u.cd:'✨')):''}</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b>${u.atk}</b></span><span class="movb" title="移動力"><b>${u.mov}</b></span><div class="nm">${HERO_SHORT[u.hid]||u.name}</div><div class="bar"><i style="width:${Math.max(0,u.hp/u.maxhp*100)}%"></i></div>`;
+    c.innerHTML = `<div class="em">${av(u.img,u.e,'hz')}</div><span class="hpn">${Math.max(0,u.hp)}</span><span class="st">${u.alive?(u.done?'✔':(u.cd>0?'⏳'+u.cd:'✨')):''}</span><span class="atkb">${ATK_ICO}<b>${u.atk}</b></span><span class="movb" title="移動力"><b>${u.mov}</b></span><div class="nm">${HERO_SHORT[u.hid]||u.name}</div><div class="bar"><i style="width:${Math.max(0,u.hp/u.maxhp*100)}%"></i></div>`;
     attachLongPress(c, ()=>u);
     c.onclick = ()=>{ if(G.lpAt && Date.now()-G.lpAt<700){ G.lpAt=0; return; } if(!G.busy && G.B.phase==='player' && u.alive && !u.done) selectUnit(u); else if(u.alive){ G.ui.inspect=u; G.ui.sel=null; renderAll(); } };
     wrap.appendChild(c);
@@ -2291,7 +2318,11 @@ function damage(target, dmg, att){
     if(guarded){ d=Math.max(1,d-1); dmg=d; }
   }
   if(att && target.armor>0 && d>0){ d=Math.max(1,d-target.armor); dmg=d; }
-  if(att && target.boss && target.guard && d>0 && G.B && G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem)){ d=Math.max(1,d-2); dmg=d; }
+  if(att && target.boss && target.guard && d>0 && G.B){
+    const adds=G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem);
+    if(!adds && target.guardLinger && target.guardUntil==null) target.guardUntil=G.B.turn+1;
+    if(adds || (target.guardUntil!=null && G.B.turn<=target.guardUntil)){ d=Math.max(1,d-2); dmg=d; }
+  }
   if(target.shield>0){ const a=Math.min(target.shield,d); target.shield-=a; d-=a; if(a) floatText(target,'🛡-'+a,'sh'); }
   if(d>0){
     target.hp-=d; const big = d>=target.maxhp*0.25;
@@ -2691,9 +2722,11 @@ $('#ovHome').onclick = ()=>show('home');
 /* ========== 單位詳情卡（英雄／敵人）========== */
 function starRowHTML(n){ return '★'.repeat(n)+'<span style="opacity:.35">'+'★'.repeat(5-n)+'</span>'; }
 function showUnitCard(u){
+  if(typeof u==='number'){ u=G.B&&G.B.units.find(x=>x.uid===u); }
   if(!u) return;
-  const isP = u.team==='p', p = u.pat||PATS.adj4;
+  const isP = u.team==='p'; let p = (u.pat&&u.pat.n)?u.pat:Object.assign({},u.pat||PATS.adj4);
   const card = $('#udCard'); card.className = isP?'hero':'foe';
+  try{ $('#udPanel').innerHTML=''; $('#udNm').textContent=''; }catch(e){}
   let no, nm, stars, lim, panel;
   if(isP){
     const h=HEROES[u.hid], mem=G.run&&G.run.members.find(m=>m.id===u.hid), sv=G.save.roster[u.hid];
@@ -2711,7 +2744,8 @@ function showUnitCard(u){
     lim = '數量限制 '+qtyLimit(null,u);
     let skN, skV, skD, tr, tags=['妖怪'];
     if(u.totem){ skN='召喚'; skV=TUNE.totemCd; skD=`每 ${TUNE.totemCd} 回合召喚 1 隻小妖（最多 ${TUNE.totemMax} 隻），直到被摧毀。`; tr={id:'still', n:'不動', d:'不會攻擊，也沒有護甲。先拆掉它。'}; tags=['特殊']; p={n:'無', d:'不會攻擊', offs:[]}; }
-    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD='每 3 回合對全隊造成（攻擊一半）傷害。'; tr=BOSS_TRAIT; tags=['首領']; if(u.guard) tags.push('護衛'); }
+    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD='每 3 回合對全隊造成（攻擊一半）傷害。'; tags=['首領']; if(u.guard) tags.push('護衛');
+      tr = (u.armor>0) ? BOSS_TRAIT : (u.guard ? {id:'guard', n:'護衛', d:'仍有隨從在場時，首領受到的傷害再 -2（至少 1）。'} : {id:'boss', n:'首領', d:'地城的層主。'}); }
     else if(u.heal){ skN='治癒術'; skV=TUNE.healV; skD=`攻擊型態為${p.n}：${p.d}。每 2 回合治療受傷的同伴 ${TUNE.healV} 點生命。`; tr=ENEMY_TRAIT.tanuki; }
     else if(u.explode){ skN='鬼火爆彈'; skV=1; skD=`攻擊型態為${p.n}：${p.d}。被擊倒時爆炸，對相鄰英雄造成攻擊 +1 點傷害。`; tr=ENEMY_TRAIT.onibi; }
     else if(u.ward){ skN='結界術'; skV=TUNE.wardV; skD=`攻擊型態為${p.n}：${p.d}。每 3 回合替 2 格內的友軍張開 ${TUNE.wardV} 點護盾。`; tr=ENEMY_TRAIT.ward; }
@@ -2721,7 +2755,7 @@ function showUnitCard(u){
     if(u.elite) tags.push('精英');
     if(u.cmd) tags.push('指揮官');
     let extra='';
-    if(u.guard) extra += `<div class="ud-tr">護衛</div><div class="ud-trd">仍有隨從在場時，首領受到的傷害再 -2（至少 1）。</div>`;
+    if(u.guard && !(tr&&tr.id==='guard')) extra += `<div class="ud-tr">護衛</div><div class="ud-trd">仍有隨從在場時，首領受到的傷害再 -2（至少 1）。</div>`;
     if(u.cmd) extra += `<div class="ud-tr">指揮</div><div class="ud-trd">存活時其他敵人攻擊 +1。</div>`;
     if(u.frozen>0) extra += `<div class="ud-tr">凍結</div><div class="ud-trd">下回合無法行動。</div>`;
     if(u.elite) extra += `<div class="ud-trd">精英：更強壯，擊倒有額外獎勵。</div>`;
@@ -2754,7 +2788,7 @@ window.__game = {
   patHits:(uid,list)=>{ const u=G.B.units.find(x=>x.uid===uid); const o={}; list.forEach(([x,y])=>{ o[x+','+y]=hitsFrom(u,x,y).map(t=>t.uid); }); return o; },
   patTilesOf:(uid,x,y)=>{ const u=G.B.units.find(w=>w.uid===uid); return [...patTiles(u,x==null?u.x:x,y==null?u.y:y).keys()]; },
   threatMap:()=>{ const thr={}; foes().forEach(e=>{ if(e.frozen>0||e.wait>0) return; const cov=new Set(); reachTiles(e).forEach((s,k)=>{ const [x,y]=k.split(',').map(Number); patTiles(e,x,y).forEach((v,kk)=>cov.add(kk)); }); cov.forEach(k=>{ thr[k]=(thr[k]||0)+e.atk; }); }); return thr; },
-  showUnitCard:(uid)=>showUnitCard(G.B.units.find(u=>u.uid===uid)), PATS,
+  showUnitCard:(uid)=>showUnitCard(G.B.units.find(u=>u.uid===uid)), PATS, ENEMIES, BOSSES,
   trace:()=>TR.slice(), G, HEROES, TUNE, renderInfo, layoutBoard,
   get errors(){ return G.errors; },
   set fast(v){ G.fast = !!v; }, get fast(){ return G.fast; },
@@ -2811,6 +2845,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v29','修好召喚燈籠詳情卡當掉；沒有護甲就不顯示護甲；十連底欄不再擋住卡片；預設隊較好過第一次首領，第 6 層不再突然變難。'],
   ['v28','浮動提示不再蓋住彈窗與出發鈕；新手第 4–5 層較好過；攻擊圓標改槌子；短屏首頁／抽卡不再裁切；十連卡放大、手牌用短名、攻擊上限 6。'],
   ['v27','詳情卡改為參考卡牌版面（隊伍與戰鬥同一張）；技能寫成「名稱(數值)」加特性；玩法說明可直接關閉，清除存檔改到設定；第 1～2 層較溫和並可一鍵推薦編成；第 1～3 層有召喚燈籠。'],
   ['v26','每層分波登場（第 3／6 回合或場上剩 1 隻時增援），回合數回到約 8～10 回合；赤鬼與首領有護甲 1；教學提示可點擊關閉、不再蓋住手牌；十連抽卡片放大。'],
@@ -2847,7 +2882,7 @@ function startFromTitle(){
 }
 function showTitle(){
   const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v28　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  $('#ttVer').textContent='v29　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -2856,7 +2891,7 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v28　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v29　・　單機版，無需登入　・　👤 '+G.save.name; }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
