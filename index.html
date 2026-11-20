@@ -875,7 +875,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 /* ===== v27 測試回饋：彈窗關閉、提示不擋棋、詳情卡短屏 ===== */
 #helpOv{align-items:center;justify-content:center}
 #helpOv .help-modal{max-height:min(92%,calc(100% - 12px));width:100%;overflow:hidden;display:flex;flex-direction:column;padding:12px 14px 10px;gap:8px}
-#helpOv .help-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+#helpOv .help-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px;padding-bottom:16px}
 #helpOv .help-body p{margin:0 0 10px}
 #helpOv .help-foot{flex:none;padding-top:4px}
 #helpOv .help-foot .btn{width:100%;min-height:44px}
@@ -912,6 +912,55 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   #detailBox.ud-card>#detailOk,#udCard>#udClose{min-height:40px;margin:4px 10px 6px}
 }
 
+
+/* ===== v28：toast 層級、短屏版面、槌子圖示、十連卡 ===== */
+#toast{z-index:40!important;max-width:86%;pointer-events:auto}
+#toast.tr{top:auto;bottom:auto}
+#toast.t-top{top:10px;bottom:auto}
+.overlay{z-index:50}
+#revealOv{z-index:70;background:#140c06}
+#app:has(#revealOv.on) #draw .drawbtns,#app:has(#revealOv.on) #draw>.sub{visibility:hidden}
+
+.bdg.atk{position:relative}
+.bdg.atk .atk-ico{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:18px;height:18px;display:block;filter:drop-shadow(0 1px 1px #0008);pointer-events:none}
+.bdg.atk b{padding-top:8px}
+#chips .chip .nm{display:block!important;left:4px;right:4px;bottom:1px;height:auto;padding:0;background:none;font-size:10px;font-weight:800;text-shadow:0 0 3px #000,0 1px 2px #000;z-index:3;white-space:nowrap;overflow:visible;text-overflow:clip;text-align:center;pointer-events:none}
+
+#hList{padding-bottom:18px}
+#hList .h-more{flex:none;position:sticky;bottom:0;z-index:2;text-align:center;font-size:11px;color:#8a6a28;padding:6px 0 8px;font-weight:700;background:linear-gradient(transparent,#e8d4a0 35%)}
+#draw.on{display:flex!important;flex-direction:column;height:100%;overflow:hidden}
+#ssrShow{flex:1 1 0%!important;min-height:0!important;overflow:hidden!important;display:flex;flex-direction:column;position:relative;z-index:1;margin:4px 0!important}
+#ssrShow .ssg{flex:1 1 0%;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+.drawbtns{flex:none;position:relative;z-index:3;background:linear-gradient(#4d2f14,#2b1a0b);padding:8px 2px 4px;margin-top:0;border-top:2px solid #c9a34a66}
+#draw>.sub{flex:none;background:#2b1a0b;padding:4px 8px 8px;margin:0}
+@media (max-height:700px){
+  #drawBanner{display:flex;align-items:center;gap:8px;padding:6px 10px;margin:4px 0;text-align:left}
+  #drawBanner .big{font-size:28px;line-height:1}
+  #drawBanner>div:not(.big){font-size:13px!important;margin-top:0!important}
+  #rates{padding:6px 8px!important}
+  #rates .rbig{margin:2px 0!important}
+  #rates .rb{padding:3px 2px}
+  #rates .rb .rp{font-size:18px}
+  #rates .pity .pt{font-size:11px}
+  #rates #ratesTog{padding:4px 8px;margin-top:4px!important}
+  #ssrShow .ssc{height:80px}
+  #hList{padding-bottom:22px}
+  #tipBox{max-height:36px;font-size:11px;margin:2px 6px 2px;padding:3px 22px 3px 6px}
+  #boardwrap{overflow:hidden;align-items:flex-start!important}
+  #helpOv .help-body{padding-bottom:16px}
+  .ud-stage{height:min(30vh,200px)}
+  #detailBox.ud-card .ud-extra{max-height:22vh;overflow-y:auto}
+}
+#boardwrap{overflow:hidden}
+
+#revealGrid.ten{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:min(100%,380px);max-height:62vh;overflow-y:auto;padding:4px;-webkit-overflow-scrolling:touch}
+#revealGrid.ten .rcard{aspect-ratio:3/4;min-height:150px}
+#revealGrid.ten .rcard .f .nm{font-size:15px}
+#revealGrid.ten .rcard .f .tag{font-size:12px}
+#revealGrid.ten .rcard .f .rr{font-size:13px}
+#revealGrid.ten .rcard .f .av{font-size:64px}
+#revealBtns{position:relative;z-index:2}
+
 </style>
 </head>
 <body>
@@ -925,7 +974,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="tt-start" id="ttStart">點擊開始</div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
   <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v27　・　單機版，無需登入</div>
+  <div class="tt-ver" id="ttVer">v28　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -946,6 +995,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
     <button class="hrow" id="btnDaily"><span class="hi gold">📋</span><span class="ht">每日任務</span><span class="hs" id="dlS">0/3</span><span class="hg" id="dlG">每日更新</span></button>
     <div class="hsub"><span class="hh-t"><i>✦</i><b>今日任務</b></span></div>
     <div id="hMis"></div>
+    <div class="h-more">↕ 向下滑還有內容</div>
   </div>
   <div id="hTabs">
     <button class="tab on" id="tabAdv"><i>⚔️</i><span>冒險</span></button>
@@ -1085,7 +1135,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="ud-head"><span class="ud-cls" id="udCls"></span><div class="ud-hm"><div class="ud-no" id="udNo">No. 001</div><div class="ud-nm" id="udNm">名稱</div></div><div class="ud-right"><div class="ud-st" id="udSt">★★★</div><div class="ud-lim" id="udLim">數量限制 2</div></div></div>
   <div class="ud-stage" id="udStage"><div class="ud-floor"></div><div class="ud-sp" id="udSp"></div><div class="ud-port" id="udPort"></div>
     <div class="ud-pat" id="udPat"></div>
-    <div class="ud-badges"><span class="bdg atk"><i>⚔</i><b id="udAtk">0</b></span><span class="bdg hp"><b id="udHp">0</b><small id="udHpM"></small></span><span class="bdg mv"><i>👟</i><b id="udMv">0</b></span></div></div>
+    <div class="ud-badges"><span class="bdg atk"><svg class="atk-ico" viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-38 16 18)"><rect x="14.2" y="11" width="3.6" height="17" rx="1.4" fill="#3a2208"/><rect x="8" y="3.5" width="16" height="10" rx="2" fill="#f3de9a" stroke="#3a2208" stroke-width="1.6"/><rect x="10" y="6.2" width="12" height="2.2" rx=".6" fill="#c9a24a"/></g></svg><b id="udAtk">0</b></span><span class="bdg hp"><b id="udHp">0</b><small id="udHpM"></small></span><span class="bdg mv"><i>👟</i><b id="udMv">0</b></span></div></div>
   <div class="ud-rule" aria-hidden="true"></div>
   <div class="ud-panel" id="udPanel"></div>
   <button class="btn gold" id="udClose">關閉</button>
@@ -1123,6 +1173,8 @@ const SAVE_KEY = 'abyss_tactics_save_v1';
 const COLS = 5, ROWS = 5;
 const DIRS = [[1,0],[-1,0],[0,1],[0,-1]];
 const TUNE = {totemP:0.3, totemHp:6, totemCd:2, totemMax:6, w1t:3, w2t:6, K:10, ex:1.0, f12:0.72, hpMax:15, f12hp:10, bossMax:30, hard:1.25, bossK:0.9, lsT:12, wardCd:3, wardV:2, healV:3, springV:3, spikeV:2, stormV:3, baseN:3, f3wave:1, waveP:0.7, waveF:0.28, waveF:0.28, rest:4, back:5};
+const ATK_ICO = `<svg class="atk-ico" viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-38 16 18)"><rect x="14.2" y="11" width="3.6" height="17" rx="1.4" fill="#3a2208"/><rect x="8" y="3.5" width="16" height="10" rx="2" fill="#f3de9a" stroke="#3a2208" stroke-width="1.6"/><rect x="10" y="6.2" width="12" height="2.2" rx=".6" fill="#c9a24a"/></g></svg>`;
+const HERO_SHORT = {samurai:'武士',kyudo:'弓道',onmyoji:'陰陽',ninja:'忍者',sohei:'僧兵',tengu:'天狗',miko:'巫女',kitsune:'狐火',ryujin:'龍神',grandonmyoji:'大陰陽',kagenin:'影忍',naginata:'薙女',ronin:'浪人',yukionna:'雪女',okami:'白狼',kagura:'神樂'};
 const CLS_ICON = {'近戰':'⚔️','遠程':'🏹','法術':'🔮','刺客':'🗡️','坦克':'🛡️','輔助':'💚'};
 const ENRAGE_BASE = 12, DIFF_UNLOCK = 4;
 const enrageT = ()=> ENRAGE_BASE - ((G.run&&G.run.diff)?2:0);
@@ -1422,23 +1474,32 @@ function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1)
 window.addEventListener('error', e=>{ G.errors.push(String(e.message)); });
 window.addEventListener('unhandledrejection', e=>{ G.errors.push('promise: '+String(e.reason)); });
 
+function hideToast(){ const t=$('#toast'); if(t) t.style.display='none'; clearTimeout(toast._t); }
 function toast(msg){
   const t=$('#toast'); if(!t) return;
+  const ov=document.querySelector('.overlay.on');
+  if(ov){ /* 彈窗打開時不蓋住卡片內容，等關閉後再提示 */ toast._q=msg; return; }
   t.textContent=msg; t.className='toast'; t.style.top=''; t.style.bottom='';
   const app=$('#app'), ar=app?app.getBoundingClientRect():{top:0,bottom:innerHeight};
-  if(document.querySelector('.overlay.on')){ t.classList.add('tm'); }
-  else if(G.screen==='battle'){
+  if(G.screen==='battle'){
     t.classList.add('tb');
     const hud=document.querySelector('#battle .hud');
     const top = hud ? Math.round(hud.getBoundingClientRect().bottom-ar.top+4) : 8;
     t.style.top=top+'px'; t.style.bottom='auto';
   } else if(G.screen==='draw'){ t.classList.add('tg'); }
-  else { t.classList.add('tm'); }
-  t.style.display='block'; t.onclick=()=>{ t.style.display='none'; };
-  clearTimeout(toast._t); toast._t=setTimeout(()=>t.style.display='none',1800);
+  else if(G.screen==='roster'){
+    t.classList.add('tr');
+    const go=$('#btnGo');
+    if(go){ t.style.top='auto'; t.style.bottom=Math.max(8, Math.round(ar.bottom-go.getBoundingClientRect().top+8))+'px'; }
+    else { t.classList.add('t-top'); }
+  } else { t.classList.add('t-top'); }
+  t.style.display='block'; t.onclick=()=>hideToast();
+  clearTimeout(toast._t); toast._t=setTimeout(hideToast,1800);
 }
 
+
 /* ========== 畫面切換 ========== */
+document.addEventListener('click',()=>{ if(toast._q && !document.querySelector('.overlay.on')){ const m=toast._q; toast._q=null; setTimeout(()=>toast(m),40); } }, true);
 function show(name){
   G.screen = name;
   $$('.screen').forEach(s=>s.classList.toggle('on', s.id===name));
@@ -1556,9 +1617,11 @@ function levelUp(id){
 }
 function heroStats(id, stars, b){
   const h = HEROES[id], lv = heroLv(id), tb = talBonus(id);
+  const raw = h.atk + (stars>=3?1:0) + (stars>=5?1:0) + Math.floor((lv-1)/3) + b.atk + tb.atk;
+  const over = Math.max(0, raw-6);
   return {
-    maxhp: h.hp + 2*(stars-1) + (lv-1) + b.hp + tb.hp,
-    atk: h.atk + (stars>=3?1:0) + (stars>=5?1:0) + Math.floor((lv-1)/3) + b.atk + tb.atk,
+    maxhp: h.hp + 2*(stars-1) + (lv-1) + b.hp + tb.hp + over,
+    atk: Math.min(6, raw),
     mov: h.mov + b.mov,
     rng: h.rng + b.rng,
     cdMax: Math.max(1, h.skill.cd - b.cd - (stars>=3?1:0)),
@@ -1588,27 +1651,22 @@ function heroSkillCard(id, stars, atk){
 /* ========== 英雄隊伍畫面 ========== */
 function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
 function isSupportHero(id){ const h=HEROES[id]; return !!(h && (h.cls==='坦克'||h.cls==='輔助'||['heal','healall','shield'].includes(h.skill.type))); }
+const SUPPORT_PREFER=['miko','kagura','sohei'];
+function supportCands(){ const S=G.save; const rank=id=>{ const i=SUPPORT_PREFER.indexOf(id); if(i>=0) return i; return 10+({輔助:0,坦克:1}[HEROES[id].cls]||2); }; return Object.keys(S.roster).filter(id=>isSupportHero(id)&&!(S.party||[]).includes(id)).sort((a,b)=>rank(a)-rank(b)); }
+function previewRecommend(){ const S=G.save, cur=(S.party||[]).slice(), cand=supportCands(); if(!cand.length) return cur; const pick=cand[0], next=cur.slice(); if(next.length<3) next.push(pick); else { const drop=[...next].reverse().find(id=>!isSupportHero(id)&&id!=='samurai')||next[next.length-1]; next[next.indexOf(drop)]=pick; } return next.slice(0,3); }
 function partyWarning(){
   const S=G.save; if(!S.party||!S.party.length) return '';
   if(S.party.some(isSupportHero)) return '';
-  const cand = Object.keys(S.roster).filter(id=>isSupportHero(id)&&!S.party.includes(id)).map(id=>HEROES[id].name);
-  if(cand.length) return '⚠ 隊伍沒有補師或坦克，前幾層會比較吃緊。建議換上：'+cand.join('、')+'。';
+  const cand = supportCands();
+  if(cand.length) return '⚠ 隊伍沒有補師或坦克，前幾層會比較吃緊。建議換上：'+cand.map(id=>HEROES[id].name).join('、')+'。';
   return '⚠ 隊伍沒有補師或坦克，前幾層請注意站位與血量。抽到巫女或僧兵後可一鍵換成推薦編成。';
 }
 function recommendParty(){
-  const S=G.save, cur=(S.party||[]).slice();
-  if(cur.some(isSupportHero)){ toast('隊伍已有補師或坦克'); return; }
-  const cand=Object.keys(S.roster).filter(isSupportHero);
-  if(!cand.length){ toast('還沒有補師或坦克，去召喚看看吧'); return; }
-  const rank=id=>({輔助:0,坦克:1}[HEROES[id].cls]||2);
-  cand.sort((a,b)=>rank(a)-rank(b)||({SSR:0,SR:1,R:2}[HEROES[a].r]-{SSR:0,SR:1,R:2}[HEROES[b].r]));
-  const pick=cand[0];
-  if(cur.length<3) cur.push(pick);
-  else {
-    const drop = [...cur].reverse().find(id=>!isSupportHero(id)&&id!=='samurai') || cur[cur.length-1];
-    cur[cur.indexOf(drop)]=pick;
-  }
-  S.party=cur.slice(0,3); persist(); renderRoster();
+  const S=G.save;
+  if((S.party||[]).some(isSupportHero)){ toast('隊伍已有補師或坦克'); return; }
+  const next=previewRecommend();
+  if(!next.some(isSupportHero)){ toast('還沒有補師或坦克，去召喚看看吧'); return; }
+  S.party=next; persist(); renderRoster();
   toast('已換成推薦編成：'+S.party.map(id=>HEROES[id].name).join('、'));
 }
 function renderRoster(){
@@ -1656,7 +1714,7 @@ function renderRoster(){
   $('#btnGo').disabled = S.party.length<1;
   { const w=partyWarning(), el=$('#partyWarn');
     if(!w){ el.style.display='none'; el.innerHTML=''; }
-    else { el.style.display='flex'; el.innerHTML=`<span class="pw-txt">${w}</span><button class="btn small gold" id="btnRecParty">✨ 推薦編成</button>`;
+    else { const pv=previewRecommend().map(id=>HEROES[id].name).join('、'); el.style.display='flex'; el.innerHTML=`<span class="pw-txt">${w}</span><button class="btn small gold" id="btnRecParty">✨ 推薦編成（${pv}）</button>`;
       const b=$('#btnRecParty'); if(b) b.onclick=ev=>{ ev.preventDefault(); recommendParty(); }; } }
   const unlocked = S.best>=DIFF_UNLOCK, hard = unlocked && S.diff;
   $('#dfN').className = 'btn small'+(hard?' gray':''); $('#dfH').className = 'btn small'+(hard?' red':' gray');
@@ -1680,7 +1738,7 @@ function showDetail(id){
     <div class="ud-head"><span class="ud-cls">${PAWN_SVG}</span><div class="ud-hm"><div class="ud-no">No. ${String(HERO_IDS.indexOf(id)+1).padStart(3,'0')}</div><div class="ud-nm">${HERO_TITLE[id]||h.cls}・${h.name}</div></div><div class="ud-right"><div class="ud-st">${own?starRowHTML(stars):'<span style="opacity:.35">★★★★★</span>'}</div><div class="ud-lim">數量限制 ${qtyLimit(h.r)}</div></div></div>
     <div class="ud-stage"><div class="ud-floor"></div><div class="ud-sp">${spark}</div><div class="ud-port"><div class="ud-frame">${av(heroImg(id),h.e,'')}</div></div>
       <div class="ud-pat">${patIconHTML(p)}<small>${p.n}</small></div>
-      <div class="ud-badges"><span class="bdg atk"><i>⚔</i><b>${st.atk}</b></span><span class="bdg hp"><b>${st.maxhp}</b></span></div></div>
+      <div class="ud-badges"><span class="bdg atk">${ATK_ICO}<b>${st.atk}</b></span><span class="bdg hp"><b>${st.maxhp}</b></span></div></div>
     <div class="ud-rule" aria-hidden="true"></div>
     <div class="ud-panel">
       ${parchmentHTML(card.name, card.val, card.desc, card.trait, card.tdesc, card.tags)}
@@ -1688,7 +1746,7 @@ function showDetail(id){
       ${syns||lvrow||tal?`<div class="ud-extra">${lvrow}${syns}${tal}</div>`:''}
     </div>
     <button class="btn gold" id="detailOk">關閉</button>`;
-  $('#detailOv').classList.add('on');
+  hideToast(); $('#detailOv').classList.add('on');
   $('#detailOk').onclick = ()=>{$('#detailOv').classList.remove('on'); box.className='modal';};
   const tb2=$('#btnTal'); if(tb2) tb2.onclick=()=>showTalPicker(id);
   const lb=$('#btnLvUp'); if(lb) lb.onclick = ()=>{ if(levelUp(id)){ showDetail(id); renderRoster(); } };
@@ -1834,7 +1892,7 @@ function genEnemyList(f, strong, totem){
   const pool = ['slime','goblin'];
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute','ward');
   const boss = isBoss(f);
-  const nb = boss ? 2 : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:1) : (f<4 ? (strong?2:0) : (f>=9?3:2));
+  const nb = boss ? (f<=5?2:2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?1 : (f>=9?3:2)));
   let nT=0, nW=0; const maxT = f>=7?2:1;
   const mk = (wv)=>{ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT||wv>0) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1||wv>0) t='brute'; else nW++; } const o={...ENEMIES[t], t, boss:false, wv}; if(wv){ o.wt = wv===1?TUNE.w1t:TUNE.w2t; } return o; };
   for(let i=0;i<nb;i++) list.push(mk(0));
@@ -1865,7 +1923,7 @@ function startBattle(){ const B0=null;
   list.forEach((en,i)=>{
     let pos = en.wv ? [-1,-1] : (en.boss ? bossSpot : sp.shift());
     if(!en.boss){ while(pos && pos[0]===bossSpot[0]&&pos[1]===bossSpot[1]) pos = sp.shift(); }
-    const hp = en.boss ? en.hp+4*en.cyc : en.hp+Math.floor((run.floor-1)/2), atk = (en.boss ? Math.min(6,en.atk+en.cyc) : Math.min(run.floor<=2?1:(run.floor<=9?4:5),en.atk+Math.floor((run.floor-1)/5))) + (run.diff?1:0);
+    const hp = en.boss ? en.hp+4*en.cyc : en.hp+Math.floor((run.floor-1)/2), atk = (en.boss ? Math.min(6,en.atk+en.cyc) : Math.min(run.floor<=5?1:(run.floor<=9?4:5),en.atk+Math.floor((run.floor-1)/5))) + (run.diff?1:0);
     units.push({uid:uid++, team:'e', wv:en.wv||0, wt:en.wt||0, armor:en.armor||0, t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:(en.img||en.t)), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, pat:PATS[en.boss?BOSS_PAT[en.img]:ENEMY_PAT[en.t]], heal:en.heal, explode:en.explode, ward:en.ward, cicon:en.heal?'✚':(en.explode?'💣':(en.ward?'🛡':'')), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
   });
   if(hasTotem){ const ti=sp.findIndex(p=>p[1]===0), pos=(ti>=0?sp.splice(ti,1)[0]:sp.shift())||[2,0];
@@ -1897,6 +1955,9 @@ function startBattle(){ const B0=null;
       obj.g = Math.round((20+6*f)*(run.diff?1.5:1)); obj.x = Math.round((8+2*f)*(run.diff?1.5:1));
     }
   }
+  if(run.floor<=5){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
+  if((G.save.best||0)<5 && run.floor<=5){ units.filter(u=>u.team==='p').forEach(u=>{ u.shield=(u.shield||0)+(run.floor===5?4:2); }); }
+  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if((G.save.best||0)<5) boss.armor=0; } } }
   const tiles = genTiles(obs, run.floor);
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
@@ -2083,7 +2144,7 @@ function renderChips(){
     const c = document.createElement('div');
     c.className = 'chip'+(G.ui.sel===u?' sel':'')+(u.done&&u.alive?' done':'')+(u.alive?'':' dead');
     c.dataset.uid = u.uid;
-    c.innerHTML = `<div class="em">${av(u.img,u.e,'hz')}</div><span class="hpn">${Math.max(0,u.hp)}</span><span class="st">${u.alive?(u.done?'✔':(u.cd>0?'⏳'+u.cd:'✨')):''}</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b>${u.atk}</b></span><span class="movb" title="移動力"><b>${u.mov}</b></span><div class="nm">${u.name}</div><div class="bar"><i style="width:${Math.max(0,u.hp/u.maxhp*100)}%"></i></div>`;
+    c.innerHTML = `<div class="em">${av(u.img,u.e,'hz')}</div><span class="hpn">${Math.max(0,u.hp)}</span><span class="st">${u.alive?(u.done?'✔':(u.cd>0?'⏳'+u.cd:'✨')):''}</span><span class="atkb"><i>${u.cicon||'⚔'}</i><b>${u.atk}</b></span><span class="movb" title="移動力"><b>${u.mov}</b></span><div class="nm">${HERO_SHORT[u.hid]||u.name}</div><div class="bar"><i style="width:${Math.max(0,u.hp/u.maxhp*100)}%"></i></div>`;
     attachLongPress(c, ()=>u);
     c.onclick = ()=>{ if(G.lpAt && Date.now()-G.lpAt<700){ G.lpAt=0; return; } if(!G.busy && G.B.phase==='player' && u.alive && !u.done) selectUnit(u); else if(u.alive){ G.ui.inspect=u; G.ui.sel=null; renderAll(); } };
     wrap.appendChild(c);
@@ -2230,6 +2291,7 @@ function damage(target, dmg, att){
     if(guarded){ d=Math.max(1,d-1); dmg=d; }
   }
   if(att && target.armor>0 && d>0){ d=Math.max(1,d-target.armor); dmg=d; }
+  if(att && target.boss && target.guard && d>0 && G.B && G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem)){ d=Math.max(1,d-2); dmg=d; }
   if(target.shield>0){ const a=Math.min(target.shield,d); target.shield-=a; d-=a; if(a) floatText(target,'🛡-'+a,'sh'); }
   if(d>0){
     target.hp-=d; const big = d>=target.maxhp*0.25;
@@ -2648,8 +2710,8 @@ function showUnitCard(u){
     nm = (u.elite?'精英・':'')+u.name;
     lim = '數量限制 '+qtyLimit(null,u);
     let skN, skV, skD, tr, tags=['妖怪'];
-    if(u.totem){ skN='召喚燈籠'; skV=TUNE.totemCd; skD=`攻擊型態不會攻擊。每 ${TUNE.totemCd} 回合召喚 1 隻小妖（最多 ${TUNE.totemMax} 隻），直到被摧毀；沒有護甲。`; tr=ENEMY_TRAIT.totem; tags=['特殊']; }
-    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD=`每 3 回合怒吼，對全隊造成（攻擊一半）傷害。攻擊型態為${p.n}：${p.d+(p.splash?'（附帶範圍波及）':'')}。`; tr=BOSS_TRAIT; tags=['首領']; }
+    if(u.totem){ skN='召喚'; skV=TUNE.totemCd; skD=`每 ${TUNE.totemCd} 回合召喚 1 隻小妖（最多 ${TUNE.totemMax} 隻），直到被摧毀。`; tr={id:'still', n:'不動', d:'不會攻擊，也沒有護甲。先拆掉它。'}; tags=['特殊']; p={n:'無', d:'不會攻擊', offs:[]}; }
+    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD='每 3 回合對全隊造成（攻擊一半）傷害。'; tr=BOSS_TRAIT; tags=['首領']; if(u.guard) tags.push('護衛'); }
     else if(u.heal){ skN='治癒術'; skV=TUNE.healV; skD=`攻擊型態為${p.n}：${p.d}。每 2 回合治療受傷的同伴 ${TUNE.healV} 點生命。`; tr=ENEMY_TRAIT.tanuki; }
     else if(u.explode){ skN='鬼火爆彈'; skV=1; skD=`攻擊型態為${p.n}：${p.d}。被擊倒時爆炸，對相鄰英雄造成攻擊 +1 點傷害。`; tr=ENEMY_TRAIT.onibi; }
     else if(u.ward){ skN='結界術'; skV=TUNE.wardV; skD=`攻擊型態為${p.n}：${p.d}。每 3 回合替 2 格內的友軍張開 ${TUNE.wardV} 點護盾。`; tr=ENEMY_TRAIT.ward; }
@@ -2659,6 +2721,7 @@ function showUnitCard(u){
     if(u.elite) tags.push('精英');
     if(u.cmd) tags.push('指揮官');
     let extra='';
+    if(u.guard) extra += `<div class="ud-tr">護衛</div><div class="ud-trd">仍有隨從在場時，首領受到的傷害再 -2（至少 1）。</div>`;
     if(u.cmd) extra += `<div class="ud-tr">指揮</div><div class="ud-trd">存活時其他敵人攻擊 +1。</div>`;
     if(u.frozen>0) extra += `<div class="ud-tr">凍結</div><div class="ud-trd">下回合無法行動。</div>`;
     if(u.elite) extra += `<div class="ud-trd">精英：更強壯，擊倒有額外獎勵。</div>`;
@@ -2672,7 +2735,7 @@ function showUnitCard(u){
   $('#udPanel').innerHTML = panel;
   $('#udPanel').scrollTop = 0;
   { const sp=$('#udSp'); let h=''; for(let i=0;i<16;i++) h+=`<span style="left:${Math.round(Math.random()*96)}%;top:${Math.round(Math.random()*88)}%;animation-delay:${(Math.random()*2.4).toFixed(2)}s;font-size:${8+Math.round(Math.random()*12)}px">✦</span>`; sp.innerHTML=h; }
-  $('#udOv').classList.add('on'); sfx('tap');
+  hideToast(); $('#udOv').classList.add('on'); sfx('tap');
 }
 $('#udClose').onclick = ()=>$('#udOv').classList.remove('on');
 $('#udOv').onclick = e=>{ if(e.target.id==='udOv') $('#udOv').classList.remove('on'); };
@@ -2748,6 +2811,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v28','浮動提示不再蓋住彈窗與出發鈕；新手第 4–5 層較好過；攻擊圓標改槌子；短屏首頁／抽卡不再裁切；十連卡放大、手牌用短名、攻擊上限 6。'],
   ['v27','詳情卡改為參考卡牌版面（隊伍與戰鬥同一張）；技能寫成「名稱(數值)」加特性；玩法說明可直接關閉，清除存檔改到設定；第 1～2 層較溫和並可一鍵推薦編成；第 1～3 層有召喚燈籠。'],
   ['v26','每層分波登場（第 3／6 回合或場上剩 1 隻時增援），回合數回到約 8～10 回合；赤鬼與首領有護甲 1；教學提示可點擊關閉、不再蓋住手牌；十連抽卡片放大。'],
   ['v25','隊伍畫面：已擁有英雄優先、未獲得收合為「未獲得 (N)」，新增稀有度／職業排序與篩選；標題畫面加大標誌與按鈕；新增標題柔和音樂（可在標題或設定開關）。'],
@@ -2783,7 +2847,7 @@ function startFromTitle(){
 }
 function showTitle(){
   const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v27　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  $('#ttVer').textContent='v28　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -2792,7 +2856,7 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v27　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v28　・　單機版，無需登入　・　👤 '+G.save.name; }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
