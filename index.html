@@ -1055,9 +1055,14 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #units .unit .face .av img.tok:not(.fb),
 #chips .chip .em .av img.tok:not(.fb){
   object-fit:cover!important;
-  object-position:var(--tokface,50% 22%)!important;
-  transform:scale(1.36)!important;
-  transform-origin:var(--tokface,50% 22%)!important;
+  object-position:var(--tokface,50% 30%)!important;
+  width:136%!important;height:136%!important;
+  max-width:none!important;max-height:none!important;
+  inset:auto!important;
+  left:calc(50% - 1.36 * var(--tokx,50%))!important;
+  top:calc(50% - 1.36 * var(--toky,30%))!important;
+  transform:none!important;
+  position:absolute!important;
 }
 #units .unit .face .av img.tok.fb,
 #units .unit .face .av img.fb,
@@ -1147,7 +1152,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 }
 #chips .chip .em{inset:0;border-radius:8px;overflow:hidden;background:#eef3f8}
 #chips .chip .em .av, #chips .chip .em .av img{width:100%;height:100%;border-radius:8px}
-/* official token crop is in the v33 tok:not(.fb) rule */
+/* official token crop is in the v34 tok:not(.fb) rule (face-centered, no scale-from-top) */
 #chips .chip .nm, #chips .chip .bar{display:none!important}
 #chips .chip .hpn{width:28px!important;height:28px!important;font-size:15px!important;min-width:28px;min-height:28px}
 #chips .chip .atkb{min-width:28px!important;height:20px!important;font-size:13px!important;padding:0 5px 0 16px!important}
@@ -1240,37 +1245,38 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   position:relative;
 }
 
-/* v33: face-tight board tokens, floor banner outside grid, 10-pull hint */
+/* v34: face-centered board tokens, floor banner sits in the HUD (never on the grid), 10-pull hint */
 #banner{
-  position:relative!important;
-  left:auto!important;top:auto!important;bottom:auto!important;
-  height:0!important;
+  position:absolute!important;
+  left:50%!important;right:auto!important;
+  top:auto!important;bottom:3px!important;
+  transform:translateX(-50%);
+  height:auto!important;
   margin:0 auto!important;
-  max-width:94%;
-  font-size:13px!important;
+  max-width:90%;
+  font-size:12px!important;
   font-weight:800;
-  padding:0!important;
-  z-index:20;
+  padding:0 10px!important;
+  line-height:16px;
+  z-index:6;
   pointer-events:none;
   white-space:nowrap;
   overflow:visible!important;
-  display:flex!important;
-  justify-content:center;
   background:none!important;
   border:none!important;
   box-shadow:none!important;
+  opacity:0;
 }
 #banner.show{
-  padding:0!important;
+  padding:2px 10px!important;
 }
-#banner.show::after{ /* use the element itself */ }
 @keyframes ban{
-  0%{opacity:0;transform:translateY(calc(-100% + 4px)) scale(.92)}
-  16%{opacity:1;transform:translateY(-100%)}
-  62%{opacity:1;transform:translateY(-100%)}
-  100%{opacity:0;transform:translateY(-100%)}
+  0%{opacity:0;transform:translateX(-50%) translateY(3px) scale(.92)}
+  16%{opacity:1;transform:translateX(-50%) scale(1)}
+  62%{opacity:1;transform:translateX(-50%) scale(1)}
+  100%{opacity:0;transform:translateX(-50%) scale(1)}
 }
-#banner.show{animation:ban .85s ease forwards!important; padding:3px 12px!important; width:max-content; background:#150b2ccc!important; border:1px solid #ffffff33!important; border-radius:999px!important;}
+#banner.show{animation:ban .85s ease forwards!important; padding:2px 10px!important; width:max-content; background:#150b2ccc!important; border:1px solid #ffffff33!important; border-radius:999px!important;}
 #revealOv #revealTitle{
   flex:none;position:relative;z-index:3;
   background:#140c06;
@@ -1297,7 +1303,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="tt-start" id="ttStart">點擊開始</div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
   <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v33　・　單機版，無需登入</div>
+  <div class="tt-ver" id="ttVer">v34　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -1368,9 +1374,9 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
     <div class="hbar l"><em>我方</em><b id="hpPv">0</b><div class="trk"><i id="hpPb"></i></div></div>
     <div class="hbar r"><em>敵方</em><b id="hpEv">0</b><div class="trk"><i id="hpEb"></i></div></div>
     <div id="objRow"></div>
+    <div id="banner"></div>
   </div>
   <div id="tipBox"></div>
-  <div id="banner"></div>
   <div id="boardwrap"><div id="board"><div id="cells"></div><svg id="lines" width="100%" height="100%"></svg><div id="units"></div><div id="fx"></div></div><div id="hint"></div></div>
   <div id="panel">
     <div id="chips"></div>
@@ -1545,8 +1551,9 @@ const START_ROSTER = ['samurai','kyudo','onmyoji'];
 const CHAR_ART = {samurai:'heroes',kyudo:'heroes',onmyoji:'heroes',ninja:'heroes',naginata:'heroes',sohei:'heroes',tengu:'heroes',miko:'heroes',kitsune:'heroes',ronin:'heroes',yukionna:'heroes',ryujin:'heroes',grandonmyoji:'heroes',kagenin:'heroes',okami:'heroes',kagura:'heroes',slime:'enemies',goblin:'enemies',skel:'enemies',bat:'enemies',brute:'enemies',onibi:'enemies',tanuki:'enemies',orochi:'enemies',gashadokuro:'enemies',shuten:'enemies',kyubi:'enemies',ward:'enemies'};
 const ART_FILE = {ward:'brute'};
 const ART_FOCUS = {samurai:'54% 12%',kyudo:'40% 10%',onmyoji:'50% 12%',ninja:'50% 8%',naginata:'50% 16%',sohei:'50% 8%',tengu:'52% 12%',miko:'50% 12%',kitsune:'50% 12%',ronin:'50% 12%',yukionna:'50% 12%',ryujin:'52% 10%',grandonmyoji:'50% 10%',kagenin:'52% 12%',okami:'52% 10%',kagura:'50% 12%',slime:'50% 12%',goblin:'50% 14%',skel:'50% 12%',bat:'50% 14%',tanuki:'50% 16%',brute:'50% 10%',onibi:'50% 12%',orochi:'50% 10%',gashadokuro:'50% 8%',shuten:'50% 10%',kyubi:'50% 10%',ward:'50% 10%'};
-const TOKEN_FOCUS = {samurai:'50% 20%',kyudo:'38% 28%',onmyoji:'45% 20%',ninja:'52% 16%',naginata:'49% 20%',sohei:'46% 20%',tengu:'49% 26%',miko:'45% 28%',kitsune:'45% 24%',ronin:'60% 24%',yukionna:'51% 28%',ryujin:'49% 18%',grandonmyoji:'56% 30%',kagenin:'57% 18%',okami:'52% 26%',kagura:'52% 28%',slime:'46% 16%',goblin:'47% 18%',skel:'38% 20%',bat:'43% 28%',tanuki:'46% 20%',brute:'52% 20%',onibi:'45% 18%',orochi:'55% 18%',gashadokuro:'49% 20%',shuten:'57% 24%',kyubi:'54% 20%',ward:'52% 20%'};
-function tokFace(id){ return TOKEN_FOCUS[id]||'50% 22%'; }
+const TOKEN_FOCUS = {samurai:'48% 38%',kyudo:'40% 38%',onmyoji:'46% 38%',ninja:'52% 38%',naginata:'50% 38%',sohei:'48% 38%',tengu:'50% 38%',miko:'46% 38%',kitsune:'46% 38%',ronin:'58% 38%',yukionna:'51% 38%',ryujin:'50% 38%',grandonmyoji:'56% 38%',kagenin:'56% 38%',okami:'52% 38%',kagura:'52% 38%',slime:'48% 38%',goblin:'52% 38%',skel:'40% 38%',bat:'44% 38%',tanuki:'48% 38%',brute:'52% 38%',onibi:'46% 38%',orochi:'54% 38%',gashadokuro:'50% 38%',shuten:'56% 38%',kyubi:'54% 38%',ward:'52% 38%'};
+function tokFace(id){ return TOKEN_FOCUS[id]||'50% 30%'; }
+function tokXY(id){ const p=(tokFace(id)||'50% 30%').split(/\s+/); return {x:p[0]||'50%', y:p[1]||'30%'}; }
 
 const ENEMIES = {
   slime:  {name:'提燈小僧', e:'🏮', hp:5, atk:1, mov:2, rng:1},
@@ -1806,7 +1813,7 @@ const faceOf = id=>ART_FOCUS[id]||'50% 16%';
 function battleAv(id, emoji){
   if(!id || id==='totem' || id==='minion') return av(id==='totem'?TOTEM_IMG:'', emoji||'', 'tok');
   const tok=tokenImg(id), v3=charImg(id), focus=faceOf(id), tf=tokFace(id);
-  return `<span class="av tok" style="--face:${focus};--tokface:${tf}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
+  const xy=tokXY(id); return `<span class="av tok" style="--face:${focus};--tokface:${tf};--tokx:${xy.x};--toky:${xy.y}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
 }
 const TOTEM_IMG = 'data:image/svg+xml;utf8,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='50%' cy='42%' r='55%'><stop offset='0' stop-color='#ffe08a'/><stop offset='.5' stop-color='#ff9a3c' stop-opacity='.85'/><stop offset='1' stop-color='#6a2a8a' stop-opacity='0'/></radialGradient></defs><rect width='100' height='100' fill='#2a1740'/><circle cx='50' cy='42' r='44' fill='url(#g)'/><rect x='44' y='60' width='12' height='28' fill='#6f6a7a'/><rect x='30' y='84' width='40' height='8' rx='2' fill='#59546a'/><rect x='34' y='28' width='32' height='32' rx='3' fill='#ffd36a' stroke='#59546a' stroke-width='4'/><rect x='40' y='34' width='20' height='20' rx='2' fill='#fff4c2'/><path d='M24 28 L50 8 L76 28 Z' fill='#7a7488' stroke='#59546a' stroke-width='3'/><circle cx='50' cy='6' r='4' fill='#59546a'/></svg>");
 const enemyImg = k=>charImg(k);
@@ -2218,7 +2225,10 @@ function playReveal(results){
       if(!rh||!g) return;
       const more=g.scrollHeight>g.clientHeight+8;
       const atEnd=g.scrollTop+g.clientHeight>=g.scrollHeight-14;
-      rh.style.display=(results.length>1 && more && !atEnd)?'block':'none';
+      const show=results.length>1 && more && !atEnd;
+      rh.style.display=(results.length>1 && more)?'block':'none';
+      rh.style.visibility=show?'visible':'hidden';
+      rh.style.opacity=show?'1':'0';
     };
     let rh=$('#revealHint'); if(!rh && results.length>1){ rh=document.createElement('div'); rh.id='revealHint'; rh.className='ss-hint'; rh.textContent='↕ 向下滑還有卡片'; grid.after(rh); }
     if(!grid._hintBound){ grid._hintBound=true; grid.addEventListener('scroll', syncHint, {passive:true}); }
@@ -2293,8 +2303,11 @@ function genEnemyList(f, strong, totem){
   const boss = isBoss(f);
   const strongParty = partyPower()>=10;
   const noSup=!partyHasSupport();
-  const nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0));
-  const w1 = 2;
+  if(f===5 && (G.save.best||0)<5 && noSup && !strongParty){ for(const bad of ['onibi','tanuki','ward']){ const ix=pool.indexOf(bad); if(ix>=0) pool.splice(ix,1); } }
+  let nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0));
+  if(boss && f===5 && (G.save.best||0)<5 && noSup && !strongParty) nb=1;
+  let w1 = 2;
+  if(f===5 && (G.save.best||0)<5 && !strongParty) w1=1;
   let w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?(strongParty?2:1) : (f===6 && (G.save.best||0)<6?1 : (f>=9?3:2))));
   if(f===5 && (G.save.best||0)<5 && noSup && !strongParty) w2=0;
   const w3 = (f===5 && strongParty)?1:0;
@@ -2375,17 +2388,21 @@ function startBattle(){ const B0=null;
   }
   const best=G.save.best||0;
   units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ if(u.hp>TUNE.hpMax) u.hp=u.maxhp=TUNE.hpMax; });
+  if(run.floor===5 && best<5 && partyPower()<10){ const boss=units.find(u=>u.boss); if(boss){ boss.hp=boss.maxhp=Math.min(boss.hp, partyHasSupport()?22:18); } }
   if(run.floor<=5 || (best<6 && run.floor===6)){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
   units.filter(u=>u.team==='p').forEach(u=>{
     let sh=0;
     const noSup=!partyHasSupport();
-    if(run.floor<=4 && best<5) sh=3+(noSup?1:0);
-    else if(run.floor===5 && best<5) sh=4+(noSup?1:0);
+    if(run.floor<=4 && best<5) sh=3+(noSup?2:0);
+    else if(run.floor===5 && best<5) sh=5+(noSup?2:0);
     else if(run.floor===6 && best<6) sh=2;
     else if(run.floor===7 && best<7) sh=1;
     if(sh) u.shield=(u.shield||0)+sh;
   });
-  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=3; } } }
+  if(run.floor===5 && best<5 && !partyHasSupport() && partyPower()<10){
+    units.filter(u=>u.team==='p').forEach(u=>{ u.hp=u.maxhp; if(u.member) u.member.hp=u.maxhp; });
+  }
+  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min((best<5 && !partyHasSupport() && partyPower()<10)?1:2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=3; } } }
   const tiles = genTiles(obs, run.floor);
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
@@ -2517,9 +2534,10 @@ function renderLines(){
     if(p.type==='ward'){ const e=G.B.units.find(u=>u.uid===uid); if(!e||!e.alive) return; p.ts.forEach(a=>{ const l=document.createElementNS(ns,'line'); l.setAttribute('class','ward'); l.setAttribute('x1',c(e.x)); l.setAttribute('y1',r(e.y)); l.setAttribute('x2',c(a.x)); l.setAttribute('y2',r(a.y)); svg.appendChild(l); const d=document.createElementNS(ns,'circle'); d.setAttribute('class','tip ward'); d.setAttribute('cx',c(a.x)); d.setAttribute('cy',r(a.y)); d.setAttribute('r',Math.max(4,cs*.13)); svg.appendChild(d); }); return; }
     if(p.type!=='atk' && p.type!=='heal') return;
     const e=G.B.units.find(u=>u.uid===uid); if(!e||!e.alive) return;
-    const mk=(cls)=>{ const l=document.createElementNS(ns,'line'); l.setAttribute('class',cls); l.setAttribute('x1',c(p.x)); l.setAttribute('y1',r(p.y)); l.setAttribute('x2',c(p.t.x)); l.setAttribute('y2',r(p.t.y)); svg.appendChild(l); return l; };
+    const tx=c(p.t.x)+cs*0.30, ty=r(p.t.y)-cs*0.30;
+    const mk=(cls)=>{ const l=document.createElementNS(ns,'line'); l.setAttribute('class',cls); l.setAttribute('x1',c(p.x)); l.setAttribute('y1',r(p.y)); l.setAttribute('x2',tx); l.setAttribute('y2',ty); svg.appendChild(l); return l; };
     mk('halo'); mk(p.type==='heal'?'heal':'');
-    { const d=document.createElementNS(ns,'circle'); d.setAttribute('class','tip'+(p.type==='heal'?' heal':'')); d.setAttribute('cx',c(p.t.x)); d.setAttribute('cy',r(p.t.y)); d.setAttribute('r',Math.max(4,cs*.095)); svg.appendChild(d); }
+    { const d=document.createElementNS(ns,'circle'); d.setAttribute('class','tip'+(p.type==='heal'?' heal':'')); d.setAttribute('cx',tx); d.setAttribute('cy',ty); d.setAttribute('r',Math.max(3,cs*.08)); d.setAttribute('opacity','0.92'); svg.appendChild(d); }
     if(p.x!==e.x||p.y!==e.y){
       const g=document.createElementNS(ns,'circle'); g.setAttribute('class','ghost'); g.setAttribute('cx',c(p.x)); g.setAttribute('cy',r(p.y)); g.setAttribute('r',Math.min(cs,G.ch)*.3); svg.appendChild(g);
     }
@@ -2731,7 +2749,9 @@ function damage(target, dmg, att){
     const adds=G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem);
     if(!adds && target.guardLinger && target.guardUntil==null) target.guardUntil=G.B.turn+target.guardLinger;
     if(adds || (target.guardUntil!=null && G.B.turn<=target.guardUntil)){
-      d = (G.run && G.run.floor===5 && partyPower()>=10) ? 1 : Math.max(1,d-2);
+      if(G.run && G.run.floor===5 && partyPower()>=10) d=1;
+      else if(G.run && G.run.floor===5 && (G.save.best||0)<5 && !partyHasSupport()) d=Math.max(1,d-1);
+      else d=Math.max(1,d-2);
       dmg=d;
     }
   }
@@ -3258,6 +3278,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v34','棋子特寫改以臉為中心（放逐騎士看得到額頭與眼睛，河童看得到頭）；短屏層名不再壓到最上排。預設／推薦第一次首領再放寬一點。十連提示捲回來還會出現。'],
   ['v33','戰鬥棋子改為近距離臉部特寫（不再用全身立繪裁切）；層名改到棋盤上方並快速淡出，不再壓到棋子。預設隊前五層稍鬆、強隊第 5 層拉長到約 8 回合以上。河童特性不再與環斬重複；十連提示會在捲到底時收起。'],
   ['v32','戰鬥棋子改為參考圖風格：粗藍／紅圓角框、淺色底的臉部特寫、左上深紅生命圓、左下攻擊、右下橙色移動水滴；手牌改為方卡。並修：召喚 SSR 一覽不被按鈕擋住、八岐大蛇型態「八頭噬」、說明羈絆名、短屏說明與羈絆捲動、十連卡名、第 6–7 層敵生命上限 15、第 6 層護盾遞減。'],
   ['v31','棋盤格子與角色棋子改為正方形；立繪裁成臉部特寫，數字角標不再擋住臉。詳情卡立繪改為滿版寬度。'],
@@ -3299,7 +3320,7 @@ function startFromTitle(){
 }
 function showTitle(){
   const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v33　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  $('#ttVer').textContent='v34　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -3308,7 +3329,7 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v33　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v34　・　單機版，無需登入　・　👤 '+G.save.name; }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
