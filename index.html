@@ -1052,9 +1052,17 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
   background:transparent;
 }
-#units .unit .face .av img.tok,
+#units .unit .face .av img.tok:not(.fb),
+#chips .chip .em .av img.tok:not(.fb){
+  object-fit:cover!important;
+  object-position:var(--tokface,50% 22%)!important;
+  transform:scale(1.36)!important;
+  transform-origin:var(--tokface,50% 22%)!important;
+}
 #units .unit .face .av img.tok.fb,
-#units .unit .face .av img.fb{
+#units .unit .face .av img.fb,
+#chips .chip .em .av img.tok.fb,
+#chips .chip .em .av img.fb{
   object-fit:cover!important;object-position:var(--face,50% 14%)!important;transform:none!important;
 }
 /* 生命：左上深紅圓 */
@@ -1139,7 +1147,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 }
 #chips .chip .em{inset:0;border-radius:8px;overflow:hidden;background:#eef3f8}
 #chips .chip .em .av, #chips .chip .em .av img{width:100%;height:100%;border-radius:8px}
-#chips .chip .em .av img.tok, #chips .chip .em .av img.tok.fb, #chips .chip .em .av img.fb{object-fit:cover!important;object-position:var(--face,50% 14%)!important;transform:none!important}
+/* official token crop is in the v33 tok:not(.fb) rule */
 #chips .chip .nm, #chips .chip .bar{display:none!important}
 #chips .chip .hpn{width:28px!important;height:28px!important;font-size:15px!important;min-width:28px;min-height:28px}
 #chips .chip .atkb{min-width:28px!important;height:20px!important;font-size:13px!important;padding:0 5px 0 16px!important}
@@ -1231,6 +1239,50 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   aspect-ratio:3/4!important;
   position:relative;
 }
+
+/* v33: face-tight board tokens, floor banner outside grid, 10-pull hint */
+#banner{
+  position:relative!important;
+  left:auto!important;top:auto!important;bottom:auto!important;
+  height:0!important;
+  margin:0 auto!important;
+  max-width:94%;
+  font-size:13px!important;
+  font-weight:800;
+  padding:0!important;
+  z-index:20;
+  pointer-events:none;
+  white-space:nowrap;
+  overflow:visible!important;
+  display:flex!important;
+  justify-content:center;
+  background:none!important;
+  border:none!important;
+  box-shadow:none!important;
+}
+#banner.show{
+  padding:0!important;
+}
+#banner.show::after{ /* use the element itself */ }
+@keyframes ban{
+  0%{opacity:0;transform:translateY(calc(-100% + 4px)) scale(.92)}
+  16%{opacity:1;transform:translateY(-100%)}
+  62%{opacity:1;transform:translateY(-100%)}
+  100%{opacity:0;transform:translateY(-100%)}
+}
+#banner.show{animation:ban .85s ease forwards!important; padding:3px 12px!important; width:max-content; background:#150b2ccc!important; border:1px solid #ffffff33!important; border-radius:999px!important;}
+#revealOv #revealTitle{
+  flex:none;position:relative;z-index:3;
+  background:#140c06;
+  margin:4px 0 0!important;
+  padding:6px 8px 8px;
+  text-shadow:0 2px 0 #000;
+}
+#revealOv.on #revealGrid.ten{
+  padding-top:10px!important;
+  scroll-padding-top:10px!important;
+  padding-bottom:18px!important;
+}
 </style>
 
 </head>
@@ -1245,7 +1297,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <div class="tt-start" id="ttStart">點擊開始</div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
   <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v32　・　單機版，無需登入</div>
+  <div class="tt-ver" id="ttVer">v33　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -1318,7 +1370,8 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
     <div id="objRow"></div>
   </div>
   <div id="tipBox"></div>
-  <div id="boardwrap"><div id="board"><div id="cells"></div><svg id="lines" width="100%" height="100%"></svg><div id="units"></div><div id="fx"></div></div><div id="banner"></div><div id="hint"></div></div>
+  <div id="banner"></div>
+  <div id="boardwrap"><div id="board"><div id="cells"></div><svg id="lines" width="100%" height="100%"></svg><div id="units"></div><div id="fx"></div></div><div id="hint"></div></div>
   <div id="panel">
     <div id="chips"></div>
     <div id="uwrap"><div id="uinfo"></div></div>
@@ -1492,6 +1545,8 @@ const START_ROSTER = ['samurai','kyudo','onmyoji'];
 const CHAR_ART = {samurai:'heroes',kyudo:'heroes',onmyoji:'heroes',ninja:'heroes',naginata:'heroes',sohei:'heroes',tengu:'heroes',miko:'heroes',kitsune:'heroes',ronin:'heroes',yukionna:'heroes',ryujin:'heroes',grandonmyoji:'heroes',kagenin:'heroes',okami:'heroes',kagura:'heroes',slime:'enemies',goblin:'enemies',skel:'enemies',bat:'enemies',brute:'enemies',onibi:'enemies',tanuki:'enemies',orochi:'enemies',gashadokuro:'enemies',shuten:'enemies',kyubi:'enemies',ward:'enemies'};
 const ART_FILE = {ward:'brute'};
 const ART_FOCUS = {samurai:'54% 12%',kyudo:'40% 10%',onmyoji:'50% 12%',ninja:'50% 8%',naginata:'50% 16%',sohei:'50% 8%',tengu:'52% 12%',miko:'50% 12%',kitsune:'50% 12%',ronin:'50% 12%',yukionna:'50% 12%',ryujin:'52% 10%',grandonmyoji:'50% 10%',kagenin:'52% 12%',okami:'52% 10%',kagura:'50% 12%',slime:'50% 12%',goblin:'50% 14%',skel:'50% 12%',bat:'50% 14%',tanuki:'50% 16%',brute:'50% 10%',onibi:'50% 12%',orochi:'50% 10%',gashadokuro:'50% 8%',shuten:'50% 10%',kyubi:'50% 10%',ward:'50% 10%'};
+const TOKEN_FOCUS = {samurai:'50% 20%',kyudo:'38% 28%',onmyoji:'45% 20%',ninja:'52% 16%',naginata:'49% 20%',sohei:'46% 20%',tengu:'49% 26%',miko:'45% 28%',kitsune:'45% 24%',ronin:'60% 24%',yukionna:'51% 28%',ryujin:'49% 18%',grandonmyoji:'56% 30%',kagenin:'57% 18%',okami:'52% 26%',kagura:'52% 28%',slime:'46% 16%',goblin:'47% 18%',skel:'38% 20%',bat:'43% 28%',tanuki:'46% 20%',brute:'52% 20%',onibi:'45% 18%',orochi:'55% 18%',gashadokuro:'49% 20%',shuten:'57% 24%',kyubi:'54% 20%',ward:'52% 20%'};
+function tokFace(id){ return TOKEN_FOCUS[id]||'50% 22%'; }
 
 const ENEMIES = {
   slime:  {name:'提燈小僧', e:'🏮', hp:5, atk:1, mov:2, rng:1},
@@ -1565,7 +1620,7 @@ const HERO_TRAIT = {
   okami:       {id:'moon',     n:'月輪', d:'攻擊周圍 8 格，並波及目標上下左右（波及傷害 -2）。'},
   kagura:      {id:'sakura',   n:'櫻護', d:'使用全體治療時，全隊同時獲得 1 點護盾。'},
   slime:       {id:'mob',      n:'燈引', d:'沒有其他特殊能力，會靠近並以提燈撞擊。'},
-  goblin:      {id:'ring',     n:'環擊', d:'可攻擊周圍相鄰的 8 格（含斜角）。'},
+  goblin:      {id:'swift',    n:'疾走', d:'移動力高，容易繞到英雄側邊或斜角。'},
   skel:        {id:'block',    n:'阻射', d:'直線射擊會被第一個單位擋住。'},
   bat:         {id:'ambush',   n:'突襲', d:'可跳到「日」字位置攻擊，後排也不安全。'},
   tanuki:      {id:'pray',     n:'化術', d:'治療生命低於一半的友軍時，治療量 +1。'},
@@ -1578,7 +1633,7 @@ const HERO_TRAIT = {
 };
 const ENEMY_TRAIT = {
   slime:{id:'mob',     n:'雜兵', d:'沒有其他特殊能力，只會靠近並攻擊。'},
-  goblin:{id:'ring',    n:'環擊', d:'可攻擊周圍相鄰的 8 格（含斜角）。'},
+  goblin:{id:'swift',   n:'疾走', d:'移動力高，容易繞到英雄側邊或斜角。'},
   skel:  {id:'block',   n:'阻射', d:'直線射擊會被第一個單位擋住。'},
   bat:   {id:'ambush',  n:'突襲', d:'可跳到「日」字位置攻擊，後排也不安全。'},
   brute:{id:'armor',   n:'護甲', d:'受到的攻擊傷害 -1（至少 1）。'},
@@ -1750,8 +1805,8 @@ const heroImg = id=>charImg(id);
 const faceOf = id=>ART_FOCUS[id]||'50% 16%';
 function battleAv(id, emoji){
   if(!id || id==='totem' || id==='minion') return av(id==='totem'?TOTEM_IMG:'', emoji||'', 'tok');
-  const tok=tokenImg(id), v3=charImg(id), focus=faceOf(id);
-  return `<span class="av tok" style="--face:${focus}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
+  const tok=tokenImg(id), v3=charImg(id), focus=faceOf(id), tf=tokFace(id);
+  return `<span class="av tok" style="--face:${focus};--tokface:${tf}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
 }
 const TOTEM_IMG = 'data:image/svg+xml;utf8,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='50%' cy='42%' r='55%'><stop offset='0' stop-color='#ffe08a'/><stop offset='.5' stop-color='#ff9a3c' stop-opacity='.85'/><stop offset='1' stop-color='#6a2a8a' stop-opacity='0'/></radialGradient></defs><rect width='100' height='100' fill='#2a1740'/><circle cx='50' cy='42' r='44' fill='url(#g)'/><rect x='44' y='60' width='12' height='28' fill='#6f6a7a'/><rect x='30' y='84' width='40' height='8' rx='2' fill='#59546a'/><rect x='34' y='28' width='32' height='32' rx='3' fill='#ffd36a' stroke='#59546a' stroke-width='4'/><rect x='40' y='34' width='20' height='20' rx='2' fill='#fff4c2'/><path d='M24 28 L50 8 L76 28 Z' fill='#7a7488' stroke='#59546a' stroke-width='3'/><circle cx='50' cy='6' r='4' fill='#59546a'/></svg>");
 const enemyImg = k=>charImg(k);
@@ -1969,6 +2024,7 @@ function heroSkillCard(id, stars, atk){
 /* ========== 角色隊伍畫面 ========== */
 function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
 function isSupportHero(id){ const h=HEROES[id]; return !!(h && (h.cls==='坦克'||['heal','healall','shield'].includes(h.skill&&h.skill.type))); }
+function partyHasSupport(){ const ids=(G.run&&G.run.members)?G.run.members.map(m=>m.id):(G.save.party||[]); return ids.some(isSupportHero); }
 const SUPPORT_PREFER=['miko','kagura','sohei'];
 function supportCands(){ const S=G.save; const rank=id=>{ const i=SUPPORT_PREFER.indexOf(id); if(i>=0) return i; return 10+({輔助:0,坦克:1}[HEROES[id].cls]||2); }; return Object.keys(S.roster).filter(id=>isSupportHero(id)&&!(S.party||[]).includes(id)).sort((a,b)=>rank(a)-rank(b)); }
 function previewRecommend(){ const S=G.save, cur=(S.party||[]).slice(), cand=supportCands(); if(!cand.length) return cur; const pick=cand[0], next=cur.slice(); if(next.length<3) next.push(pick); else { const drop=[...next].reverse().find(id=>!isSupportHero(id)&&id!=='samurai')||next[next.length-1]; next[next.indexOf(drop)]=pick; } return next.slice(0,3); }
@@ -2157,11 +2213,20 @@ function playReveal(results){
     { const n=results.length, cost=n===10?COST10:COST1, ag=$('#revealAgain'); ag.dataset.n=n; ag.innerHTML=`再抽 ×${n}<small>💎 ${cost}</small>`; ag.disabled=G.save.gems<cost; ag.style.display='block'; ag.style.opacity=ag.disabled?.45:1; }
     ov.onclick = null;
     cards.forEach(c=>{ c.style.cursor='pointer'; c.onclick=ev=>{ ev.stopPropagation(); if(c.dataset.hero) showDetail(c.dataset.hero); }; });
+    const syncHint=()=>{
+      const rh=$('#revealHint'), g=$('#revealGrid');
+      if(!rh||!g) return;
+      const more=g.scrollHeight>g.clientHeight+8;
+      const atEnd=g.scrollTop+g.clientHeight>=g.scrollHeight-14;
+      rh.style.display=(results.length>1 && more && !atEnd)?'block':'none';
+    };
+    let rh=$('#revealHint'); if(!rh && results.length>1){ rh=document.createElement('div'); rh.id='revealHint'; rh.className='ss-hint'; rh.textContent='↕ 向下滑還有卡片'; grid.after(rh); }
+    if(!grid._hintBound){ grid._hintBound=true; grid.addEventListener('scroll', syncHint, {passive:true}); }
     grid.scrollTop=0;
     const hi=grid.querySelector('.rcard.ssr');
     if(hi){ try{ hi.scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(e){} }
-    let rh=$('#revealHint'); if(!rh && results.length>1){ rh=document.createElement('div'); rh.id='revealHint'; rh.className='ss-hint'; rh.textContent='↕ 向下滑還有卡片'; grid.after(rh); }
-    if(rh) rh.style.display=(results.length>1 && grid.scrollHeight>grid.clientHeight+8)?'block':'none';
+    requestAnimationFrame(()=>{ requestAnimationFrame(syncHint); });
+    setTimeout(syncHint, 320);
   };
   cards.forEach((c,i)=>{ timers.push(setTimeout(()=>{ c.classList.add('flipped'); sfx(c.dataset.rarity==='SSR'?'ssr':'flip'); if(i===cards.length-1) setTimeout(finish, 450); }, G.fast?10: 500+i*260)); });
   ov.onclick = (e)=>{ if(e.target.id==='revealOk') return; finish(); };
@@ -2227,14 +2292,30 @@ function genEnemyList(f, strong, totem){
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki','ninja'); if(f>=4) pool.push('brute','ward','naginata'); if(f>=6) pool.push('sohei','ronin','kitsune'); if(f>=8) pool.push('tengu','yukionna','kyudo');
   const boss = isBoss(f);
   const strongParty = partyPower()>=10;
-  const nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?(strongParty?2:1) : (f===6 && (G.save.best||0)<6?1 : (f>=9?3:2))));
+  const noSup=!partyHasSupport();
+  const nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0));
+  const w1 = 2;
+  let w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?(strongParty?2:1) : (f===6 && (G.save.best||0)<6?1 : (f>=9?3:2))));
+  if(f===5 && (G.save.best||0)<5 && noSup && !strongParty) w2=0;
+  const w3 = (f===5 && strongParty)?1:0;
   let nT=0, nW=0; const maxT = f>=7?2:1;
-  const mk = (wv)=>{ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT||wv>0) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1||wv>0) t='brute'; else nW++; }
+  const mk = (wv)=>{
+    const used=new Set(list.map(x=>x.t));
+    const ok=p=>{
+      if(p==='tanuki' && (nT>=maxT||wv>0)) return false;
+      if(p==='ward' && (nW>=1||wv>0)) return false;
+      return true;
+    };
+    const fresh=pool.filter(p=>ok(p)&&!used.has(p));
+    const avail=fresh.length?fresh:pool.filter(ok);
+    let t=(avail.length?avail:pool)[Math.floor(Math.random()*(avail.length||pool.length))];
+    if(t==='tanuki') nT++; if(t==='ward') nW++;
     const c=ENEMIES[t]||(()=>{ const h=HEROES[t]; return {name:h.name,e:h.e,hp:Math.max(4,Math.min(12,(h.hp||8)-3)),atk:Math.max(1,Math.min(3,(h.atk||2)-1)),mov:h.mov,rng:h.rng,armor:h.armor||0}; })();
-    const o={...c, t, boss:false, wv, img:c.img||t}; if(wv){ o.wt = wv===1?TUNE.w1t:TUNE.w2t; } return o; };
+    const o={...c, t, boss:false, wv, img:c.img||t}; if(wv){ o.wt = wv===1?TUNE.w1t:wv===2?(strongParty&&f===5?7:TUNE.w2t):(wv===3?8:TUNE.w2t); } return o; };
   for(let i=0;i<nb;i++) list.push(mk(0));
   for(let i=0;i<w1;i++) list.push(mk(1));
   for(let i=0;i<w2;i++) list.push(mk(2));
+  for(let i=0;i<w3;i++) list.push(mk(3));
   if(boss){ const b = BOSSES[(f/5-1)%BOSSES.length]; list.unshift({...b, t:b.img, boss:true, cyc:f/5-1, wv:0}); }
   return list;
 }
@@ -2297,13 +2378,14 @@ function startBattle(){ const B0=null;
   if(run.floor<=5 || (best<6 && run.floor===6)){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
   units.filter(u=>u.team==='p').forEach(u=>{
     let sh=0;
-    if(run.floor<=4 && best<5) sh=3;
-    else if(run.floor===5 && best<5) sh=4;
+    const noSup=!partyHasSupport();
+    if(run.floor<=4 && best<5) sh=3+(noSup?1:0);
+    else if(run.floor===5 && best<5) sh=4+(noSup?1:0);
     else if(run.floor===6 && best<6) sh=2;
     else if(run.floor===7 && best<7) sh=1;
     if(sh) u.shield=(u.shield||0)+sh;
   });
-  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=2; } } }
+  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=3; } } }
   const tiles = genTiles(obs, run.floor);
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
@@ -2647,8 +2729,11 @@ function damage(target, dmg, att){
   if(att && target.armor>0 && d>0){ d=Math.max(1,d-target.armor); dmg=d; }
   if(att && target.boss && target.guard && d>0 && G.B){
     const adds=G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem);
-    if(!adds && target.guardLinger && target.guardUntil==null) target.guardUntil=G.B.turn+1;
-    if(adds || (target.guardUntil!=null && G.B.turn<=target.guardUntil)){ d=Math.max(1,d-2); dmg=d; }
+    if(!adds && target.guardLinger && target.guardUntil==null) target.guardUntil=G.B.turn+target.guardLinger;
+    if(adds || (target.guardUntil!=null && G.B.turn<=target.guardUntil)){
+      d = (G.run && G.run.floor===5 && partyPower()>=10) ? 1 : Math.max(1,d-2);
+      dmg=d;
+    }
   }
   if(target.shield>0){ const a=Math.min(target.shield,d); target.shield-=a; d-=a; if(a) floatText(target,'🛡-'+a,'sh'); }
   if(d>0){
@@ -2758,7 +2843,8 @@ async function afterPlayerAction(){
 function maybeReinforce(){
   const B=G.B; if(!B||B.over||!B.reserve||!B.reserve.length) return false;
   const nxt=Math.min(...B.reserve.map(u=>u.wv)), grp=B.reserve.filter(u=>u.wv===nxt);
-  if(!(B.turn>=grp[0].wt || foes().length<=1)) return false;
+  const hold=(G.run&&G.run.floor===5 && partyPower()>=10);
+  if(!(B.turn>=grp[0].wt || (foes().length<=1 && !hold))) return false;
   const free=(x,y)=>!B.obs.has(key(x,y)) && !B.units.some(u=>u.alive&&u.x===x&&u.y===y);
   let spots=[]; for(let y=0;y<ROWS&&spots.length<grp.length+3;y++) for(let x=0;x<COLS;x++) if(free(x,y)) spots.push([x,y]);
   spots=shuffle(spots.filter(p=>p[1]<=1)).concat(shuffle(spots.filter(p=>p[1]>1)));
@@ -3172,6 +3258,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v33','戰鬥棋子改為近距離臉部特寫（不再用全身立繪裁切）；層名改到棋盤上方並快速淡出，不再壓到棋子。預設隊前五層稍鬆、強隊第 5 層拉長到約 8 回合以上。河童特性不再與環斬重複；十連提示會在捲到底時收起。'],
   ['v32','戰鬥棋子改為參考圖風格：粗藍／紅圓角框、淺色底的臉部特寫、左上深紅生命圓、左下攻擊、右下橙色移動水滴；手牌改為方卡。並修：召喚 SSR 一覽不被按鈕擋住、八岐大蛇型態「八頭噬」、說明羈絆名、短屏說明與羈絆捲動、十連卡名、第 6–7 層敵生命上限 15、第 6 層護盾遞減。'],
   ['v31','棋盤格子與角色棋子改為正方形；立繪裁成臉部特寫，數字角標不再擋住臉。詳情卡立繪改為滿版寬度。'],
   ['v30','全部換成新立繪；角色不再分成英雄與敵人，27 人都可抽來組隊，戰場上也會遇上任何角色。燈籠仍是關卡物件。'],
@@ -3212,7 +3299,7 @@ function startFromTitle(){
 }
 function showTitle(){
   const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v32　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  $('#ttVer').textContent='v33　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -3221,12 +3308,12 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v32　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v33　・　單機版，無需登入　・　👤 '+G.save.name; }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
 $('#hName').onclick=()=>askName(false);
-window.__game.charImg=charImg; window.__game.tokenImg=tokenImg; window.__game.heroImg=heroImg; window.__game.CHAR_IDS=CHAR_IDS; window.__game.ART_FOCUS=ART_FOCUS; window.__game.faceOf=faceOf; window.__game.heroStats=heroStats; window.__game.skillDesc=skillDesc; window.__game.UPGRADES=UPGRADES; window.__game.TAL_TYPES=TAL_TYPES; window.__game.PATS=PATS; window.__game.HERO_TRAIT=HERO_TRAIT; window.__game.ENEMY_TRAIT=ENEMY_TRAIT; window.__game.HERO_V3=HERO_V3; window.__game.ENEMY_V3=ENEMY_V3; window.__game.bgm=()=>({on:BGM.on, pref:G.save.bgm!==false}); window.__game.toggleBgm=toggleBgm; window.__game.skipTitle = ()=>show('home'); window.__game.showTitle = showTitle; window.__game.news = NEWS;
+window.__game.charImg=charImg; window.__game.tokenImg=tokenImg; window.__game.heroImg=heroImg; window.__game.CHAR_IDS=CHAR_IDS; window.__game.ART_FOCUS=ART_FOCUS; window.__game.TOKEN_FOCUS=TOKEN_FOCUS; window.__game.tokFace=tokFace; window.__game.faceOf=faceOf; window.__game.heroStats=heroStats; window.__game.skillDesc=skillDesc; window.__game.UPGRADES=UPGRADES; window.__game.TAL_TYPES=TAL_TYPES; window.__game.PATS=PATS; window.__game.HERO_TRAIT=HERO_TRAIT; window.__game.ENEMY_TRAIT=ENEMY_TRAIT; window.__game.HERO_V3=HERO_V3; window.__game.ENEMY_V3=ENEMY_V3; window.__game.bgm=()=>({on:BGM.on, pref:G.save.bgm!==false}); window.__game.toggleBgm=toggleBgm; window.__game.skipTitle = ()=>show('home'); window.__game.showTitle = showTitle; window.__game.news = NEWS;
 
 { const q=new URLSearchParams(location.search); if(q.get('title')==='1' || (!navigator.webdriver && q.get('skip')!=='1')) showTitle(); else show('home'); }
 </script>
