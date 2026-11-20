@@ -706,34 +706,88 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #cells .cell.obs.riv{background-image:linear-gradient(145deg,#5ab4e8,#2a78c0)!important;box-shadow:inset 0 2px 0 #ffffff55,inset 0 -3px 0 #164a80!important}
 #cells .cell.obs.riv::after{content:'🌊'!important}
 
-/* ===== v24：標題畫面 ===== */
-#title{background:radial-gradient(ellipse at 50% 38%,#ffe9a0 0%,#e0b050 30%,#a8742a 62%,#4d2f14 100%);padding:0;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
-#title::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,#0000 0 38px,#3b240c18 38px 40px);pointer-events:none}
-#title::after{content:'';position:absolute;inset:6px;border:3px solid #7a5416;border-radius:18px;box-shadow:inset 0 0 0 2px #fff3b0aa,0 0 0 2px #e9c35e;pointer-events:none}
-.tt-rays{position:absolute;left:50%;top:44%;width:900px;height:900px;transform:translate(-50%,-50%);background:repeating-conic-gradient(#fff6c855 0 6deg,#0000 6deg 15deg);animation:ttspin 40s linear infinite;pointer-events:none}
-@keyframes ttspin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-.tt-art{position:absolute;left:0;right:0;top:25%;height:46%}
-.tt-card{position:absolute;border:4px solid #fff3b0;border-radius:14px;box-shadow:0 0 0 2px #8a6414,0 10px 20px #0008;overflow:hidden;background:#222}
-.tt-card img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;display:block}
-.tt-card.c0{left:7%;top:9%;width:34%;height:62%;transform:rotate(-7deg)}
-.tt-card.c1{left:50%;top:0;width:52%;height:90%;transform:translateX(-50%);z-index:3;border-width:5px;box-shadow:0 0 0 3px #8a6414,0 0 34px #fff6c0,0 14px 24px #000a}
-.tt-card.c2{right:7%;top:11%;width:34%;height:62%;transform:rotate(7deg);z-index:1}
-.tt-card.c3{left:11%;bottom:-2%;width:26%;height:40%;transform:rotate(5deg);z-index:4}
-.tt-card.c4{right:11%;bottom:-2%;width:26%;height:40%;transform:rotate(-5deg);z-index:4}
-.tt-logo{position:absolute;left:0;right:0;top:5%;text-align:center;z-index:5;pointer-events:none}
-.tt-sub{font-size:12px;font-weight:800;color:#5a3a0e;letter-spacing:2px}
-.tt-logo h1{margin:2px 0 0;font-size:68px;line-height:1.05;letter-spacing:4px;font-weight:900;display:flex;justify-content:center;gap:14px}
-.tt-logo h1 span{background:linear-gradient(#fffbe0 10%,#ffd24a 45%,#c8861a 80%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:3px #4a2a06;paint-order:stroke fill;filter:drop-shadow(0 4px 0 #3a2208) drop-shadow(0 6px 8px #0008)}
-.tt-rib{display:inline-block;margin-top:2px;padding:3px 26px;font-size:17px;font-weight:900;letter-spacing:4px;color:#ffe9a0;background:linear-gradient(#7a2418,#4a1008);border:2px solid #e0b53a;border-radius:4px;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);text-shadow:0 2px 0 #000}
-.tt-start{position:absolute;left:0;right:0;bottom:17%;text-align:center;font-size:26px;font-weight:900;letter-spacing:6px;color:#fff;-webkit-text-stroke:4px #4a2a06;paint-order:stroke fill;text-shadow:0 3px 0 #3a2208,0 0 16px #ffe9a0;z-index:6;animation:ttpulse 1.3s ease-in-out infinite;pointer-events:none}
-@keyframes ttpulse{0%,100%{opacity:.35;transform:scale(.96)}50%{opacity:1;transform:scale(1.05)}}
-.tt-load{position:absolute;left:12%;right:12%;bottom:14%;z-index:7;display:none;text-align:center}.tt-load.on{display:block}
+/* ===== v35：標題畫面（參考版面，用自家立繪） ===== */
+#title{display:none;flex-direction:column;padding:0;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;container-type:size;
+  background:radial-gradient(ellipse at 50% 18%,#fffce8 0%,#f6e09a 32%,#e8c14e 68%,#d4a028 100%)}
+#title.on{display:flex}
+#title::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:url('assets/title/grain.png') repeat,repeating-conic-gradient(from 0deg at 50% 22%,#fff8d055 0 5deg,#0000 5deg 14deg);
+  background-size:96px 96px,auto;opacity:.55}
+#title::after{content:none}
+.tt-rays{display:none}
+.tt-top{position:relative;z-index:8;flex:none;display:flex;justify-content:space-between;align-items:baseline;
+  padding:8px 14px 0;font-size:12px;font-weight:700;color:#6a4a18;letter-spacing:.02em;pointer-events:none}
+#ttPid{white-space:nowrap}
+#title .tt-ver,#ttVer{position:static;left:auto;right:auto;bottom:auto;transform:none;width:auto;max-width:none;margin:0;padding:0;
+  background:none;color:#6a4a18;text-shadow:none;font-size:12px;font-weight:700;white-space:nowrap;border-radius:0}
+.tt-logo{position:relative;z-index:5;flex:none;text-align:center;padding:2px 6px 4px;pointer-events:none}
+.tt-sub{display:none}
+.tt-logo h1{margin:0;display:flex;justify-content:center;align-items:center;gap:2px;
+  font-family:"Noto Sans CJK TC","Noto Sans CJK JP","Source Han Sans TC","PingFang TC","Hiragino Sans","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  font-size:clamp(46px,17cqw,68px);line-height:1.05;letter-spacing:.02em;font-weight:900}
+.tt-logo h1 span,.tt-logo h1 .tt-star{
+  display:inline-block;
+  background:linear-gradient(#fff6c4 0%,#f3cc3a 48%,#d49a14 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  -webkit-text-stroke:7px #16316c;paint-order:stroke fill;
+  filter:drop-shadow(0 3px 0 #0d1e48) drop-shadow(0 5px 6px #0005)}
+.tt-logo h1 span:first-child{transform:rotate(-1.8deg);margin-right:1px}
+.tt-logo h1 span:last-child{transform:rotate(1.6deg);margin-left:1px}
+.tt-logo h1 .tt-star{font-style:normal;transform:rotate(-12deg) scale(1.12);font-size:.78em;margin:0 .02em .08em;color:#f0c430;-webkit-text-stroke:6px #16316c}
+.tt-rib{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);border:0;padding:0;margin:0;background:none;color:transparent;text-shadow:none}
+.tt-band{flex:none;height:18px;margin:0;background:url('assets/title/band.svg') repeat-x center;background-size:auto 100%;
+  box-shadow:inset 0 1px 0 #fff6c288,0 1px 0 #8a5a1288;z-index:4;pointer-events:none}
+.tt-art{position:relative;flex:1 1 auto;min-height:0;margin:6px 14px 4px;z-index:3}
+.tt-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:7px;z-index:1}
+.tt-cell{position:relative;background:linear-gradient(#f8ebc8,#ecd7a4 80%,#e2c890);
+  border-radius:16px;border:1.5px solid #e8d39a;
+  box-shadow:0 2px 0 #c9a45a,0 4px 8px #8a6a2033,inset 0 1px 0 #fffaf0;overflow:hidden}
+.tt-cell:nth-child(1){border-radius:15px 18px 14px 17px}
+.tt-cell:nth-child(3){border-radius:18px 15px 17px 14px}
+.tt-cell:nth-child(7){border-radius:16px 14px 18px 15px}
+.tt-cell:nth-child(9){border-radius:14px 17px 15px 18px}
+.tt-cell img{position:absolute;width:200%;height:auto;max-width:none;
+  filter:drop-shadow(1px 1px 0 #fff8e8) drop-shadow(-1px 1px 0 #fff8e8) drop-shadow(0 3px 4px #0004);pointer-events:none}
+.tt-cell.c0 img{width:210%;left:-42%;top:-2%}
+.tt-cell.c2 img{width:200%;left:auto;right:-38%;top:-6%}
+.tt-cell.c6 img{width:190%;left:-6%;top:30%;bottom:auto}
+.tt-cell.c8 img{width:155%;left:auto;right:-18%;top:58%;bottom:auto}
+.tt-heroes{position:absolute;inset:0;z-index:4;pointer-events:none}
+.tt-heroes .th{position:absolute;width:auto;height:90%;bottom:-2%;
+  filter:drop-shadow(0 0 1px #fffce8) drop-shadow(2px 3px 0 #fff6d8) drop-shadow(0 8px 10px #0004)}
+.tt-heroes .th-l{height:70%;left:16%;bottom:18%;z-index:2}
+.tt-heroes .th-r{height:74%;right:6%;bottom:1%;z-index:2}
+.tt-heroes .th-c{height:95%;left:50%;transform:translateX(-46%);bottom:-2%;z-index:3}
+#title .tt-start,#ttStart{
+  position:absolute;left:50%;right:auto;bottom:7%;transform:translateX(-50%);
+  z-index:6;font-size:clamp(16px,5.4cqw,22px);font-weight:800;letter-spacing:.22em;
+  color:#5a3a10cc;text-shadow:0 1px 0 #fff8;-webkit-text-stroke:0;background:none;border:none;box-shadow:none;
+  padding:0;margin:0;border-radius:0;white-space:nowrap;pointer-events:none;
+  animation:ttpulse 1.6s ease-in-out infinite}
+@keyframes ttpulse{0%,100%{opacity:.4;transform:translateX(-50%) scale(1)}50%{opacity:.95;transform:translateX(-50%) scale(1)}}
+@keyframes ttpulse2{0%,100%{opacity:.28;transform:translateX(-50%)}50%{opacity:.9;transform:translateX(-50%)}}
+.tt-foot{flex:none;z-index:8;background:linear-gradient(#efc45c,#d4a230);box-shadow:inset 0 2px 0 #f8e7a0,0 -1px 0 #a07820;padding:6px 8px 8px}
+.tt-btns{position:static;left:auto;right:auto;bottom:auto;display:flex;justify-content:center;gap:8px;margin:0 0 5px}
+.tt-b{min-width:90px;min-height:40px;padding:0 12px;border-radius:18px;font-size:13px;font-weight:800;
+  color:#fff8d8;background:linear-gradient(#8a5a1c,#5a3a10);border:2px solid #f0d070;box-shadow:0 2px 0 #3a2208}
+.tt-copy{text-align:center;font-size:11px;font-weight:700;color:#5a3a10;letter-spacing:.04em;pointer-events:none}
+.tt-load{position:absolute;left:14%;right:14%;bottom:26%;z-index:10;display:none;text-align:center}.tt-load.on{display:block}
 .tt-bar{height:14px;border-radius:8px;background:#3b240c;border:2px solid #e0b53a;overflow:hidden}.tt-bar i{display:block;height:100%;width:0;background:linear-gradient(#fff3a0,#e0a020)}
 .tt-tip{margin-top:8px;font-size:12.5px;font-weight:800;color:#3a2208;text-shadow:0 1px 0 #fff8}
-.tt-btns{position:absolute;left:0;right:0;bottom:6.5%;display:flex;justify-content:center;gap:14px;z-index:8}
-.tt-b{min-width:104px;min-height:44px;padding:0 16px;border-radius:22px;font-size:15px;font-weight:900;color:#ffe9a0;background:linear-gradient(#6a4418,#3a2208);border:2px solid #e0b53a;box-shadow:0 3px 0 #1f1405}
-.tt-ver{position:absolute;left:0;right:0;bottom:2.4%;text-align:center;font-size:11.5px;font-weight:800;color:#4a2f0a;z-index:8;pointer-events:none;text-shadow:0 1px 0 #fff6}
-@media (max-height:700px){.tt-logo h1{font-size:56px}.tt-art{top:24%;height:44%}.tt-start{bottom:19%;font-size:23px}.tt-btns{bottom:8%}}
+@media (max-height:700px){
+  .tt-top{padding:4px 12px 0;font-size:11px}
+  .tt-logo{padding:0 4px 2px}
+  .tt-logo h1{font-size:clamp(40px,15cqw,56px)}
+  .tt-logo h1 span,.tt-logo h1 .tt-star{-webkit-text-stroke:6px #16316c}
+  .tt-band{height:14px}
+  .tt-art{margin:4px 10px 3px}
+  .tt-grid{gap:5px}
+  .tt-cell{border-radius:12px}
+  .tt-foot{padding:4px 6px 5px}
+  .tt-b{min-width:82px;min-height:38px;font-size:12px;padding:0 8px}
+  .tt-copy{font-size:10px}
+  #title .tt-start,#ttStart{font-size:15px;bottom:6%;letter-spacing:.16em}
+}
 #hName{cursor:pointer}
 
 /* ===== v25：隊伍畫面（已擁有優先、未獲得收合、排序／篩選） ===== */
@@ -763,17 +817,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 #rosterGrid .hcard.small .ov{padding:8px 1px 1px}
 #rosterGrid .hcard.small .nm{font-size:9.5px;color:#ddd}#rosterGrid .hcard.small .st,#rosterGrid .hcard.small .cl,#rosterGrid .hcard.small .rt{display:none}
 
-/* ===== v25：標題畫面可讀性 ===== */
-.tt-sub{font-size:13.5px;color:#3a2208;text-shadow:0 1px 0 #fff9}
-.tt-logo h1{font-size:82px;gap:8px;letter-spacing:2px}
-.tt-logo h1 span{-webkit-text-stroke:4px #3a1c04}
-.tt-rib{font-size:19px;padding:4px 30px}
-.tt-start{bottom:16.5%;left:50%;right:auto;transform:translateX(-50%);white-space:nowrap;padding:9px 34px;font-size:30px;letter-spacing:8px;color:#fff3b0;-webkit-text-stroke:0;background:linear-gradient(#3a2208ee,#1f1204ee);border:3px solid #e0b53a;border-radius:32px;text-shadow:0 2px 0 #000,0 0 14px #ffd24a;box-shadow:0 0 0 2px #7a5416,0 6px 14px #000a;animation:ttpulse2 1.3s ease-in-out infinite}
-@keyframes ttpulse2{0%,100%{opacity:.7;transform:translateX(-50%) scale(.97)}50%{opacity:1;transform:translateX(-50%) scale(1.04)}}
-.tt-btns{gap:12px;bottom:6.8%}
-.tt-b{min-width:98px;min-height:48px;font-size:17px;color:#fff3b0;background:linear-gradient(#3a2208f2,#1f1204f2);border:3px solid #e0b53a;box-shadow:0 0 0 2px #7a5416,0 4px 8px #0009}
-.tt-ver{bottom:2.2%;font-size:12.5px;color:#fff3b0;background:#2a1606cc;width:max-content;max-width:92%;margin:0 auto;padding:3px 14px;border-radius:12px;text-shadow:0 1px 0 #000;left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
-@media (max-height:700px){.tt-logo h1{font-size:68px}.tt-start{bottom:19%;font-size:26px;padding:7px 28px}.tt-btns{bottom:8.6%}.tt-art{top:26%;height:42%}}
+/* v25 title readability superseded by v35 */
 
 /* ===== v26 ===== */
 #tipBox{top:38%!important;bottom:auto!important;left:6px!important;right:6px!important;z-index:30;cursor:pointer;background:#150b2cf2;padding:7px 28px 7px 10px}
@@ -1289,6 +1333,44 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   scroll-padding-top:10px!important;
   padding-bottom:18px!important;
 }
+
+/* ===== v35：橫幅獨立列（不蓋目標晶片）、十連提示佔位、河童縮放 ===== */
+.hud{grid-template-rows:26px 18px auto 16px!important}
+#objRow{grid-column:1/-1;grid-row:3;position:relative;z-index:2}
+#banner{
+  position:relative!important;
+  grid-column:1/-1;grid-row:4;
+  left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  transform:none!important;
+  justify-self:center;align-self:center;
+  height:16px!important;max-width:96%;
+  font-size:11px!important;line-height:14px;padding:0 8px!important;
+  z-index:3;
+}
+@media (max-height:700px){
+  .hud{grid-template-rows:24px 16px auto 15px!important}
+  #banner{font-size:10px!important;height:15px!important}
+}
+@keyframes ban{
+  0%{opacity:0;transform:translateY(2px) scale(.94)}
+  16%{opacity:1;transform:scale(1)}
+  62%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1)}
+}
+#banner.show{animation:ban .85s ease forwards!important;transform:none!important;padding:0 8px!important;width:max-content}
+#ssrShow .ss-hint{flex:none;display:none;text-align:center;font-size:11px;font-weight:800;color:#ffe9a0;padding:2px 0 4px;text-shadow:0 1px 2px #0008}
+#revealHint.ss-hint,#revealHint{
+  flex:none;display:block;min-height:18px;text-align:center;font-size:11px;font-weight:800;color:#ffe9a0;
+  padding:2px 0 4px;text-shadow:0 1px 2px #0008;visibility:hidden;opacity:0;transition:opacity .15s;
+}
+#revealHint.show{visibility:visible;opacity:1}
+#units .unit .face .av img.tok:not(.fb),
+#chips .chip .em .av img.tok:not(.fb){
+  width:calc(var(--toks, 1.36) * 100%)!important;
+  height:calc(var(--toks, 1.36) * 100%)!important;
+  left:calc(50% - var(--toks, 1.36) * var(--tokx,50%))!important;
+  top:calc(50% - var(--toks, 1.36) * var(--toky,30%))!important;
+}
 </style>
 
 </head>
@@ -1297,13 +1379,34 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 
 <!-- 標題／登入畫面 -->
 <section id="title" class="screen">
-  <div class="tt-rays"></div>
-  <div class="tt-art" id="ttArt"></div>
-  <div class="tt-logo"><div class="tt-sub">⛩️ 日式地城 ・ 格子戰術 ⛩️</div><h1><span>地城</span><span>戰棋</span></h1><div class="tt-rib">（試作版）</div></div>
-  <div class="tt-start" id="ttStart">點擊開始</div>
+  <div class="tt-top"><span id="ttPid">玩家ID: ———</span><span class="tt-ver" id="ttVer">Version v35</span></div>
+  <div class="tt-logo"><h1><span>地城</span><i class="tt-star">★</i><span>戰棋</span></h1><div class="tt-rib">（試作版）</div></div>
+  <div class="tt-band" aria-hidden="true"></div>
+  <div class="tt-art" id="ttArt">
+    <div class="tt-grid">
+      <div class="tt-cell c0"><img src="assets/title/kagura.webp?v=1" alt=""></div>
+      <div class="tt-cell"></div>
+      <div class="tt-cell c2"><img src="assets/title/naginata.webp?v=1" alt=""></div>
+      <div class="tt-cell"></div>
+      <div class="tt-cell"></div>
+      <div class="tt-cell"></div>
+      <div class="tt-cell c6"><img src="assets/title/onmyoji.webp?v=1" alt=""></div>
+      <div class="tt-cell"></div>
+      <div class="tt-cell c8"><img src="assets/title/sohei.webp?v=1" alt=""></div>
+    </div>
+    <div class="tt-heroes">
+      <img class="th th-l" src="assets/title/kyudo.webp?v=1" alt="">
+      <img class="th th-r" src="assets/title/miko.webp?v=1" alt="">
+      <img class="th th-c" src="assets/title/samurai.webp?v=1" alt="">
+    </div>
+    <div class="tt-start" id="ttStart">點擊開始</div>
+  </div>
+  <div class="tt-band" aria-hidden="true"></div>
+  <div class="tt-foot">
+    <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
+    <div class="tt-copy">© 地城戰棋 試作版</div>
+  </div>
   <div class="tt-load" id="ttLoad"><div class="tt-bar"><i id="ttBar"></i></div><div class="tt-tip" id="ttTip"></div></div>
-  <div class="tt-btns"><button class="tt-b" id="ttNews">📢 公告</button><button class="tt-b" id="ttBgm">🎵 音樂</button><button class="tt-b" id="ttSet">⚙ 設定</button></div>
-  <div class="tt-ver" id="ttVer">v34　・　單機版，無需登入</div>
 </section>
 
 <!-- 主選單 -->
@@ -1421,6 +1524,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 <div id="revealOv" class="overlay" style="flex-direction:column;gap:14px">
   <h2 id="revealTitle" style="color:#ffe066">召喚中…點擊可跳過動畫</h2>
   <div id="revealGrid"></div>
+  <div id="revealHint" class="ss-hint">↕ 向下滑還有卡片</div>
   <div id="revealBtns" style="display:flex;gap:10px;justify-content:center"><button class="btn" id="revealAgain" style="display:none;min-width:150px">再抽 ×1</button><button class="btn gold" id="revealOk" style="display:none;min-width:130px">確定</button></div>
 </div>
 <!-- 覆蓋層：詳細 -->
@@ -1519,7 +1623,7 @@ const SKILL_TYPES = {power:'單體重擊', aoe:'範圍攻擊', heal:'治療', he
 const HEROES = {
   samurai:  {name:'放逐騎士', e:'⚔️', r:'R',  cls:'近戰', hp:10, atk:3,  mov:3, rng:1, skill:{name:'雙匕連斬',  type:'power',   add:2, rng:1, cd:3}},
   kyudo:    {name:'弓道少女', e:'🏹', r:'R',  cls:'遠程', hp:7, atk:3,  mov:3, rng:3, skill:{name:'破魔矢',    type:'power',   add:2, rng:4, cd:3}},
-  onmyoji:  {name:'座敷童子', e:'🧸', r:'R',  cls:'輔助', hp:6, atk:2,  mov:2, rng:2, skill:{name:'惡作劇福符',type:'aoe',     add:1, rng:3, cd:3, rad:1}},
+  onmyoji:  {name:'座敷童子', e:'🧸', r:'R',  cls:'法術', hp:6, atk:2,  mov:2, rng:2, skill:{name:'惡作劇福符',type:'aoe',     add:1, rng:3, cd:3, rad:1}},
   ninja:    {name:'轆轤首',   e:'👻', r:'R',  cls:'刺客', hp:8, atk:3,  mov:4, rng:1, skill:{name:'飛首一擊',  type:'power',   add:3, rng:1, cd:3}},
   naginata: {name:'雷神',     e:'⚡', r:'R',  cls:'近戰', hp:9, atk:3,  mov:3, rng:2, skill:{name:'雷鼓連擊',  type:'aoe',     add:1, rng:2, cd:3, rad:1}},
   sohei:    {name:'牛鬼',     e:'🐂', r:'SR', cls:'坦克', hp:15, atk:2,  mov:2, rng:1, skill:{name:'鬼甲結界',  type:'shield',  amt:3, rng:0, cd:3, rad:2}},
@@ -1551,8 +1655,10 @@ const START_ROSTER = ['samurai','kyudo','onmyoji'];
 const CHAR_ART = {samurai:'heroes',kyudo:'heroes',onmyoji:'heroes',ninja:'heroes',naginata:'heroes',sohei:'heroes',tengu:'heroes',miko:'heroes',kitsune:'heroes',ronin:'heroes',yukionna:'heroes',ryujin:'heroes',grandonmyoji:'heroes',kagenin:'heroes',okami:'heroes',kagura:'heroes',slime:'enemies',goblin:'enemies',skel:'enemies',bat:'enemies',brute:'enemies',onibi:'enemies',tanuki:'enemies',orochi:'enemies',gashadokuro:'enemies',shuten:'enemies',kyubi:'enemies',ward:'enemies'};
 const ART_FILE = {ward:'brute'};
 const ART_FOCUS = {samurai:'54% 12%',kyudo:'40% 10%',onmyoji:'50% 12%',ninja:'50% 8%',naginata:'50% 16%',sohei:'50% 8%',tengu:'52% 12%',miko:'50% 12%',kitsune:'50% 12%',ronin:'50% 12%',yukionna:'50% 12%',ryujin:'52% 10%',grandonmyoji:'50% 10%',kagenin:'52% 12%',okami:'52% 10%',kagura:'50% 12%',slime:'50% 12%',goblin:'50% 14%',skel:'50% 12%',bat:'50% 14%',tanuki:'50% 16%',brute:'50% 10%',onibi:'50% 12%',orochi:'50% 10%',gashadokuro:'50% 8%',shuten:'50% 10%',kyubi:'50% 10%',ward:'50% 10%'};
-const TOKEN_FOCUS = {samurai:'48% 38%',kyudo:'40% 38%',onmyoji:'46% 38%',ninja:'52% 38%',naginata:'50% 38%',sohei:'48% 38%',tengu:'50% 38%',miko:'46% 38%',kitsune:'46% 38%',ronin:'58% 38%',yukionna:'51% 38%',ryujin:'50% 38%',grandonmyoji:'56% 38%',kagenin:'56% 38%',okami:'52% 38%',kagura:'52% 38%',slime:'48% 38%',goblin:'52% 38%',skel:'40% 38%',bat:'44% 38%',tanuki:'48% 38%',brute:'52% 38%',onibi:'46% 38%',orochi:'54% 38%',gashadokuro:'50% 38%',shuten:'56% 38%',kyubi:'54% 38%',ward:'52% 38%'};
+const TOKEN_FOCUS = {samurai:'48% 38%',kyudo:'40% 38%',onmyoji:'46% 38%',ninja:'52% 38%',naginata:'50% 38%',sohei:'48% 38%',tengu:'50% 38%',miko:'46% 38%',kitsune:'46% 38%',ronin:'58% 38%',yukionna:'51% 38%',ryujin:'50% 38%',grandonmyoji:'56% 38%',kagenin:'56% 38%',okami:'52% 38%',kagura:'52% 38%',slime:'48% 38%',goblin:'44% 43%',skel:'40% 38%',bat:'44% 38%',tanuki:'48% 38%',brute:'52% 38%',onibi:'46% 38%',orochi:'54% 38%',gashadokuro:'50% 38%',shuten:'56% 38%',kyubi:'54% 38%',ward:'52% 38%'};
 function tokFace(id){ return TOKEN_FOCUS[id]||'50% 30%'; }
+const TOKEN_SCALE={goblin:1.16};
+function tokScale(id){ return TOKEN_SCALE[id]||1.36; }
 function tokXY(id){ const p=(tokFace(id)||'50% 30%').split(/\s+/); return {x:p[0]||'50%', y:p[1]||'30%'}; }
 
 const ENEMIES = {
@@ -1730,7 +1836,7 @@ const UPGRADES = [
 function defaultSave(){
   const roster = {}; START_ROSTER.forEach(id=>roster[id]={stars:1});
   if(!roster.miko) roster.miko={stars:1}; /* 開場贈送巫女，預設不出戰，可一鍵推薦編成 */
-  return {v:2, gems:1000, tix:0, lv:{}, diff:0, roster, party:START_ROSTER.slice(), pity:0, draws:0, best:0, runs:0, tutSeen:false, tutDone:false, mute:false, run:null, name:'', bgm:true, econ:2};
+  return {v:2, gems:1000, tix:0, lv:{}, diff:0, roster, party:START_ROSTER.slice(), pity:0, draws:0, best:0, runs:0, tutSeen:false, tutDone:false, mute:false, run:null, name:'', bgm:true, econ:2, pid:''};
 }
 function loadSave(){
   try{
@@ -1743,6 +1849,7 @@ function loadSave(){
       if(!s.party.length) s.party = Object.keys(s.roster).slice(0,3);
       /* 舊存檔若仍是初始三人、尚未抽卡，補送巫女（不自動入隊） */
       if(!s.roster.miko && (s.draws||0)===0 && Object.keys(s.roster).length<=3 && START_ROSTER.every(id=>s.roster[id])) s.roster.miko={stars:1};
+      if(!s.pid || !/^\d{9}$/.test(String(s.pid))) s.pid=String(100000000+Math.floor(Math.random()*900000000));
       return s;
     }
   }catch(e){}
@@ -1813,7 +1920,7 @@ const faceOf = id=>ART_FOCUS[id]||'50% 16%';
 function battleAv(id, emoji){
   if(!id || id==='totem' || id==='minion') return av(id==='totem'?TOTEM_IMG:'', emoji||'', 'tok');
   const tok=tokenImg(id), v3=charImg(id), focus=faceOf(id), tf=tokFace(id);
-  const xy=tokXY(id); return `<span class="av tok" style="--face:${focus};--tokface:${tf};--tokx:${xy.x};--toky:${xy.y}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
+  const xy=tokXY(id); return `<span class="av tok" style="--face:${focus};--tokface:${tf};--tokx:${xy.x};--toky:${xy.y};--toks:${tokScale(id)}"><img class="tok" src="${tok}" alt="" draggable="false" onerror="this.onerror=null;this.src='${v3}';this.classList.add('fb');"><span class="emf">${emoji||''}</span></span>`;
 }
 const TOTEM_IMG = 'data:image/svg+xml;utf8,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='g' cx='50%' cy='42%' r='55%'><stop offset='0' stop-color='#ffe08a'/><stop offset='.5' stop-color='#ff9a3c' stop-opacity='.85'/><stop offset='1' stop-color='#6a2a8a' stop-opacity='0'/></radialGradient></defs><rect width='100' height='100' fill='#2a1740'/><circle cx='50' cy='42' r='44' fill='url(#g)'/><rect x='44' y='60' width='12' height='28' fill='#6f6a7a'/><rect x='30' y='84' width='40' height='8' rx='2' fill='#59546a'/><rect x='34' y='28' width='32' height='32' rx='3' fill='#ffd36a' stroke='#59546a' stroke-width='4'/><rect x='40' y='34' width='20' height='20' rx='2' fill='#fff4c2'/><path d='M24 28 L50 8 L76 28 Z' fill='#7a7488' stroke='#59546a' stroke-width='3'/><circle cx='50' cy='6' r='4' fill='#59546a'/></svg>");
 const enemyImg = k=>charImg(k);
@@ -2032,6 +2139,9 @@ function heroSkillCard(id, stars, atk){
 function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
 function isSupportHero(id){ const h=HEROES[id]; return !!(h && (h.cls==='坦克'||['heal','healall','shield'].includes(h.skill&&h.skill.type))); }
 function partyHasSupport(){ const ids=(G.run&&G.run.members)?G.run.members.map(m=>m.id):(G.save.party||[]); return ids.some(isSupportHero); }
+function firstNoHealEase(){ return (G.save.best||0)<5 && !partyHasSupport(); }
+function bossGuardReduce(){ if(firstNoHealEase() && G.run && G.run.floor===5) return 1; if(G.run && G.run.floor===5 && partyPower()>=10) return 'cap1'; return 2; }
+function bossGuardDesc(){ const r=bossGuardReduce(); return r==='cap1' ? '仍有隨從在場時，打首領的傷害上限為 1 點。' : '仍有隨從在場時，首領受到的傷害再 −'+r+'（至少 1）。'; }
 const SUPPORT_PREFER=['miko','kagura','sohei'];
 function supportCands(){ const S=G.save; const rank=id=>{ const i=SUPPORT_PREFER.indexOf(id); if(i>=0) return i; return 10+({輔助:0,坦克:1}[HEROES[id].cls]||2); }; return Object.keys(S.roster).filter(id=>isSupportHero(id)&&!(S.party||[]).includes(id)).sort((a,b)=>rank(a)-rank(b)); }
 function previewRecommend(){ const S=G.save, cur=(S.party||[]).slice(), cand=supportCands(); if(!cand.length) return cur; const pick=cand[0], next=cur.slice(); if(next.length<3) next.push(pick); else { const drop=[...next].reverse().find(id=>!isSupportHero(id)&&id!=='samurai')||next[next.length-1]; next[next.indexOf(drop)]=pick; } return next.slice(0,3); }
@@ -2039,8 +2149,10 @@ function partyWarning(){
   const S=G.save; if(!S.party||!S.party.length) return '';
   if(S.party.some(isSupportHero)) return '';
   const cand = supportCands();
-  if(cand.length) return '⚠ 隊伍沒有補師或坦克，前幾層會比較吃緊。建議換上：'+cand.map(id=>HEROES[id].name).join('、')+'。';
-  return '⚠ 隊伍沒有補師或坦克，前幾層請注意站位與血量。抽到巫女或牛鬼後可一鍵換成推薦編成。';
+  const hasKid = (S.party||[]).includes('onmyoji');
+  const why = hasKid ? '座敷童子是搗蛋攻擊手，沒有治療。' : '隊伍沒有補師或坦克，前幾層會比較吃緊。';
+  if(cand.length) return '⚠ '+why+'建議換上：'+cand.map(id=>HEROES[id].name).join('、')+'。';
+  return '⚠ '+why+(hasKid?'抽到巫女或牛鬼後可一鍵換成推薦編成。':'前幾層請注意站位與血量。抽到巫女或牛鬼後可一鍵換成推薦編成。');
 }
 function recommendParty(){
   const S=G.save;
@@ -2224,19 +2336,22 @@ function playReveal(results){
       const rh=$('#revealHint'), g=$('#revealGrid');
       if(!rh||!g) return;
       const more=g.scrollHeight>g.clientHeight+8;
-      const atEnd=g.scrollTop+g.clientHeight>=g.scrollHeight-14;
+      const atEnd=g.scrollTop+g.clientHeight>=g.scrollHeight-12;
       const show=results.length>1 && more && !atEnd;
-      rh.style.display=(results.length>1 && more)?'block':'none';
+      rh.style.display='block';
+      rh.classList.toggle('show', !!show);
       rh.style.visibility=show?'visible':'hidden';
       rh.style.opacity=show?'1':'0';
     };
-    let rh=$('#revealHint'); if(!rh && results.length>1){ rh=document.createElement('div'); rh.id='revealHint'; rh.className='ss-hint'; rh.textContent='↕ 向下滑還有卡片'; grid.after(rh); }
+    let rh=$('#revealHint'); if(!rh){ rh=document.createElement('div'); rh.id='revealHint'; rh.className='ss-hint'; rh.textContent='↕ 向下滑還有卡片'; grid.after(rh); }
+    rh.textContent='↕ 向下滑還有卡片';
     if(!grid._hintBound){ grid._hintBound=true; grid.addEventListener('scroll', syncHint, {passive:true}); }
     grid.scrollTop=0;
     const hi=grid.querySelector('.rcard.ssr');
     if(hi){ try{ hi.scrollIntoView({block:'nearest',behavior:'smooth'}); }catch(e){} }
     requestAnimationFrame(()=>{ requestAnimationFrame(syncHint); });
     setTimeout(syncHint, 320);
+    setTimeout(syncHint, 900);
   };
   cards.forEach((c,i)=>{ timers.push(setTimeout(()=>{ c.classList.add('flipped'); sfx(c.dataset.rarity==='SSR'?'ssr':'flip'); if(i===cards.length-1) setTimeout(finish, 450); }, G.fast?10: 500+i*260)); });
   ov.onclick = (e)=>{ if(e.target.id==='revealOk') return; finish(); };
@@ -2301,15 +2416,15 @@ function genEnemyList(f, strong, totem){
   const pool = ['slime','goblin'];
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki','ninja'); if(f>=4) pool.push('brute','ward','naginata'); if(f>=6) pool.push('sohei','ronin','kitsune'); if(f>=8) pool.push('tengu','yukionna','kyudo');
   const boss = isBoss(f);
-  const strongParty = partyPower()>=10;
-  const noSup=!partyHasSupport();
-  if(f===5 && (G.save.best||0)<5 && noSup && !strongParty){ for(const bad of ['onibi','tanuki','ward']){ const ix=pool.indexOf(bad); if(ix>=0) pool.splice(ix,1); } }
+  const ease=firstNoHealEase();
+  const strongParty = !ease && partyPower()>=10;
+  if(f===5 && ease){ for(const bad of ['onibi','tanuki','ward']){ const ix=pool.indexOf(bad); if(ix>=0) pool.splice(ix,1); } }
   let nb = boss ? (f<=5?(strongParty?3:2):2) : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0));
-  if(boss && f===5 && (G.save.best||0)<5 && noSup && !strongParty) nb=1;
+  if(boss && f===5 && ease) nb=2;
   let w1 = 2;
-  if(f===5 && (G.save.best||0)<5 && !strongParty) w1=1;
+  if(f===5 && ((G.save.best||0)<5 || ease) && !strongParty) w1=1;
   let w2 = f<=2 ? (strong?2:2) : (f<4 ? (strong?2:0) : (f===5?(strongParty?2:1) : (f===6 && (G.save.best||0)<6?1 : (f>=9?3:2))));
-  if(f===5 && (G.save.best||0)<5 && noSup && !strongParty) w2=0;
+  if(f===5 && ease) w2=1;
   const w3 = (f===5 && strongParty)?1:0;
   let nT=0, nW=0; const maxT = f>=7?2:1;
   const mk = (wv)=>{
@@ -2388,7 +2503,7 @@ function startBattle(){ const B0=null;
   }
   const best=G.save.best||0;
   units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ if(u.hp>TUNE.hpMax) u.hp=u.maxhp=TUNE.hpMax; });
-  if(run.floor===5 && best<5 && partyPower()<10){ const boss=units.find(u=>u.boss); if(boss){ boss.hp=boss.maxhp=Math.min(boss.hp, partyHasSupport()?22:18); } }
+  if(run.floor===5 && best<5){ const boss=units.find(u=>u.boss); if(boss){ boss.hp=boss.maxhp=Math.min(boss.hp, firstNoHealEase()?18:((partyPower()<10)?22:boss.hp)); } }
   if(run.floor<=5 || (best<6 && run.floor===6)){ units.filter(u=>u.team==='e'&&!u.boss&&!u.totem).forEach(u=>{ u.atk=Math.min(1,u.atk); }); }
   units.filter(u=>u.team==='p').forEach(u=>{
     let sh=0;
@@ -2399,10 +2514,10 @@ function startBattle(){ const B0=null;
     else if(run.floor===7 && best<7) sh=1;
     if(sh) u.shield=(u.shield||0)+sh;
   });
-  if(run.floor===5 && best<5 && !partyHasSupport() && partyPower()<10){
+  if(run.floor===5 && firstNoHealEase()){
     units.filter(u=>u.team==='p').forEach(u=>{ u.hp=u.maxhp; if(u.member) u.member.hp=u.maxhp; });
   }
-  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min((best<5 && !partyHasSupport() && partyPower()<10)?1:2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10) boss.guardLinger=3; } } }
+  if(isBoss(run.floor)){ const boss=units.find(u=>u.boss); if(boss){ boss.guard=true; if(run.floor===5){ boss.atk=Math.min(firstNoHealEase()?1:2,boss.atk); if(best<5) boss.armor=0; if(partyPower()>=10 && !firstNoHealEase()) boss.guardLinger=3; } } }
   const tiles = genTiles(obs, run.floor);
   G.B = {obs, tiles, units, turn:1, phase:'player', over:false, uidn:uid, mod, obj, heroDied:false, strikes:new Set(), reserve, layout:G._layout};
   if(mod&&mod.id==='storm') assignStrikes();
@@ -2416,7 +2531,8 @@ function startBattle(){ const B0=null;
   renderAll(); applySpeed(); hideTip();
   (G._tipTimers||[]).forEach(clearTimeout); G._tipTimers=[];
   const later=(fn,ms)=>G._tipTimers.push(setTimeout(fn,ms));
-  later(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); else if(BB&&BB.units.some(u=>u.ward&&u.alive)) showTip('ward'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
+  if(run.floor===5 && isBoss(run.floor)) later(()=>showTip('f5guard'), 400);
+  later(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(document.querySelector('#tipBox').classList.contains('on')) return; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); else if(BB&&BB.units.some(u=>u.ward&&u.alive)) showTip('ward'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
   later(()=>{ const BB=G.B; if(BB&&BB.reserve&&BB.reserve.length) showTip('wave'); }, 7700);
   later(()=>{ const BB=G.B; if(BB&&BB===G.B&&BB.units.some(u=>u.totem&&u.alive)) showTip('totem'); }, 5200);
   const ban = $('#banner');
@@ -2749,8 +2865,8 @@ function damage(target, dmg, att){
     const adds=G.B.units.some(u=>u.team==='e'&&u.alive&&!u.boss&&!u.totem);
     if(!adds && target.guardLinger && target.guardUntil==null) target.guardUntil=G.B.turn+target.guardLinger;
     if(adds || (target.guardUntil!=null && G.B.turn<=target.guardUntil)){
-      if(G.run && G.run.floor===5 && partyPower()>=10) d=1;
-      else if(G.run && G.run.floor===5 && (G.save.best||0)<5 && !partyHasSupport()) d=Math.max(1,d-1);
+      if(firstNoHealEase() && G.run && G.run.floor===5) d=Math.max(1,d-1);
+      else if(G.run && G.run.floor===5 && partyPower()>=10) d=1;
       else d=Math.max(1,d-2);
       dmg=d;
     }
@@ -2792,7 +2908,8 @@ const TIPS = {
   wave:'🚩 這層分波登場：第 3、6 回合會有援軍從上方出現。援軍當回合不行動。',
   cmd:'🚩 指揮官：先擊倒有旗的敵人！他活著時其他敵人攻擊 +1，倒下後士氣崩潰。',
   ward:'🛡 結界青鬼：每 3 回合替身旁 2 格內的敵人加護盾（青色連線預告），血少、先擊倒牠！',
-  syn:'🔗 羈絆：特定英雄相鄰時有加成，看上方粉色標籤；點標籤查看說明'
+  syn:'🔗 羈絆：特定英雄相鄰時有加成，看上方粉色標籤；點標籤查看說明',
+  f5guard:'首領有護衛：場上還有隨從時，打首領的傷害會被擋住。先清隨從，再集火首領。怒吼每 3 回合打全體。'
 };
 document.addEventListener('click',e=>{ const t=e.target.closest&&e.target.closest('#tipBox'); if(t) hideTip(); });
 function hideTip(){
@@ -3178,7 +3295,7 @@ function showUnitCard(u){
     let skN, skV, skD, tr, tags=['妖怪'];
     if(u.totem){ skN='召喚'; skV=TUNE.totemCd; skD=`每 ${TUNE.totemCd} 回合召喚 1 隻小妖（最多 ${TUNE.totemMax} 隻），直到被摧毀。`; tr={id:'still', n:'不動', d:'不會攻擊，也沒有護甲。先拆掉它。'}; tags=['特殊']; p={n:'無', d:'不會攻擊', offs:[]}; }
     else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD='每 3 回合對全隊造成（攻擊一半）傷害。'; tags=['首領']; if(u.guard) tags.push('護衛');
-      tr = (u.armor>0) ? BOSS_TRAIT : (u.guard ? {id:'guard', n:'護衛', d:'仍有隨從在場時，首領受到的傷害再 -2（至少 1）。'} : {id:'boss', n:'首領', d:'地城的層主。'}); }
+      tr = (u.armor>0) ? BOSS_TRAIT : (u.guard ? {id:'guard', n:'護衛', d:bossGuardDesc()} : {id:'boss', n:'首領', d:'地城的層主。'}); }
     else if(u.heal){ skN='治癒術'; skV=TUNE.healV; skD=`攻擊型態為${p.n}：${p.d}。每 2 回合治療受傷的同伴 ${TUNE.healV} 點生命。`; tr=ENEMY_TRAIT.tanuki; }
     else if(u.explode){ skN='鬼火爆彈'; skV=1; skD=`攻擊型態為${p.n}：${p.d}。被擊倒時爆炸，對相鄰英雄造成攻擊 +1 點傷害。`; tr=ENEMY_TRAIT.onibi; }
     else if(u.ward){ skN='結界術'; skV=TUNE.wardV; skD=`攻擊型態為${p.n}：${p.d}。每 3 回合替 2 格內的友軍張開 ${TUNE.wardV} 點護盾。`; tr=ENEMY_TRAIT.ward; }
@@ -3188,7 +3305,7 @@ function showUnitCard(u){
     if(u.elite) tags.push('精英');
     if(u.cmd) tags.push('指揮官');
     let extra='';
-    if(u.guard && !(tr&&tr.id==='guard')) extra += `<div class="ud-tr">護衛</div><div class="ud-trd">仍有隨從在場時，首領受到的傷害再 -2（至少 1）。</div>`;
+    if(u.guard && !(tr&&tr.id==='guard')) extra += `<div class="ud-tr">護衛</div><div class="ud-trd">${bossGuardDesc()}</div>`;
     if(u.cmd) extra += `<div class="ud-tr">指揮</div><div class="ud-trd">存活時其他敵人攻擊 +1。</div>`;
     if(u.frozen>0) extra += `<div class="ud-tr">凍結</div><div class="ud-trd">下回合無法行動。</div>`;
     if(u.elite) extra += `<div class="ud-trd">精英：更強壯，擊倒有額外獎勵。</div>`;
@@ -3278,6 +3395,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
+  ['v35','標題畫面改版（玩家ID、地城★戰棋、自家立繪去背）。第一次第 5 層優待不再因武運之刃關掉，並加「先打隨從」提示；座敷童子改標法術。十連提示捲回頂端會再出現。'],
   ['v34','棋子特寫改以臉為中心（放逐騎士看得到額頭與眼睛，河童看得到頭）；短屏層名不再壓到最上排。預設／推薦第一次首領再放寬一點。十連提示捲回來還會出現。'],
   ['v33','戰鬥棋子改為近距離臉部特寫（不再用全身立繪裁切）；層名改到棋盤上方並快速淡出，不再壓到棋子。預設隊前五層稍鬆、強隊第 5 層拉長到約 8 回合以上。河童特性不再與環斬重複；十連提示會在捲到底時收起。'],
   ['v32','戰鬥棋子改為參考圖風格：粗藍／紅圓角框、淺色底的臉部特寫、左上深紅生命圓、左下攻擊、右下橙色移動水滴；手牌改為方卡。並修：召喚 SSR 一覽不被按鈕擋住、八岐大蛇型態「八頭噬」、說明羈絆名、短屏說明與羈絆捲動、十連卡名、第 6–7 層敵生命上限 15、第 6 層護盾遞減。'],
@@ -3318,9 +3436,19 @@ function startFromTitle(){
   sfx('tap');
   if(!G.save.name) { G.titleBusy=false; askName(true, ()=>{ G.titleBusy=true; go(); }); } else go();
 }
+function ensurePid(){
+  let id=String((G.save&&G.save.pid)||'');
+  if(!/^\d{9}$/.test(id)){ id=String(100000000+Math.floor(Math.random()*900000000)); G.save.pid=id; persist(); }
+  return id;
+}
+function fmtPid(id){ return String(id).replace(/(\d{3})(\d{3})(\d{3})/,'$1,$2,$3'); }
+function paintTitleChrome(){
+  ensurePid();
+  const pidEl=$('#ttPid'); if(pidEl) pidEl.textContent='玩家ID: '+fmtPid(G.save.pid);
+  const ver=$('#ttVer'); if(ver) ver.textContent='Version v35';
+}
 function showTitle(){
-  const art=$('#ttArt'); if(!art.childElementCount){ art.innerHTML=['kagenin','ryujin','grandonmyoji','okami','kagura'].map((id,i)=>`<div class="tt-card c${i}"><img src="${heroImg(id)}" alt=""></div>`).join(''); }
-  $('#ttVer').textContent='v34　・　單機版，無需登入'+(G.save.name?'　・　👤 '+G.save.name:'');
+  paintTitleChrome();
   show('title');
 }
 $('#title').addEventListener('click',e=>{ if(e.target.closest('.tt-btns')) return; startFromTitle(); });
@@ -3329,12 +3457,12 @@ $('#newsOk').onclick=()=>$('#newsOv').classList.remove('on');
 $('#ttBgm').onclick=toggleBgm; $('#setBgm').onclick=toggleBgm; bgmLabels();
 $('#ttSet').onclick=()=>{ $('#setName').textContent = G.save.name?('目前暱稱：'+G.save.name):'尚未設定暱稱'; $('#setOv').classList.add('on'); };
 $('#setOk').onclick=()=>$('#setOv').classList.remove('on');
-$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ $('#ttVer').textContent='v34　・　單機版，無需登入　・　👤 '+G.save.name; }); };
+$('#setRename').onclick=()=>{ $('#setOv').classList.remove('on'); askName(!G.save.name, ()=>{ paintTitleChrome(); }); };
 $('#setClear').onclick=()=>{ $('#setOv').classList.remove('on'); $('#confOv').classList.add('on'); };
 $('#confNo').onclick=()=>$('#confOv').classList.remove('on');
 $('#confYes').onclick=()=>{ $('#confOv').classList.remove('on'); G.save=defaultSave(); persist(); try{ localStorage.removeItem(SAVE_KEY); }catch(e){} G.save=defaultSave(); persist(); showTitle(); toast('存檔已清除'); };
 $('#hName').onclick=()=>askName(false);
-window.__game.charImg=charImg; window.__game.tokenImg=tokenImg; window.__game.heroImg=heroImg; window.__game.CHAR_IDS=CHAR_IDS; window.__game.ART_FOCUS=ART_FOCUS; window.__game.TOKEN_FOCUS=TOKEN_FOCUS; window.__game.tokFace=tokFace; window.__game.faceOf=faceOf; window.__game.heroStats=heroStats; window.__game.skillDesc=skillDesc; window.__game.UPGRADES=UPGRADES; window.__game.TAL_TYPES=TAL_TYPES; window.__game.PATS=PATS; window.__game.HERO_TRAIT=HERO_TRAIT; window.__game.ENEMY_TRAIT=ENEMY_TRAIT; window.__game.HERO_V3=HERO_V3; window.__game.ENEMY_V3=ENEMY_V3; window.__game.bgm=()=>({on:BGM.on, pref:G.save.bgm!==false}); window.__game.toggleBgm=toggleBgm; window.__game.skipTitle = ()=>show('home'); window.__game.showTitle = showTitle; window.__game.news = NEWS;
+window.__game.charImg=charImg; window.__game.tokenImg=tokenImg; window.__game.heroImg=heroImg; window.__game.CHAR_IDS=CHAR_IDS; window.__game.ART_FOCUS=ART_FOCUS; window.__game.TOKEN_FOCUS=TOKEN_FOCUS; window.__game.tokFace=tokFace; window.__game.faceOf=faceOf; window.__game.heroStats=heroStats; window.__game.skillDesc=skillDesc; window.__game.UPGRADES=UPGRADES; window.__game.TAL_TYPES=TAL_TYPES; window.__game.PATS=PATS; window.__game.HERO_TRAIT=HERO_TRAIT; window.__game.ENEMY_TRAIT=ENEMY_TRAIT; window.__game.HERO_V3=HERO_V3; window.__game.ENEMY_V3=ENEMY_V3; window.__game.bgm=()=>({on:BGM.on, pref:G.save.bgm!==false}); window.__game.toggleBgm=toggleBgm; window.__game.skipTitle = ()=>show('home'); window.__game.showTitle = showTitle; window.__game.news = NEWS; window.__game.firstNoHealEase=firstNoHealEase; window.__game.ensurePid=ensurePid; window.__game.tokScale=tokScale;
 
 { const q=new URLSearchParams(location.search); if(q.get('title')==='1' || (!navigator.webdriver && q.get('skip')!=='1')) showTitle(); else show('home'); }
 </script>
