@@ -871,6 +871,47 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   object-fit:cover;object-position:50% 16%;
 }
 
+
+/* ===== v27 測試回饋：彈窗關閉、提示不擋棋、詳情卡短屏 ===== */
+#helpOv{align-items:center;justify-content:center}
+#helpOv .help-modal{max-height:min(92%,calc(100% - 12px));width:100%;overflow:hidden;display:flex;flex-direction:column;padding:12px 14px 10px;gap:8px}
+#helpOv .help-body{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+#helpOv .help-body p{margin:0 0 10px}
+#helpOv .help-foot{flex:none;padding-top:4px}
+#helpOv .help-foot .btn{width:100%;min-height:44px}
+#helpOv .help-hint{text-align:center;font-size:11px;color:#c9b98a;margin:0 0 6px}
+
+#detailOv{align-items:flex-start;justify-content:center;padding:8px}
+#detailBox.ud-card,#udCard{max-height:100%;width:min(100%,400px);display:flex;flex-direction:column;overflow:hidden}
+#detailBox.ud-card .ud-panel,#udPanel{flex:1;min-height:0;overflow-y:auto}
+#detailBox.ud-card>#detailOk,#udCard>#udClose{flex:none;position:relative;z-index:2}
+
+/* 戰鬥提示改為棋盤上方單列（在 HUD 與棋盤之間），不蓋住格子 */
+#tipBox{position:relative!important;top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
+  display:none;flex:none;z-index:30;cursor:pointer;pointer-events:auto;margin:4px 8px 0;
+  background:#150b2cf2;padding:5px 26px 5px 8px;font-size:12px;line-height:1.35;max-height:44px;overflow:hidden;
+  border-radius:10px;box-shadow:0 2px 8px #0008}
+#tipBox.on{display:block}
+#tipBox::after{content:'✕';position:absolute;right:8px;top:4px;font-size:13px;color:#ffd24a}
+#hint{top:auto!important;bottom:4px!important;transform:translateX(-50%);z-index:15;max-width:92%}
+#boardwrap{padding-top:0!important}
+
+/* toast：戰鬥在 HUD 與棋盤之間；抽卡在頂欄下方，不擋召喚鈕；可點掉 */
+#toast{z-index:80;max-width:86%;pointer-events:auto;white-space:normal;text-align:center;line-height:1.3}
+#toast.tb{top:auto;bottom:auto;font-size:12.5px;padding:5px 12px}
+#toast.tg{top:52px;bottom:auto;font-size:13px;padding:6px 14px}
+#toast.tm{bottom:90px;top:auto}
+
+#partyWarn{display:flex;flex-direction:column;gap:6px}
+#partyWarn .pw-txt{display:block}
+#btnRecParty{min-height:38px;width:100%}
+
+@media (max-height:700px){
+  #tipBox{font-size:11.5px;max-height:40px;padding:4px 24px 4px 7px}
+  .ud-stage{height:min(34vh,220px)}
+  #detailBox.ud-card>#detailOk,#udCard>#udClose{min-height:40px;margin:4px 10px 6px}
+}
+
 </style>
 </head>
 <body>
@@ -955,7 +996,8 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
     <div class="hbar r"><em>敵方</em><b id="hpEv">0</b><div class="trk"><i id="hpEb"></i></div></div>
     <div id="objRow"></div>
   </div>
-  <div id="boardwrap"><div id="board"><div id="cells"></div><svg id="lines" width="100%" height="100%"></svg><div id="units"></div><div id="fx"></div></div><div id="banner"></div><div id="hint"></div><div id="tipBox"></div></div>
+  <div id="tipBox"></div>
+  <div id="boardwrap"><div id="board"><div id="cells"></div><svg id="lines" width="100%" height="100%"></svg><div id="units"></div><div id="fx"></div></div><div id="banner"></div><div id="hint"></div></div>
   <div id="panel">
     <div id="chips"></div>
     <div id="uwrap"><div id="uinfo"></div></div>
@@ -1013,8 +1055,10 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <p><b>⑤ 長按棋子或按 ⓘ</b> 看技能與型態詳情；🔺尖刺會傷人、♨️溫泉回血。</p>
   <button class="btn gold" id="tutOk">開始戰鬥！</button>
 </div></div>
-<div id="helpOv" class="overlay"><div class="modal">
+<div id="helpOv" class="overlay"><div class="modal help-modal">
+  <div class="help-body">
   <h2>玩法說明</h2>
+  <p class="help-hint">↕ 可向下滑動查看全文</p>
   <p><b>目標：</b>操控 1～3 位武士、陰陽師、巫女等英雄，在鳥居地城的格子戰場上擊敗所有妖怪，一路深入，每 5 層會有首領妖怪。</p>
   <p><b>操作：</b>點英雄 → 點藍色格移動 → 點紅色敵人攻擊，或按「技能」再點目標，最後自動待機。全部行動完（或按「結束回合」）換怪物行動。點敵人可查看資料與威脅範圍。</p>
   <p><b>成長：</b>通關會得到 🎫 御札，在「英雄隊伍」點英雄的 ⓘ 可升級（每級生命 +1、每 3 級攻擊 +1）；通關第 4 層後可選「修羅」難度（戰鬥時標題列顯示 👹），敵人更強、獎勵 ×1.5。</p>
@@ -1027,8 +1071,8 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
   <p><b>護符：</b>首領與精英會掉落 🧿 護符，在英雄詳情裝備（每人 1 個），提供攻擊／生命／護盾／回春加成。</p>
   <p><b>每層通關：</b>獲得 💎 靈玉並三選一強化，隊伍會回復一些生命，倒下的英雄會以少量生命復活。</p>
   <p><b>抽卡：</b>用 💎 靈玉在神樂召喚陣抽英雄（R／SR／SSR）。抽到重複英雄會提升星級，並獲得 🎫 御札（R 15／SR 30／SSR 60）。出發前在「英雄隊伍」挑選最多 3 位出戰。</p>
-  <p style="color:#ffb3b3"><button class="btn red small" id="btnReset">清除存檔</button></p>
-  <button class="btn" id="helpOk">知道了</button>
+  </div>
+  <div class="help-foot"><button class="btn" id="helpOk">知道了</button></div>
 </div></div>
 <div id="menuOv" class="overlay"><div class="modal">
   <h2>暫停</h2>
@@ -1078,7 +1122,7 @@ body.hs .unit,body.hs .float,body.hs .burst{animation-play-state:paused!importan
 const SAVE_KEY = 'abyss_tactics_save_v1';
 const COLS = 5, ROWS = 5;
 const DIRS = [[1,0],[-1,0],[0,1],[0,-1]];
-const TUNE = {totemP:0.3, totemHp:6, totemCd:2, totemMax:6, w1t:3, w2t:6, K:10, ex:1.0, f12:0.85, hpMax:15, bossMax:30, hard:1.25, bossK:0.9, lsT:12, wardCd:3, wardV:2, healV:3, springV:3, spikeV:2, stormV:3, baseN:3, f3wave:1, waveP:0.7, waveF:0.28, waveF:0.28, rest:4, back:5};
+const TUNE = {totemP:0.3, totemHp:6, totemCd:2, totemMax:6, w1t:3, w2t:6, K:10, ex:1.0, f12:0.72, hpMax:15, f12hp:10, bossMax:30, hard:1.25, bossK:0.9, lsT:12, wardCd:3, wardV:2, healV:3, springV:3, spikeV:2, stormV:3, baseN:3, f3wave:1, waveP:0.7, waveF:0.28, waveF:0.28, rest:4, back:5};
 const CLS_ICON = {'近戰':'⚔️','遠程':'🏹','法術':'🔮','刺客':'🗡️','坦克':'🛡️','輔助':'💚'};
 const ENRAGE_BASE = 12, DIFF_UNLOCK = 4;
 const enrageT = ()=> ENRAGE_BASE - ((G.run&&G.run.diff)?2:0);
@@ -1273,6 +1317,7 @@ const UPGRADES = [
 /* ========== 存檔 ========== */
 function defaultSave(){
   const roster = {}; START_ROSTER.forEach(id=>roster[id]={stars:1});
+  if(!roster.miko) roster.miko={stars:1}; /* 開場贈送巫女，預設不出戰，可一鍵推薦編成 */
   return {v:1, gems:1000, tix:0, lv:{}, diff:0, roster, party:START_ROSTER.slice(), pity:0, draws:0, best:0, runs:0, tutSeen:false, tutDone:false, mute:false, run:null, name:'', bgm:true, econ:2};
 }
 function loadSave(){
@@ -1282,6 +1327,8 @@ function loadSave(){
       s.lv = s.lv||{}; s.tix = s.tix||0; s.diff = s.diff||0; s.name = (typeof s.name==='string')?s.name:''; s.bgm = (s.bgm!==false); if(s.econ!==2){ s.econ=2; s.run=null; }
       s.party = (s.party||[]).filter(id=>s.roster[id]).slice(0,3);
       if(!s.party.length) s.party = Object.keys(s.roster).slice(0,3);
+      /* 舊存檔若仍是初始三人、尚未抽卡，補送巫女（不自動入隊） */
+      if(!s.roster.miko && (s.draws||0)===0 && Object.keys(s.roster).length<=3 && START_ROSTER.every(id=>s.roster[id])) s.roster.miko={stars:1};
       return s;
     }
   }catch(e){}
@@ -1375,7 +1422,21 @@ function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1)
 window.addEventListener('error', e=>{ G.errors.push(String(e.message)); });
 window.addEventListener('unhandledrejection', e=>{ G.errors.push('promise: '+String(e.reason)); });
 
-function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.toggle('tb', G.screen==='battle'); t.style.display='block'; clearTimeout(toast._t); toast._t=setTimeout(()=>t.style.display='none',1800); }
+function toast(msg){
+  const t=$('#toast'); if(!t) return;
+  t.textContent=msg; t.className='toast'; t.style.top=''; t.style.bottom='';
+  const app=$('#app'), ar=app?app.getBoundingClientRect():{top:0,bottom:innerHeight};
+  if(document.querySelector('.overlay.on')){ t.classList.add('tm'); }
+  else if(G.screen==='battle'){
+    t.classList.add('tb');
+    const hud=document.querySelector('#battle .hud');
+    const top = hud ? Math.round(hud.getBoundingClientRect().bottom-ar.top+4) : 8;
+    t.style.top=top+'px'; t.style.bottom='auto';
+  } else if(G.screen==='draw'){ t.classList.add('tg'); }
+  else { t.classList.add('tm'); }
+  t.style.display='block'; t.onclick=()=>{ t.style.display='none'; };
+  clearTimeout(toast._t); toast._t=setTimeout(()=>t.style.display='none',1800);
+}
 
 /* ========== 畫面切換 ========== */
 function show(name){
@@ -1526,13 +1587,29 @@ function heroSkillCard(id, stars, atk){
 
 /* ========== 英雄隊伍畫面 ========== */
 function starStr(n){ return '★'.repeat(n)+'☆'.repeat(5-n); }
+function isSupportHero(id){ const h=HEROES[id]; return !!(h && (h.cls==='坦克'||h.cls==='輔助'||['heal','healall','shield'].includes(h.skill.type))); }
 function partyWarning(){
   const S=G.save; if(!S.party||!S.party.length) return '';
-  const sup = id=>{ const h=HEROES[id]; return h.cls==='坦克'||h.cls==='輔助'||['heal','healall','shield'].includes(h.skill.type); };
-  if(S.party.some(sup)) return '';
-  const cand = Object.keys(S.roster).filter(id=>sup(id)&&!S.party.includes(id)).slice(0,2).map(id=>HEROES[id].name);
-  if(!cand.length) return '';
-  return '⚠ 隊伍沒有補師或坦克，後面幾層血量會比較吃緊。'+`可考慮換上：${cand.join('、')}。`;
+  if(S.party.some(isSupportHero)) return '';
+  const cand = Object.keys(S.roster).filter(id=>isSupportHero(id)&&!S.party.includes(id)).map(id=>HEROES[id].name);
+  if(cand.length) return '⚠ 隊伍沒有補師或坦克，前幾層會比較吃緊。建議換上：'+cand.join('、')+'。';
+  return '⚠ 隊伍沒有補師或坦克，前幾層請注意站位與血量。抽到巫女或僧兵後可一鍵換成推薦編成。';
+}
+function recommendParty(){
+  const S=G.save, cur=(S.party||[]).slice();
+  if(cur.some(isSupportHero)){ toast('隊伍已有補師或坦克'); return; }
+  const cand=Object.keys(S.roster).filter(isSupportHero);
+  if(!cand.length){ toast('還沒有補師或坦克，去召喚看看吧'); return; }
+  const rank=id=>({輔助:0,坦克:1}[HEROES[id].cls]||2);
+  cand.sort((a,b)=>rank(a)-rank(b)||({SSR:0,SR:1,R:2}[HEROES[a].r]-{SSR:0,SR:1,R:2}[HEROES[b].r]));
+  const pick=cand[0];
+  if(cur.length<3) cur.push(pick);
+  else {
+    const drop = [...cur].reverse().find(id=>!isSupportHero(id)&&id!=='samurai') || cur[cur.length-1];
+    cur[cur.indexOf(drop)]=pick;
+  }
+  S.party=cur.slice(0,3); persist(); renderRoster();
+  toast('已換成推薦編成：'+S.party.map(id=>HEROES[id].name).join('、'));
 }
 function renderRoster(){
   const S = G.save;
@@ -1577,7 +1654,10 @@ function renderRoster(){
   }
   grid.scrollTop=keep;
   $('#btnGo').disabled = S.party.length<1;
-  { const w=partyWarning(), el=$('#partyWarn'); el.style.display=w?'block':'none'; el.textContent=w||''; }
+  { const w=partyWarning(), el=$('#partyWarn');
+    if(!w){ el.style.display='none'; el.innerHTML=''; }
+    else { el.style.display='flex'; el.innerHTML=`<span class="pw-txt">${w}</span><button class="btn small gold" id="btnRecParty">✨ 推薦編成</button>`;
+      const b=$('#btnRecParty'); if(b) b.onclick=ev=>{ ev.preventDefault(); recommendParty(); }; } }
   const unlocked = S.best>=DIFF_UNLOCK, hard = unlocked && S.diff;
   $('#dfN').className = 'btn small'+(hard?' gray':''); $('#dfH').className = 'btn small'+(hard?' red':' gray');
   $('#dfH').textContent = unlocked ? '🔥 修羅（更強敵人・獎勵×1.5）' : `🔒 修羅（通關第 ${DIFF_UNLOCK} 層解鎖）`;
@@ -1754,7 +1834,7 @@ function genEnemyList(f, strong, totem){
   const pool = ['slime','goblin'];
   if(f>=2) pool.push('skel','onibi'); if(f>=3) pool.push('bat','tanuki'); if(f>=4) pool.push('brute','ward');
   const boss = isBoss(f);
-  const nb = boss ? 1 : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = f<3 ? 1 : 2, w2 = f<4 ? (strong?2:(f===1?1:0)) : (f>=9?3:2);
+  const nb = boss ? 2 : ((f>=8?4:3)+(strong&&f<8?1:0)-(totem?1:0)), w1 = 2, w2 = f<=2 ? (strong?2:1) : (f<4 ? (strong?2:0) : (f>=9?3:2));
   let nT=0, nW=0; const maxT = f>=7?2:1;
   const mk = (wv)=>{ let t=pick(pool); if(t==='tanuki'){ if(nT>=maxT||wv>0) t='goblin'; else nT++; } if(t==='ward'){ if(nW>=1||wv>0) t='brute'; else nW++; } const o={...ENEMIES[t], t, boss:false, wv}; if(wv){ o.wt = wv===1?TUNE.w1t:TUNE.w2t; } return o; };
   for(let i=0;i<nb;i++) list.push(mk(0));
@@ -1785,7 +1865,7 @@ function startBattle(){ const B0=null;
   list.forEach((en,i)=>{
     let pos = en.wv ? [-1,-1] : (en.boss ? bossSpot : sp.shift());
     if(!en.boss){ while(pos && pos[0]===bossSpot[0]&&pos[1]===bossSpot[1]) pos = sp.shift(); }
-    const hp = en.boss ? en.hp+4*en.cyc : en.hp+Math.floor((run.floor-1)/2), atk = (en.boss ? Math.min(6,en.atk+en.cyc) : Math.min(run.floor<=1?1:(run.floor<=2?2:(run.floor<=9?4:5)),en.atk+Math.floor((run.floor-1)/5))) + (run.diff?1:0);
+    const hp = en.boss ? en.hp+4*en.cyc : en.hp+Math.floor((run.floor-1)/2), atk = (en.boss ? Math.min(6,en.atk+en.cyc) : Math.min(run.floor<=2?1:(run.floor<=9?4:5),en.atk+Math.floor((run.floor-1)/5))) + (run.diff?1:0);
     units.push({uid:uid++, team:'e', wv:en.wv||0, wt:en.wt||0, armor:en.armor||0, t:en.t, name:en.name, e:en.e, img:enemyImg(en.boss?en.img:(en.img||en.t)), x:pos[0], y:pos[1], hp, maxhp:hp, atk, mov:en.mov, rng:en.rng, boss:en.boss, pat:PATS[en.boss?BOSS_PAT[en.img]:ENEMY_PAT[en.t]], heal:en.heal, explode:en.explode, ward:en.ward, cicon:en.heal?'✚':(en.explode?'💣':(en.ward?'🛡':'')), rage:en.boss?3:0, shield:0, cd:0, done:false, moved:false, alive:true});
   });
   if(hasTotem){ const ti=sp.findIndex(p=>p[1]===0), pos=(ti>=0?sp.splice(ti,1)[0]:sp.shift())||[2,0];
@@ -1795,7 +1875,7 @@ function startBattle(){ const B0=null;
     const sumAtk = fp.reduce((a,u)=>a+u.atk*(['heal','healall','shield'].includes(u.skill&&u.skill.type)?0.65:1),0), pool = fe.reduce((a,u)=>a+u.hp,0);
     const cap = TUNE.K * Math.pow(sumAtk, TUNE.ex) * (run.floor<=2?TUNE.f12:1) * (run.diff?TUNE.hard:1) * (isBoss(run.floor)?TUNE.bossK:1);
     G.pi={f:run.floor,sumAtk:+sumAtk.toFixed(1),pool,cap:Math.round(cap)};
-    const f=cap/pool, xm=Math.floor(Math.max(0,sumAtk-10)*1.2); fe.forEach(u=>{ const mx=u.boss?TUNE.bossMax:TUNE.hpMax+xm; u.hp=u.maxhp=Math.min(mx,Math.max(3,Math.round(u.hp*f))); });
+    const f=cap/pool, xm=Math.floor(Math.max(0,sumAtk-10)*1.2); fe.forEach(u=>{ const mx=u.boss?TUNE.bossMax:((run.floor<=2?TUNE.f12hp:TUNE.hpMax)+xm); u.hp=u.maxhp=Math.min(mx,Math.max(3,Math.round(u.hp*f))); });
   }
   let reserve = units.filter(u=>u.wv>0); reserve.forEach(u=>{ units.splice(units.indexOf(u),1); u.wait=1; });
   // 精英、樓層詞綴、戰鬥目標
@@ -1827,10 +1907,12 @@ function startBattle(){ const B0=null;
   const th = themeOf(run.floor), bd = $('#board');
   bd.style.setProperty('--c1', th.c1); bd.style.setProperty('--c2', th.c2); bd.style.setProperty('--obs', '"'+th.obs+'"');
   show('battle');
-  renderAll(); applySpeed(); $('#tipBox').classList.remove('on');
-  setTimeout(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); else if(BB&&BB.units.some(u=>u.ward&&u.alive)) showTip('ward'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
-  setTimeout(()=>{ const BB=G.B; if(BB&&BB.reserve&&BB.reserve.length) showTip('wave'); }, 7700);
-  setTimeout(()=>{ const BB=G.B; if(BB&&BB===G.B&&BB.units.some(u=>u.totem&&u.alive)) showTip('totem'); }, 5200);
+  renderAll(); applySpeed(); hideTip();
+  (G._tipTimers||[]).forEach(clearTimeout); G._tipTimers=[];
+  const later=(fn,ms)=>G._tipTimers.push(setTimeout(fn,ms));
+  later(()=>{ if(G.B===B0||!B0){ const BB=G.B; if(BB&&BB.mod&&BB.mod.id==='storm') showTip('storm'); else if(BB&&BB.mod&&BB.mod.id==='cmd') showTip('cmd'); else if(BB&&[...BB.tiles.values()].includes('high')) showTip('high'); else if(BB&&BB.units.some(u=>u.ward&&u.alive)) showTip('ward'); if(BB&&BB.reserve&&BB.reserve.length&&!document.querySelector('#tipBox').classList.contains('on')) showTip('wave'); if(!document.querySelector('#tipBox').classList.contains('on')) showTip('card'); } }, 900);
+  later(()=>{ const BB=G.B; if(BB&&BB.reserve&&BB.reserve.length) showTip('wave'); }, 7700);
+  later(()=>{ const BB=G.B; if(BB&&BB===G.B&&BB.units.some(u=>u.totem&&u.alive)) showTip('totem'); }, 5200);
   const ban = $('#banner');
   ban.textContent = (isBoss(run.floor) ? `⚠ 第 ${run.floor} 層・首領戰` : `第 ${run.floor} 層`) + ' ' + th.ic + th.name;
   ban.classList.remove('show'); void ban.offsetWidth; ban.classList.add('show');
@@ -2181,17 +2263,22 @@ const TIPS = {
   high:'⛰️ 高台（金框格）：站在上面的英雄攻擊 +1，可與挾擊疊加',
   storm:'⚡ 落雷：紅色斜紋範圍會在你的回合結束後被雷擊（敵我皆受 3 點傷害），先離開！',
   eflank:'🟥 包夾：敵人若夾在英雄兩側（對面也有敵人），傷害 +1。預告數字旁會顯示 ⚑，別讓英雄被兩面夾住！',
-  card:'🃏 棋子卡：左上大數字＝生命、左下綠徽章＝攻擊力、右下橘徽章＝移動力、右上小圖示＝狀態（⚠ 被鎖定）。藍框我方、紅框敵人、金框精英。',
-  wave:'🚩 增援：這層分好幾波！第 3、6 回合（或場上只剩 1 隻時）會有援軍從上方出現（那回合不會行動），留點力氣與位置。',
+  card:'🃏 左上數字＝生命、左下綠＝攻擊、右上圖示＝狀態。藍框我方、紅框敵人。',
+  wave:'🚩 這層分波登場：第 3、6 回合會有援軍從上方出現（當回合不行動）。',
   cmd:'🚩 指揮官：先擊倒有旗的敵人！他活著時其他敵人攻擊 +1，倒下後士氣崩潰。',
   ward:'🛡 結界青鬼：每 3 回合替身旁 2 格內的敵人加護盾（青色連線預告），血少、先擊倒牠！',
   syn:'🔗 羈絆：特定英雄相鄰時有加成，看上方粉色標籤；點標籤查看說明'
 };
-document.addEventListener('click',e=>{ const t=e.target.closest&&e.target.closest('#tipBox'); if(t) t.classList.remove('on'); });
+document.addEventListener('click',e=>{ const t=e.target.closest&&e.target.closest('#tipBox'); if(t) hideTip(); });
+function hideTip(){
+  const b=$('#tipBox'); if(!b) return;
+  b.classList.remove('on'); clearTimeout(showTip._t);
+}
 function showTip(id){
   if(G.fast || !G.save) return; const S=G.save; S.tips = S.tips||{}; if(S.tips[id]) return; S.tips[id]=1; persist();
-  const b=$('#tipBox'); if(!b) return; b.textContent=TIPS[id]; b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
-  clearTimeout(showTip._t); showTip._t=setTimeout(()=>b.classList.remove('on'), 4500);
+  const b=$('#tipBox'); if(!b) return;
+  b.textContent=TIPS[id]; b.classList.remove('on'); void b.offsetWidth; b.classList.add('on');
+  clearTimeout(showTip._t); showTip._t=setTimeout(hideTip, 4500);
 }
 function applySpeed(){ const sp=(G.save&&G.save.speed===2)?2:1; document.body.classList.toggle('spd2', sp===2); const l='⏩'+sp+'×'; const b=$('#btnSpeed'); if(b) b.textContent=l; const m=$('#menuSpeed'); if(m) m.textContent='⏩ 動畫速度：'+sp+'×'; }
 function toggleSpeed(){ G.save.speed = (G.save.speed===2)?1:2; persist(); applySpeed(); toast('動畫速度 '+G.save.speed+'×'); }
@@ -2360,7 +2447,10 @@ async function enemyPhase(){
         logLine(`${e.name} 怒吼！全隊受到傷害`,'e');
         renderAll(); await sleep(500);
         if(checkEnd()){ e.acting=false; return; }
-      } else syncUnits();
+      } else {
+        syncUnits();
+        if(e.rage===1){ banner('⚠ 下回合首領將怒吼！','enemy'); logLine('下回合首領將怒吼，對全隊造成傷害','e'); }
+      }
     }
     const plan = planEnemy(e); T('e'+e.uid+' plan '+plan.type);
     if(plan.type==='heal'){
@@ -2491,7 +2581,7 @@ document.addEventListener('click', e=>{ if(e.target.closest('.btn')) sfx('tap');
 $('#btnRoster').onclick = ()=>show('roster');
 $('#btnDraw').onclick = ()=>show('draw');
 $('#btnRosterDraw').onclick = ()=>show('draw');
-$('#btnGo').onclick = ()=>{ const w=partyWarning(); newRun(); if(w) setTimeout(()=>toast('⚠ 沒有補師／坦克：注意站位與血量'),500); };
+$('#btnGo').onclick = ()=>{ newRun(); };
 $('#btnDaily').onclick = ()=>{ renderDaily(); $('#dailyOv').classList.add('on'); };
 $('#dailyOk').onclick = ()=>$('#dailyOv').classList.remove('on');
 $('#btnHelp').onclick = ()=>$('#helpOv').classList.add('on');
@@ -2499,7 +2589,9 @@ $('#btnHard').onclick = ()=>{ if(G.save.best<DIFF_UNLOCK){ toast(`通關第 ${DI
 $('#tabAdv').onclick = ()=>{ $('#hList').scrollTop=0; };
 $('#tabTeam').onclick = ()=>show('roster'); $('#tabDraw').onclick = ()=>show('draw'); $('#tabDaily').onclick = ()=>$('#btnDaily').click(); $('#tabHelp').onclick = ()=>$('#btnHelp').click();
 $('#helpOk').onclick = ()=>$('#helpOv').classList.remove('on');
-$('#btnReset').onclick = ()=>{ if(confirm('確定要清除所有存檔（英雄與靈玉）嗎？')){ G.save=defaultSave(); persist(); $('#helpOv').classList.remove('on'); show('home'); toast('已清除存檔'); } };
+$('#helpOv').onclick = e=>{ if(e.target.id==='helpOv') $('#helpOv').classList.remove('on'); };
+$('#detailOv').onclick = e=>{ if(e.target.id==='detailOv'){ $('#detailOv').classList.remove('on'); const box=$('#detailBox'); if(box) box.className='modal'; } };
+$('#setOv').onclick = e=>{ if(e.target.id==='setOv') $('#setOv').classList.remove('on'); };
 $('#revealAgain').onclick = (e)=>{ e.stopPropagation(); const n=+$('#revealAgain').dataset.n||1; if(G.save.gems<(n===10?COST10:COST1)){ toast('💎 不足'); return; } const r=doDraw(n); if(r) playReveal(r); };
 $('#btnDraw1').onclick = ()=>{ const r=doDraw(1); if(r) playReveal(r); };
 $('#btnDraw10').onclick = ()=>{ const r=doDraw(10); if(r) playReveal(r); };
@@ -2557,7 +2649,7 @@ function showUnitCard(u){
     lim = '數量限制 '+qtyLimit(null,u);
     let skN, skV, skD, tr, tags=['妖怪'];
     if(u.totem){ skN='召喚燈籠'; skV=TUNE.totemCd; skD=`攻擊型態不會攻擊。每 ${TUNE.totemCd} 回合召喚 1 隻小妖（最多 ${TUNE.totemMax} 隻），直到被摧毀；沒有護甲。`; tr=ENEMY_TRAIT.totem; tags=['特殊']; }
-    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD=`攻擊型態為${p.n}：${p.d+(p.splash?'（附帶範圍波及）':'')}。${u.rage||3} 回合後怒吼，對全隊造成傷害。`; tr=BOSS_TRAIT; tags=['首領']; }
+    else if(u.boss){ skN='怒吼'; skV=u.rage||3; skD=`每 3 回合怒吼，對全隊造成（攻擊一半）傷害。攻擊型態為${p.n}：${p.d+(p.splash?'（附帶範圍波及）':'')}。`; tr=BOSS_TRAIT; tags=['首領']; }
     else if(u.heal){ skN='治癒術'; skV=TUNE.healV; skD=`攻擊型態為${p.n}：${p.d}。每 2 回合治療受傷的同伴 ${TUNE.healV} 點生命。`; tr=ENEMY_TRAIT.tanuki; }
     else if(u.explode){ skN='鬼火爆彈'; skV=1; skD=`攻擊型態為${p.n}：${p.d}。被擊倒時爆炸，對相鄰英雄造成攻擊 +1 點傷害。`; tr=ENEMY_TRAIT.onibi; }
     else if(u.ward){ skN='結界術'; skV=TUNE.wardV; skD=`攻擊型態為${p.n}：${p.d}。每 3 回合替 2 格內的友軍張開 ${TUNE.wardV} 點護盾。`; tr=ENEMY_TRAIT.ward; }
@@ -2656,7 +2748,7 @@ document.addEventListener('visibilitychange',()=>{ if(document.hidden&&BGM.on){ 
 
 /* ========== v24：標題／登入畫面（單機，無密碼、無網路） ========== */
 const NEWS = [
-  ['v27','詳情卡改為參考卡牌版面，技能寫成「名稱(數值)」加特性說明；僧兵有嘲諷等新特性；第 1～3 層出現召喚燈籠。'],
+  ['v27','詳情卡改為參考卡牌版面（隊伍與戰鬥同一張）；技能寫成「名稱(數值)」加特性；玩法說明可直接關閉，清除存檔改到設定；第 1～2 層較溫和並可一鍵推薦編成；第 1～3 層有召喚燈籠。'],
   ['v26','每層分波登場（第 3／6 回合或場上剩 1 隻時增援），回合數回到約 8～10 回合；赤鬼與首領有護甲 1；教學提示可點擊關閉、不再蓋住手牌；十連抽卡片放大。'],
   ['v25','隊伍畫面：已擁有英雄優先、未獲得收合為「未獲得 (N)」，新增稀有度／職業排序與篩選；標題畫面加大標誌與按鈕；新增標題柔和音樂（可在標題或設定開關）。'],
   ['v24','5×5 棋盤新增 4 種版型（開闊／柱陣／走廊／河與橋）；鬼火改為 3×3 範圍爆彈；徽章不再溢出；新增標題畫面與玩家暱稱。'],
